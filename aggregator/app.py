@@ -88,6 +88,7 @@ class GameBackend(object):
     def run(self):
         """Listens for new messages in Redis, and sends them to clients."""
         for data in self.__iter_data():
+            print(data)
             for client in self.clients:
                 gevent.spawn(self.send, client, data)
 
@@ -125,6 +126,7 @@ def player_client(ws):
     while not ws.closed:
         gevent.sleep(0.1)
         message = ws.receive()
+        print(message)
 
         # TODO: Validate message is legit
         if message:

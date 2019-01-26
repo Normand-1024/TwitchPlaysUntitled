@@ -12,9 +12,8 @@ var outbox = new ReconnectingWebSocket(ws_scheme + location.host + "/player_subm
 
 $(".direction-btn").on("click", function(event) {
   event.preventDefault();
-  console.log(event);
   var handle = $("#input-handle")[0].value;
-  var direction = event.currentTarget.name
+  var direction = event.currentTarget.name;
   outbox.send(JSON.stringify({ handle: handle, direction: direction }));
 });
 
