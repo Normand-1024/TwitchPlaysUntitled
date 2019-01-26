@@ -11,28 +11,27 @@
 
 .centered-bits{
   display: block;
-  width: 650px;
   margin: 0 auto;
 }
 
-.form-group{
-  width: 500px
+.controller{
+  display: inline-block;
+  zoom: 0.35;
 }
 
 .direction-btn{
   float: left;
   padding: 0;
   border: none;
+  display: inline-block;
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 0px 0px;
-  width: 100px;
 }
 
 .grid-cell{
   display: inline-grid;
-  grid-gap: 0px;
 }
