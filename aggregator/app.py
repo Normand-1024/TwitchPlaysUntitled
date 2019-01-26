@@ -68,7 +68,6 @@ class GameBackend(object):
     def __iter_data(self):
         for message in self.pubsub.listen():
             data = message.get('data')
-            print(data)
             if message['type'] == 'message':
                 app.logger.info(u'Sending message: {}'.format(data))
                 yield data
