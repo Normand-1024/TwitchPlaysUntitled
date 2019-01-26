@@ -63,11 +63,12 @@ class GameBackend(object):
     def __init__(self):
         self.clients = list()
         self.pubsub = redis.pubsub()
-        self.pubsub.subscribe(REDIS_CHAN)
+        self.pubsub.subscribe(REDIS_COMMAND_CHAN)
 
     def __iter_data(self):
         for message in self.pubsub.listen():
             data = message.get('data')
+            print(data)
             if message['type'] == 'message':
                 app.logger.info(u'Sending message: {}'.format(data))
                 yield data
@@ -80,7 +81,6 @@ class GameBackend(object):
     def send(self, client, data):
         """Send given data to the registered client.
         Automatically discards invalid connections."""
-        import json
         try:
             client.send(data.decode('utf-8'))
         except Exception:
