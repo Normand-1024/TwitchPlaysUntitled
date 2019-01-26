@@ -1,1 +1,4 @@
 venv
+*.js.map
+*.pyc
+node_modules/*
