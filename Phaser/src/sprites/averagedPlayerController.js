@@ -14,16 +14,16 @@ export default class extends Phaser.Sprite {
 	  	if (input == null){ return; }
 
 	    if(input.direction == "right"){
-	    	this.body.velocity.set(this.speed, 0);
+	    	this.body.velocity.add(this.speed, 0);
 	    }
 	    if(input.direction == "left"){
-	    	this.body.velocity.set(-1*this.speed, 0);
+	    	this.body.velocity.add(-1*this.speed, 0);
 	    }
 	    if(input.direction == "up"){
-	    	this.body.velocity.set(0, -1*this.speed);
+	    	this.body.velocity.add(0, -1*this.speed);
 	    }
 	    if(input.direction == "down"){
-	    	this.body.velocity.set(0, this.speed);
+	    	this.body.velocity.add(0, this.speed);
 	    }
   	}
   	else{

@@ -20,14 +20,15 @@ export default class extends Phaser.State {
       console.log('Message from server ' + event.data);
       var control = JSON.parse(event.data);
 
-
       if(!Array.isArray(control)){
          control = [control];
       }
+
       for(var i = 0; i < control.length; i++){
-        obj = control[i];
-        this.inputQueue.push(obj);
-        this.averagedPlayerController.setInputList(this.inputQueue);
+        var obj = control[i];
+        localObj.addRowOfData("fakeName", obj.direction)
+        localObj.inputQueue.push(obj);
+        localObj.averagedPlayerController.setInputList(this.inputQueue);
       }
 
     });
@@ -37,13 +38,13 @@ export default class extends Phaser.State {
   init() { }
   
 
-  preload() { 
+  preload() {   
        this.output;
     }
 
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.devMode = true;
+    this.devMode = false;
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
     }
@@ -105,6 +106,10 @@ export default class extends Phaser.State {
       this.inputQueue.push(obj);
       this.averagedPlayerController.setInputList(this.inputQueue);
   } 
+
+  addRowOfData(name, direction){
+
+  }
 
   //   function init()
   // {
