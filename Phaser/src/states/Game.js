@@ -25,7 +25,7 @@ export default class extends Phaser.State {
 
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
-        localObj.addRowOfData("fakeName", obj.direction)
+        localObj.addRowOfData("fakeName", obj.direction);
         localObj.inputQueue.push(obj);
         localObj.averagedPlayerController.setInputList(localObj.inputQueue);
       }
@@ -51,7 +51,7 @@ export default class extends Phaser.State {
       this.cursors = game.input.keyboard.createCursorKeys();
       websocket_url="ws://0.0.0.0:5000/game_receive";
     }
-    const bannerText = lang.text('welcome')
+    const bannerText = lang.text('welcome');
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
       font: '40px Bangers',
       fill: '#77BFA3',
