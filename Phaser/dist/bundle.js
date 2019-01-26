@@ -4266,7 +4266,7 @@ module.exports = Math.scale || function scale(x, inLow, inHigh, outLow, outHigh)
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! babel-polyfill */131);
-module.exports = __webpack_require__(/*! /Users/charlesgeorge/Documents/GGJ2019/TwitchPlaysUntitled/Phaser/src/main.js */333);
+module.exports = __webpack_require__(/*! /Users/prestonhale/Documents/TwitchPlaysUntitled/Phaser/src/main.js */333);
 
 
 /***/ }),
@@ -10808,9 +10808,8 @@ const centerGameObjects = objects => {
 
 /* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.State {
 
-  testWebSocket() {
-    this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
-    var webLocal = this.websocket;
+  testWebSocket(websocket_url) {
+    this.websocket = new WebSocket(websocket_url);
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
@@ -10828,7 +10827,7 @@ const centerGameObjects = objects => {
         var obj = control[i];
         localObj.addRowOfData("fakeName", obj.direction);
         localObj.inputQueue.push(obj);
-        localObj.averagedPlayerController.setInputList(this.inputQueue);
+        localObj.averagedPlayerController.setInputList(localObj.inputQueue);
       }
     });
   }
@@ -10841,9 +10840,13 @@ const centerGameObjects = objects => {
 
   create() {
     this.game.physics.startSystem(__WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Physics.ARCADE);
-    this.devMode = false;
+    this.devMode = true;
+    this.baseSpeed = 1000;
+    this.inputQueue = [];
+    let websocket_url = "ws://tpg45.herokuapp.com/game_receive";
     if (this.devMode) {
       this.cursors = game.input.keyboard.createCursorKeys();
+      websocket_url = "ws://0.0.0.0:5000/game_receive";
     }
     const bannerText = __WEBPACK_IMPORTED_MODULE_2__lang__["a" /* default */].text('welcome');
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
@@ -10851,8 +10854,6 @@ const centerGameObjects = objects => {
       fill: '#77BFA3',
       smoothed: false
     });
-
-    this.inputQueue = [];
 
     banner.padding.set(10, 16);
     banner.anchor.setTo(0.5);
@@ -10862,43 +10863,43 @@ const centerGameObjects = objects => {
       x: this.world.centerX,
       y: this.world.centerY,
       asset: 'mushroom',
-      baseSpeed: 10
+      baseSpeed: this.baseSpeed
     });
 
     this.game.add.existing(this.averagedPlayerController);
 
     this.game.physics.arcade.enable([this.averagedPlayerController]);
-    this.testWebSocket();
+    this.testWebSocket(websocket_url);
   }
 
   update() {
     if (this.devMode) {
       var obj;
       if (this.cursors.right.isDown) {
-
         obj = {
           "direction": "right"
         };
       }
       if (this.cursors.left.isDown) {
-
         obj = {
           "direction": "left"
         };
       }
-
       if (this.cursors.down.isDown) {
-
         obj = {
           "direction": "down"
         };
       }
-      if (this.cursors.up.isDown) obj = {
-        "direction": "up"
-      };
+      if (this.cursors.up.isDown) {
+        obj = {
+          "direction": "up"
+        };
+      }
+      if (obj) {
+        this.inputQueue.push(obj);
+        this.averagedPlayerController.setInputList(this.inputQueue);
+      }
     }
-    this.inputQueue.push(obj);
-    this.averagedPlayerController.setInputList(this.inputQueue);
   }
 
   addRowOfData(name, direction) {}
@@ -10908,8 +10909,7 @@ const centerGameObjects = objects => {
   //   output = document.getElementById("output");
   //   testWebSocket();
   // }
-
-
+  //
 });
 
 /***/ }),
@@ -11045,7 +11045,7 @@ exports.default = idiom;
 
   update() {
     if (this.inputList != null && this.inputList.length > 0) {
-      var input = this.inputList.shift();
+      var input = this.inputList.pop();
       if (input == null) {
         return;
       }
@@ -11063,12 +11063,17 @@ exports.default = idiom;
         this.body.velocity.add(0, this.speed);
       }
     } else {
-      this.body.setVelocity(0, 0);
+      this.body.velocity.set(0, 0);
     }
   }
 
   setInputList(inputList) {
     this.inputList = inputList;
+    console.log(this.inputList);
+  }
+
+  appendInputList(inputList) {
+    this.inputList.push(inputList);
   }
 });
 
