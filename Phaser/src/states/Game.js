@@ -19,14 +19,14 @@ export default class extends Phaser.State {
       console.log('Message from server ' + event.data);
       var control = JSON.parse(event.data);
 
-
-      if(!Array.isArray(control)) {
-        control = [control];
+      if(!Array.isArray(control)){
+         control = [control];
       }
+
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
+        localObj.addRowOfData("fakeName", obj.direction)
         localObj.inputQueue.push(obj);
-        console.log(localObj.inputQueue);
         localObj.averagedPlayerController.setInputList(localObj.inputQueue);
       }
 
@@ -37,7 +37,7 @@ export default class extends Phaser.State {
   init() { }
   
 
-  preload() { 
+  preload() {   
        this.output;
     }
 
@@ -103,9 +103,12 @@ export default class extends Phaser.State {
       if (obj) {
         this.inputQueue.push(obj);
         this.averagedPlayerController.setInputList(this.inputQueue);
+        }
       }
     }
-  }
+
+    addRowOfData(name, direction){
+    }
 
     //   function init()
     // {

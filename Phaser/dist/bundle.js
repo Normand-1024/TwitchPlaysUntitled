@@ -4250,8 +4250,8 @@ module.exports = Math.scale || function scale(x, inLow, inHigh, outLow, outHigh)
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = ({
-  gameWidth: 760,
-  gameHeight: 400,
+  gameWidth: 1100,
+  gameHeight: 720,
   localStorageName: 'phaseres6webpack',
   webfonts: ['Bangers']
 });
@@ -10822,10 +10822,11 @@ const centerGameObjects = objects => {
       if (!Array.isArray(control)) {
         control = [control];
       }
+
       for (var i = 0; i < control.length; i++) {
         var obj = control[i];
+        localObj.addRowOfData("fakeName", obj.direction);
         localObj.inputQueue.push(obj);
-        console.log(localObj.inputQueue);
         localObj.averagedPlayerController.setInputList(localObj.inputQueue);
       }
     });
@@ -10900,6 +10901,8 @@ const centerGameObjects = objects => {
       }
     }
   }
+
+  addRowOfData(name, direction) {}
 
   //   function init()
   // {
@@ -11049,16 +11052,16 @@ exports.default = idiom;
       }
 
       if (input.direction == "right") {
-        this.body.velocity.set(this.speed, 0);
+        this.body.velocity.add(this.speed, 0);
       }
       if (input.direction == "left") {
-        this.body.velocity.set(-1 * this.speed, 0);
+        this.body.velocity.add(-1 * this.speed, 0);
       }
       if (input.direction == "up") {
-        this.body.velocity.set(0, -1 * this.speed);
+        this.body.velocity.add(0, -1 * this.speed);
       }
       if (input.direction == "down") {
-        this.body.velocity.set(0, this.speed);
+        this.body.velocity.add(0, this.speed);
       }
     } else {
       this.body.velocity.set(0, 0);

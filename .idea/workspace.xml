@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14b10452-7ab7-43ec-ad3e-9134cee8ae11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Phaser/src/sprites/PathSprite" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Phaser/src/sprites/waterSprite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/dist/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/dist/bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/bundle.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/dist/vendor.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/vendor.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/dist/vendor.bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/vendor.bundle.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/src/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/src/states/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/states/Game.js" afterDir="false" />
     </list>
@@ -35,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Phaser/src/states/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+            <state relative-caret-position="203">
+              <caret line="102" selection-start-line="102" selection-end-line="102" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -47,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="323">
+              <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -57,7 +63,7 @@
         <entry file="file://$PROJECT_DIR$/aggregator/static/js/application.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="259">
-              <caret line="16" column="30" lean-forward="true" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+              <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -227,7 +233,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16469000" />
+    <option name="totallyTimeSpent" value="16777000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -452,7 +458,7 @@
     <entry file="file://$PROJECT_DIR$/aggregator/static/js/application.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
-          <caret line="16" column="30" lean-forward="true" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+          <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -465,15 +471,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="323">
+          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Phaser/src/states/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+        <state relative-caret-position="203">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
