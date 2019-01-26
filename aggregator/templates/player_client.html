@@ -1,0 +1,30 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demo Player Client</title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="static/css/application.css" rel="stylesheet" media="screen">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="container">
+      <form id="input-form" class="form-inline">
+        <div class="form-group">
+          <input id="input-handle" type="text" class="form-control" placeholder="Enter handle" autofocus />
+        </div>
+        <button class="direction-btn btn btn-primary" name="up" type="submit">Up</button>
+        <button class="direction-btn btn btn-primary" name="right" type="submit">Right</button>
+        <button class="direction-btn btn btn-primary" name="down" type="submit">Down</button>
+        <button class="direction-btn btn btn-primary" name="left" type="submit">Left</button>
+      </form>
+    </div>
+
+
+    <script type="text/javascript" src="static/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="static/js/reconnecting-websocket.min.js"></script>
+    <script type="text/javascript" src="static/js/game_client.js"></script>
+  </body>
+</html>
+
+
