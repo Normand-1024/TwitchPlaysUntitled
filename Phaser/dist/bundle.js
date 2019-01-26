@@ -4266,7 +4266,7 @@ module.exports = Math.scale || function scale(x, inLow, inHigh, outLow, outHigh)
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! babel-polyfill */131);
-module.exports = __webpack_require__(/*! /Users/prestonhale/Documents/TwitchPlaysUntitled/Phaser/src/main.js */333);
+module.exports = __webpack_require__(/*! D:\Projects\GameJam2019\TwitchPlaysUntitled\Phaser\src\main.js */333);
 
 
 /***/ }),
@@ -10760,6 +10760,7 @@ if ('serviceWorker' in navigator) {
     // load your assets
     //
     this.load.image('mushroom', 'assets/images/mushroom2.png');
+    this.load.image('water', 'assets/images/Water.png');
   }
 
   create() {
@@ -10808,8 +10809,9 @@ const centerGameObjects = objects => {
 
 /* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.State {
 
-  testWebSocket(websocket_url) {
-    this.websocket = new WebSocket(websocket_url);
+  testWebSocket() {
+    this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
+    var webLocal = this.websocket;
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
@@ -10822,12 +10824,10 @@ const centerGameObjects = objects => {
       if (!Array.isArray(control)) {
         control = [control];
       }
-
       for (var i = 0; i < control.length; i++) {
-        var obj = control[i];
-        localObj.addRowOfData("fakeName", obj.direction);
-        localObj.inputQueue.push(obj);
-        localObj.averagedPlayerController.setInputList(localObj.inputQueue);
+        obj = control[i];
+        this.inputQueue.push(obj);
+        this.averagedPlayerController.setInputList(this.inputQueue);
       }
     });
   }
@@ -10841,12 +10841,8 @@ const centerGameObjects = objects => {
   create() {
     this.game.physics.startSystem(__WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Physics.ARCADE);
     this.devMode = true;
-    this.baseSpeed = 1000;
-    this.inputQueue = [];
-    let websocket_url = "ws://tpg45.herokuapp.com/game_receive";
     if (this.devMode) {
       this.cursors = game.input.keyboard.createCursorKeys();
-      websocket_url = "ws://0.0.0.0:5000/game_receive";
     }
     const bannerText = __WEBPACK_IMPORTED_MODULE_2__lang__["a" /* default */].text('welcome');
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
@@ -10854,6 +10850,8 @@ const centerGameObjects = objects => {
       fill: '#77BFA3',
       smoothed: false
     });
+
+    this.inputQueue = [];
 
     banner.padding.set(10, 16);
     banner.anchor.setTo(0.5);
@@ -10863,53 +10861,79 @@ const centerGameObjects = objects => {
       x: this.world.centerX,
       y: this.world.centerY,
       asset: 'mushroom',
-      baseSpeed: this.baseSpeed
+      baseSpeed: 10
     });
 
+    // ******************************
+    //        CREATING WATER TILES
+    // EDIT this.waterCoord TO PLACE WATERS
+    // ******************************
+    this.waterGroup = game.add.physicsGroup();
+    this.waterCoord = [[300, 300], [50, 50], [0, 0]];
+
+    for (var i = 0; i < this.waterCoord.length; i++) {
+      var c = this.waterGroup.create(this.waterCoord[i][0], this.waterCoord[i][1], 'water', 0);
+      c.scale.setTo(0.2, 0.2);
+    }
+    // ******************************
+
+    this.game.add.existing(this.waterGroup);
     this.game.add.existing(this.averagedPlayerController);
 
-    this.game.physics.arcade.enable([this.averagedPlayerController]);
-    this.testWebSocket(websocket_url);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup]);
+    this.testWebSocket();
   }
 
   update() {
     if (this.devMode) {
       var obj;
       if (this.cursors.right.isDown) {
+
         obj = {
           "direction": "right"
         };
       }
       if (this.cursors.left.isDown) {
+
         obj = {
           "direction": "left"
         };
       }
+
       if (this.cursors.down.isDown) {
+
         obj = {
           "direction": "down"
         };
       }
-      if (this.cursors.up.isDown) {
-        obj = {
-          "direction": "up"
-        };
-      }
-      if (obj) {
-        this.inputQueue.push(obj);
-        this.averagedPlayerController.setInputList(this.inputQueue);
-      }
+      if (this.cursors.up.isDown) obj = {
+        "direction": "up"
+      };
     }
+    this.inputQueue.push(obj);
+    this.averagedPlayerController.setInputList(this.inputQueue);
+
+    // Collision Detection
+    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
   }
 
-  addRowOfData(name, direction) {}
+  restartGame() {
+    this.restart();
+  }
+
+  playerWaterCollision() {
+    console.log('WaterCollision');
+    //this.averagedPlayerController.x = 500;
+    //this.averagedPlayerController.y = 500;
+  }
 
   //   function init()
   // {
   //   output = document.getElementById("output");
   //   testWebSocket();
   // }
-  //
+
+
 });
 
 /***/ }),
