@@ -2,9 +2,9 @@ import Phaser from 'phaser'
 
 export default class extends Phaser.Sprite {
   constructor ({ game, x, y, asset, baseSpeed }) {
-    super(game, x, y, asset)
-    this.anchor.setTo(0.5)
-    this.speed = baseSpeed
+    super(game, x, y, asset);
+    this.anchor.setTo(0.5);
+    this.speed = baseSpeed;
    	game.physics.arcade.enable(this);
   }
 
@@ -27,7 +27,7 @@ export default class extends Phaser.Sprite {
 	    }
   	}
   	else{
-  		this.body.setVelocity(0,0);
+  		this.body.velocity.set(0,0);
   	}
 
 
@@ -36,4 +36,8 @@ export default class extends Phaser.Sprite {
   setInputList(inputList){
   	this.inputList = inputList;
   }
+
+  appendInputList(inputList){
+  	this.inputList.push(inputList);
+	}
 }

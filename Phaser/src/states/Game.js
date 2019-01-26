@@ -7,10 +7,9 @@ import averagedPlayerController from '../sprites/averagedPlayerController.js'
 export default class extends Phaser.State {
   
 
-  testWebSocket()
+  testWebSocket(websocket_url)
   {
-    this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
-    var webLocal = this.websocket;
+    this.websocket = new WebSocket(websocket_url);
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
@@ -21,13 +20,13 @@ export default class extends Phaser.State {
       var control = JSON.parse(event.data);
 
 
-      if(!Array.isArray(control)){
-         control = [control];
+      if(!Array.isArray(control)) {
+        control = [control];
       }
       for(var i = 0; i < control.length; i++){
-        obj = control[i];
-        this.inputQueue.push(obj);
-        this.averagedPlayerController.setInputList(this.inputQueue);
+        var obj = control[i];
+        localObj.inputQueue.push(obj);
+        localObj.averagedPlayerController.setInputList(localObj.inputQueue);
       }
 
     });
@@ -43,18 +42,20 @@ export default class extends Phaser.State {
 
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.devMode = true;
+    this.devMode = false;
+    this.inputQueue = [];
+    let websocket_url="ws://tpg45.herokuapp.com/game_receive";
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
+      websocket_url="0.0.0.0:5000/game_receive";
     }
     const bannerText = lang.text('welcome')
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
       font: '40px Bangers',
       fill: '#77BFA3',
       smoothed: false
-    })
+    });
 
-    this.inputQueue = []
 
     banner.padding.set(10, 16)
     banner.anchor.setTo(0.5)
@@ -64,54 +65,49 @@ export default class extends Phaser.State {
       x: this.world.centerX,
       y: this.world.centerY,
       asset: 'mushroom',
-      baseSpeed: 10
-    })
+      baseSpeed: 1000
+    });
 
 
-    this.game.add.existing(this.averagedPlayerController)
+    this.game.add.existing(this.averagedPlayerController);
 
     this.game.physics.arcade.enable([this.averagedPlayerController]);
-    this.testWebSocket();
+    this.testWebSocket(websocket_url);
   }
 
-  update(){
-    if(this.devMode){
+  update() {
+    if (this.devMode) {
       var obj;
-      if(this.cursors.right.isDown){
-
+      if (this.cursors.right.isDown) {
         obj = {
-          "direction":"right"
+          "direction": "right"
         }
       }
-       if(this.cursors.left.isDown){
-
+      if (this.cursors.left.isDown) {
         obj = {
-          "direction":"left"
+          "direction": "left"
         }
       }
-      
-      if(this.cursors.down.isDown){
-
+      if (this.cursors.down.isDown) {
         obj = {
-          "direction":"down"
+          "direction": "down"
         }
       }
-      if(this.cursors.up.isDown)
-
+      if (this.cursors.up.isDown) {
         obj = {
-          "direction":"up"
+          "direction": "up"
         }
       }
+      console.log(obj)
       this.inputQueue.push(obj);
       this.averagedPlayerController.setInputList(this.inputQueue);
-  } 
+    }
+  }
 
-  //   function init()
-  // {
-  //   output = document.getElementById("output");
-  //   testWebSocket();
-  // }
-
-
-
+    //   function init()
+    // {
+    //   output = document.getElementById("output");
+    //   testWebSocket();
+    // }
+//
 }
