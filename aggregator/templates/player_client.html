@@ -1,7 +1,6 @@
 <!-- templates/index.html -->
 <!DOCTYPE html>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <html>
   <head>
@@ -16,36 +15,38 @@
             <div class="form-group">
               <input id="input-handle" type="text" class="form-control" placeholder="Enter handle" autofocus />
             </div>
-            <div class="grid-container">
-                <div class="grid-cell"></div>
-                <div class="grid-cell">
-                    <button class="direction-btn" name="up">
-                        <img src="{{ url_for('static', filename='images/button_up.jpg')}}">
-                    </button>
+            <div class="controller">
+                <div class="grid-container">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="up">
+                            <img src="{{ url_for('static', filename='images/button_up.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="left">
+                            <img src="{{ url_for('static', filename='images/button_left.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="right">
+                            <img src="{{ url_for('static', filename='images/button_center.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="right">
+                            <img src="{{ url_for('static', filename='images/button_right.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="down">
+                            <img src="{{ url_for('static', filename='images/button_down.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell"></div>
                 </div>
-                <div class="grid-cell"></div>
-                <div class="grid-cell">
-                    <button class="direction-btn" name="left">
-                        <img src="{{ url_for('static', filename='images/button_left.jpg')}}">
-                    </button>
-                </div>
-                <div class="grid-cell">
-                    <button class="direction-btn" name="right">
-                        <img src="{{ url_for('static', filename='images/button_center.jpg')}}">
-                    </button>
-                </div>
-                <div class="grid-cell">
-                    <button class="direction-btn" name="right">
-                        <img src="{{ url_for('static', filename='images/button_right.jpg')}}">
-                    </button>
-                </div>
-                <div class="grid-cell"></div>
-                <div class="grid-cell">
-                    <button class="direction-btn" name="down">
-                        <img src="{{ url_for('static', filename='images/button_down.jpg')}}">
-                    </button>
-                </div>
-                <div class="grid-cell"></div>
             </div>
         </div>
     </div>
