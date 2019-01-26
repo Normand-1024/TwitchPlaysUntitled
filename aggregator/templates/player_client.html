@@ -1,5 +1,7 @@
 <!-- templates/index.html -->
 <!DOCTYPE html>
+
+
 <html>
   <head>
     <title>Demo Player Client</title>
@@ -9,13 +11,44 @@
   </head>
   <body>
     <div class="container">
-        <div class="form-group">
-          <input id="input-handle" type="text" class="form-control" placeholder="Enter handle" autofocus />
+        <div class="centered-bits">
+            <div class="form-group">
+              <input id="input-handle" type="text" class="form-control" placeholder="Enter handle" autofocus />
+            </div>
+            <div class="controller">
+                <div class="grid-container">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="up">
+                            <img src="{{ url_for('static', filename='images/button_up.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="left">
+                            <img src="{{ url_for('static', filename='images/button_left.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="right">
+                            <img src="{{ url_for('static', filename='images/button_center.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="right">
+                            <img src="{{ url_for('static', filename='images/button_right.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell">
+                        <button class="direction-btn" name="down">
+                            <img src="{{ url_for('static', filename='images/button_down.jpg')}}">
+                        </button>
+                    </div>
+                    <div class="grid-cell"></div>
+                </div>
+            </div>
         </div>
-        <button class="direction-btn btn btn-primary" name="up">Up</button>
-        <button class="direction-btn btn btn-primary" name="right">Right</button>
-        <button class="direction-btn btn btn-primary" name="down">Down</button>
-        <button class="direction-btn btn btn-primary" name="left">Left</button>
     </div>
 
 

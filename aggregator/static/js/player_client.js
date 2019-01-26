@@ -14,7 +14,7 @@ $(".direction-btn").on("click", function(event) {
   event.preventDefault();
   console.log(event);
   var handle = $("#input-handle")[0].value;
-  var direction = event.target.name
+  var direction = event.currentTarget.name
   outbox.send(JSON.stringify({ handle: handle, direction: direction }));
 });
 
