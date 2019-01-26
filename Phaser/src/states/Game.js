@@ -26,6 +26,7 @@ export default class extends Phaser.State {
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
         localObj.inputQueue.push(obj);
+        console.log(localObj.inputQueue);
         localObj.averagedPlayerController.setInputList(localObj.inputQueue);
       }
 
@@ -42,12 +43,13 @@ export default class extends Phaser.State {
 
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.devMode = false;
+    this.devMode = true;
+    this.baseSpeed = 1000;
     this.inputQueue = [];
     let websocket_url="ws://tpg45.herokuapp.com/game_receive";
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
-      websocket_url="0.0.0.0:5000/game_receive";
+      websocket_url="ws://0.0.0.0:5000/game_receive";
     }
     const bannerText = lang.text('welcome')
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
@@ -65,7 +67,7 @@ export default class extends Phaser.State {
       x: this.world.centerX,
       y: this.world.centerY,
       asset: 'mushroom',
-      baseSpeed: 1000
+      baseSpeed: this.baseSpeed,
     });
 
 
@@ -98,9 +100,10 @@ export default class extends Phaser.State {
           "direction": "up"
         }
       }
-      console.log(obj)
-      this.inputQueue.push(obj);
-      this.averagedPlayerController.setInputList(this.inputQueue);
+      if (obj) {
+        this.inputQueue.push(obj);
+        this.averagedPlayerController.setInputList(this.inputQueue);
+      }
     }
   }
 

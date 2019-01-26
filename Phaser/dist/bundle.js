@@ -10825,6 +10825,7 @@ const centerGameObjects = objects => {
       for (var i = 0; i < control.length; i++) {
         var obj = control[i];
         localObj.inputQueue.push(obj);
+        console.log(localObj.inputQueue);
         localObj.averagedPlayerController.setInputList(localObj.inputQueue);
       }
     });
@@ -10839,6 +10840,7 @@ const centerGameObjects = objects => {
   create() {
     this.game.physics.startSystem(__WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Physics.ARCADE);
     this.devMode = true;
+    this.baseSpeed = 1000;
     this.inputQueue = [];
     let websocket_url = "ws://tpg45.herokuapp.com/game_receive";
     if (this.devMode) {
@@ -10860,7 +10862,7 @@ const centerGameObjects = objects => {
       x: this.world.centerX,
       y: this.world.centerY,
       asset: 'mushroom',
-      baseSpeed: 1000
+      baseSpeed: this.baseSpeed
     });
 
     this.game.add.existing(this.averagedPlayerController);
@@ -10892,9 +10894,10 @@ const centerGameObjects = objects => {
           "direction": "up"
         };
       }
-      console.log(obj);
-      this.inputQueue.push(obj);
-      this.averagedPlayerController.setInputList(this.inputQueue);
+      if (obj) {
+        this.inputQueue.push(obj);
+        this.averagedPlayerController.setInputList(this.inputQueue);
+      }
     }
   }
 
@@ -11040,7 +11043,7 @@ exports.default = idiom;
 
   update() {
     if (this.inputList != null && this.inputList.length > 0) {
-      var input = this.inputList.shift();
+      var input = this.inputList.pop();
       if (input == null) {
         return;
       }
@@ -11064,6 +11067,7 @@ exports.default = idiom;
 
   setInputList(inputList) {
     this.inputList = inputList;
+    console.log(this.inputList);
   }
 
   appendInputList(inputList) {

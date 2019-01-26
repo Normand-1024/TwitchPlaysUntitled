@@ -10,7 +10,7 @@ export default class extends Phaser.Sprite {
 
   update () {
   	if(this.inputList != null && this.inputList.length > 0){
-	  	var input = this.inputList.shift();
+	  	var input = this.inputList.pop();
 	  	if (input == null){ return; }
 
 	    if(input.direction == "right"){
@@ -35,6 +35,7 @@ export default class extends Phaser.Sprite {
 
   setInputList(inputList){
   	this.inputList = inputList;
+  	console.log(this.inputList);
   }
 
   appendInputList(inputList){
