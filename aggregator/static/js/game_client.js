@@ -8,14 +8,14 @@ if (window.location.protocol == "https:") {
 };
 
 
-var outbox = new ReconnectingWebSocket(ws_scheme + location.host + "/submit");
+var inbox = new ReconnectingWebSocket(ws_scheme + location.host + "/game_receive");
 
-$(".direction-btn").on("click", function(event) {
-  event.preventDefault();
-  console.log(event);
-  var handle = $("#input-handle")[0].value;
-  var direction = event.target.name
-  console.log(JSON.stringify({ handle: handle, direction: direction }));
-  outbox.send(JSON.stringify({ handle: handle, direction: direction }));
-});
+inbox.onmessage = function(message) {
+  console.log(message.data)
+  var data = JSON.parse(message.data);
+  $("#inputs-text").append("<div class='panel panel-default'><div class='panel-heading'>" + $('<span/>').text(data.handle).html() + "</div><div class='panel-body'>" + $('<span/>').text(data.direction).html() + "</div></div>");
+  $("#chat-text").stop().animate({
+    scrollTop: $('#chat-text')[0].scrollHeight
+  }, 800);
+};
 

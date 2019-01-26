@@ -61,7 +61,7 @@ class GameBackend(object):
     """Interface for registering and updating WebSocket clients."""
 
     def __init__(self):
-        self.clients = None
+        self.clients = list()
         self.pubsub = redis.pubsub()
         self.pubsub.subscribe(REDIS_CHAN)
 
@@ -96,8 +96,8 @@ class GameBackend(object):
         """Maintains Redis subscription in the background."""
         gevent.spawn(self.run)
 
-game = GameBackend()
-game.start()
+game_backend = GameBackend()
+game_backend.start()
 
 
 
@@ -110,13 +110,18 @@ def play():
     return render_template('player_client.html')
 
 
+@app.route('/game')
+def game():
+    return render_template('game_client.html')
+
+
 @sockets.route('/echo')
 def echo(ws):
     message = ws.receive()
     ws.send(message)
 
 
-@sockets.route('/player_client')
+@sockets.route('/player_submit')
 def player_client(ws):
     while not ws.closed:
         gevent.sleep(0.1)
@@ -128,10 +133,10 @@ def player_client(ws):
             redis.publish(REDIS_COMMAND_CHAN, message)
 
 
-@sockets.route('/game_client')
+@sockets.route('/game_receive')
 def game_client(ws):
     """Sends outgoing chat messages, via `ChatBackend`."""
-    game.register(ws)
+    game_backend.register(ws)
 
     while not ws.closed:
         # Context switch while `ChatBackend.start` is running in the background.
