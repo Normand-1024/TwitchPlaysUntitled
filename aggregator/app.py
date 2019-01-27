@@ -13,7 +13,7 @@ REDIS_CHAN = 'chat'
 REDIS_COMMAND_CHAN = 'command'
 
 CHUNKING_DIVISOR = 2
-QUEUE_TIMESTEPS = .1
+QUEUE_TIMESTEPS = .2
 
 app = Flask(__name__)
 app.debug = 'DEBUG' in os.environ
@@ -84,13 +84,13 @@ class GameBackend(object):
                 inputs_to_process = queue[-20:]
             except AttributeError:
                 inputs_to_process = queue
+            directions = {
+                'up': 0,
+                'down': 0,
+                'left': 0,
+                'right': 0
+            }
             if len(inputs_to_process) > 0:
-                directions = {
-                    'up': 0,
-                    'down': 0,
-                    'left': 0,
-                    'right': 0
-                }
                 for message in inputs_to_process:
                     if not message.get('direction'):
                         continue
@@ -103,6 +103,7 @@ class GameBackend(object):
                     elif message['direction'] == 'right':
                         directions['right'] += 1
 
+                print(directions)
                 gevent.spawn(self.send_average, directions)
             gevent.sleep(QUEUE_TIMESTEPS)
 
