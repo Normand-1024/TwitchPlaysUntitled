@@ -24,9 +24,11 @@ export default class extends Phaser.State {
          control = [control];
       }
       for(var i = 0; i < control.length; i++){
-        obj = control[i];
-        this.inputQueue.push(obj);
-        this.averagedPlayerController.setInputList(this.inputQueue);
+        var obj = control[i];
+        console.log("Pushing into input queue " );
+        localObj.addRowOfData(obj.name, obj.direction);
+        localObj.game.inputQueue.push(obj);
+        localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
       }
 
     });
@@ -42,14 +44,12 @@ export default class extends Phaser.State {
 
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-<<<<<<< HEAD
+
     this.devMode = false;
-    this.baseSpeed = 1000;
-    this.inputQueue = [];
+    this.baseSpeed = 100;
+    this.game.inputQueue = [];
     let websocket_url="ws://tpg45.herokuapp.com/game_receive";
-=======
-    this.devMode = true;
->>>>>>> master
+
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
     }
@@ -60,7 +60,6 @@ export default class extends Phaser.State {
       smoothed: false
     })
 
-    this.inputQueue = []
 
     banner.padding.set(10, 16)
     banner.anchor.setTo(0.5)
@@ -70,7 +69,7 @@ export default class extends Phaser.State {
       x: this.world.centerX,
       y: this.world.centerY,
       asset: 'mushroom',
-      baseSpeed: 10
+      baseSpeed: this.baseSpeed
     })
 
     // ******************************
@@ -78,7 +77,7 @@ export default class extends Phaser.State {
     // EDIT this.waterCoord TO PLACE WATERS
     // ******************************
     this.waterGroup = game.add.physicsGroup();
-    this.waterCoord = [[300, 300], [50, 50], [0, 0]]
+    this.waterCoord = [ [50, 50], [0, 0]]
 
     for (var i = 0; i < this.waterCoord.length; i++)
       {
@@ -122,8 +121,9 @@ export default class extends Phaser.State {
           "direction":"up"
         }
       }
-      this.inputQueue.push(obj);
-      this.averagedPlayerController.setInputList(this.inputQueue);
+      if(obj!=null);
+      this.game.inputQueue.push(obj);
+      // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
       game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
   } 
@@ -159,9 +159,7 @@ export default class extends Phaser.State {
     column1.appendChild(document.createTextNode(name));
     column2.appendChild(document.createTextNode(direction));
 
-    while (sideTable.childElementCount > 50) {
-      myNode.removeChild(myNode.firstChild);
-    }
+
     var rightDiv = document.querySelector("#RightDiv");
     rightDiv.scrollTop = rightDiv.scrollHeight;
   }

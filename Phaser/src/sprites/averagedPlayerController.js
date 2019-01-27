@@ -9,33 +9,43 @@ export default class extends Phaser.Sprite {
   }
 
   update () {
-  	if(this.inputList != null && this.inputList.length > 0){
-	  	var input = this.inputList.pop();
-	  	if (input == null){ return; }
-
-	    if(input.direction == "right"){
-	    	this.body.velocity.add(this.speed, 0);
-	    }
-	    if(input.direction == "left"){
-	    	this.body.velocity.add(-1*this.speed, 0);
-	    }
-	    if(input.direction == "up"){
-	    	this.body.velocity.add(0, -1*this.speed);
-	    }
-	    if(input.direction == "down"){
-	    	this.body.velocity.add(0, this.speed);
-	    }
+    console.log(this.game.inputQueue);
+  	if(this.game.inputQueue != null && this.game.inputQueue.length > 0){
+	  	var input = this.game.inputQueue.shift();
+      if (input == null){ 
+        // if(this.body.velocity){
+        //   console.log("reducing velocity");
+        //   this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y*.95);
+        // }
+        
+      }else{
+        if(input.direction == "right"){
+          this.body.velocity.add(this.speed, 0);
+          console.log("In Right");
+        }
+        if(input.direction == "left"){
+          this.body.velocity.add(-1*this.speed, 0);
+        }
+        if(input.direction == "up"){
+          this.body.velocity.add(0, -1*this.speed);
+        }
+        if(input.direction == "down"){
+          this.body.velocity.add(0, this.speed);
+        }
+      }
   	}
-  	else{
-  		this.body.velocity.set(0,0);
-  	}
-
-
+    
+   
+    if(this.body.velocity){
+      console.log("reducing velocity");
+      this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y*.95);
+    }
   }
+
 
   setInputList(inputList){
   	this.inputList = inputList;
-  	console.log(this.inputList);
+  	
   }
 
   appendInputList(inputList){
