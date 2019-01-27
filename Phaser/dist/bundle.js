@@ -10764,6 +10764,7 @@ if ('serviceWorker' in navigator) {
     this.load.image('mushroom', 'assets/images/mushroom2.png');
     this.load.image('water', 'assets/images/Water.png');
     this.load.image('fly', 'assets/images/fly.png');
+    this.load.spritesheet('chameleon', 'assets/images/chameleon.png', 128, 128, 2);
   }
 
   create() {
@@ -10876,9 +10877,12 @@ var flyCount = 0;
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
-      asset: 'mushroom',
+      asset: 'chameleon',
       baseSpeed: this.baseSpeed
     });
+    var anim = this.averagedPlayerController.animations.add("walk");
+    this.averagedPlayerController.animations.play("walk", 5, true);
+
     this.game.world.setBounds(0, 0, 5000, 800);
     this.game.camera.follow(this.averagedPlayerController, 2);
 
@@ -10887,7 +10891,7 @@ var flyCount = 0;
     // EDIT this.waterCoord TO PLACE WATERS
     // ******************************
     this.waterGroup = game.add.physicsGroup();
-    this.waterCoord = [[0, 0], [100, 0], [200, 0], [300, 0], [400, 0], [500, 0], [600, 0], [700, 0], [800, 0], [900, 0], [1000, 0], [0, 700], [100, 700], [200, 700], [300, 700], [400, 700], [500, 700], [600, 700], [700, 700], [800, 700], [900, 700], [1000, 700], [0, 600], [100, 500], [100, 600], [200, 400], [200, 500], [200, 600], [300, 100], [300, 400], [300, 500], [300, 600], [400, 100], [400, 400], [400, 500], [400, 600], [500, 100], [500, 500], [500, 600], [600, 100], [600, 600], [600, 200], [700, 100], [700, 200], [700, 300], [900, 600], [1000, 200], [1000, 300], [1000, 600], [1000, 500]];
+    this.waterCoord = [[0, 0], [100, 0], [200, 0], [300, 0], [400, 0], [500, 0], [600, 0], [700, 0], [800, 0], [900, 0], [1000, 0], [1100, 0], [1200, 0], [1300, 0], [1400, 0], [1500, 0], [1600, 0], [1700, 0], [1800, 0], [1900, 0], [2000, 0], [2100, 0], [2200, 0], [2300, 0], [2400, 0], [2500, 0], [2600, 0], [2700, 0], [2800, 0], [2900, 0], [3000, 0], [0, 700], [100, 700], [200, 700], [300, 700], [400, 700], [500, 700], [600, 700], [700, 700], [800, 700], [900, 700], [1000, 700], [1100, 700], [1200, 700], [1300, 700], [1400, 700], [1500, 700], [1600, 700], [1700, 700], [1800, 700], [1900, 700], [2000, 700], [2100, 700], [2200, 700], [2300, 700], [2400, 700], [2500, 700], [2600, 700], [2700, 700], [2800, 700], [2900, 700], [3000, 700], [0, 600], [100, 500], [100, 600], [200, 400], [200, 500], [200, 600], [300, 100], [300, 400], [300, 500], [300, 600], [400, 100], [400, 400], [400, 500], [400, 600], [500, 100], [500, 500], [500, 600], [600, 100], [600, 600], [600, 200], [700, 100], [700, 200], [700, 300], [900, 600], [1000, 200], [1000, 300], [1000, 600], [1100, 300], [1100, 600]];
 
     for (var i = 0; i < this.waterCoord.length; i++) {
       var c = this.waterGroup.create(this.waterCoord[i][0], this.waterCoord[i][1], 'water', 0);
@@ -10899,7 +10903,7 @@ var flyCount = 0;
     //         CREATING FLIES
     // ******************************
     this.flyGroup = game.add.physicsGroup();
-    this.flyCoord = [[600, 400, 100, -100], [1000, 250, 50, 0]];
+    this.flyCoord = [[600, 400, 100, -100], [1000, 250, 40, 0], [1100, 250, -40, 0], [1150, 400, 0, -40]];
     for (var i = 0; i < this.flyCoord.length; i++) {
       var f = new __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__["a" /* default */]({ game: this.game,
         x: this.flyCoord[i][0],
@@ -10992,9 +10996,6 @@ var flyCount = 0;
   // }
   addRowOfData(name, direction) {
     var sideTable = document.querySelector("#Inputs");
-    if (sideTable == null) {
-      alert("fuck you");
-    };
     var row = document.createElement("tr");
     var column1 = document.createElement("td");
     var column2 = document.createElement("td");
