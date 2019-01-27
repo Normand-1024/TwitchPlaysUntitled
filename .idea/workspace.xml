@@ -2,33 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14b10452-7ab7-43ec-ad3e-9134cee8ae11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Phaser/assets/images/fly.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Phaser/src/sprites/fly.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Phaser/src/states/Game.js.orig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/assets/images/icon-192px.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/assets/images/icon-512px.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/assets/images/loader-bar.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/assets/images/loader-bg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/assets/images/mushroom2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/assets/images/phaser-es6-webpack.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/js/bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/js/vendor.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/precache-manifest.bb334eff38c2307ef0490095a03586cb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/build/service-worker.js" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Phaser/assets/fonts/gem.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Phaser/assets/fonts/gem.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Phaser/assets/images/Chameleon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Phaser/src/states/Game.js.orig.orig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/dist/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/dist/bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/dist/vendor.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/vendor.bundle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/dist/vendor.bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/vendor.bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/src/states/Boot.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/states/Boot.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/src/states/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/states/Game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/src/states/Game.js.orig" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/states/Game.js.orig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/src/states/Splash.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/states/Splash.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/www/index.html" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,8 +32,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Phaser/src/states/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="184" column="4" selection-start-line="184" selection-start-column="4" selection-end-line="184" selection-end-column="4" />
+            <state relative-caret-position="2648">
+              <caret line="214" lean-forward="true" selection-start-line="214" selection-end-line="214" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -227,12 +211,12 @@
       <updated>1548470061941</updated>
       <workItem from="1548470064234" duration="3082000" />
       <workItem from="1548549442784" duration="5756000" />
-      <workItem from="1548556383067" duration="2416000" />
+      <workItem from="1548556383067" duration="2751000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28597000" />
+    <option name="totallyTimeSpent" value="28932000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -487,8 +471,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Phaser/src/states/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="184" column="4" selection-start-line="184" selection-start-column="4" selection-end-line="184" selection-end-column="4" />
+        <state relative-caret-position="2648">
+          <caret line="214" lean-forward="true" selection-start-line="214" selection-end-line="214" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

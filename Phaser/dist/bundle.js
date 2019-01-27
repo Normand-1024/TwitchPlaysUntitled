@@ -11171,6 +11171,8 @@ if ('serviceWorker' in navigator) {
     let text = this.add.text(this.world.centerX, this.world.centerY, 'loading fonts', { font: '16px Arial', fill: '#dddddd', align: 'center' });
     text.anchor.setTo(0.5, 0.5);
 
+    this.load.bitmapFont('gem', 'assets/fonts/gem.png', 'assets/fonts/gem.xml');
+
     this.load.image('loaderBg', './assets/images/loader-bg.png');
     this.load.image('loaderBar', './assets/images/loader-bar.png');
   }
@@ -11220,6 +11222,7 @@ if ('serviceWorker' in navigator) {
     this.load.image('mushroom', 'assets/images/mushroom2.png');
     this.load.image('water', 'assets/images/Water.png');
     this.load.image('fly', 'assets/images/fly.png');
+    this.load.spritesheet('chameleon', 'assets/images/chameleon.png', 128, 128, 2);
   }
 
   create() {
@@ -11268,6 +11271,9 @@ const centerGameObjects = objects => {
 
 
 
+// Global Variables
+var flyCount = 0;
+
 /* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.State {
 
   testWebSocket() {
@@ -11285,6 +11291,7 @@ const centerGameObjects = objects => {
       }
       for (var i = 0; i < control.length; i++) {
         var obj = control[i];
+        console.log("Pushing into input queue ");
         localObj.addRowOfData(obj.name, obj.direction);
         localObj.game.inputQueue.push(obj);
         localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
@@ -11301,6 +11308,7 @@ const centerGameObjects = objects => {
   create() {
     this.game.physics.startSystem(__WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Physics.ARCADE);
 
+    //this.flyCount = 0;
     this.devMode = true;
     this.playerStartX = 100;
     this.playerStartY = 300;
@@ -11310,14 +11318,17 @@ const centerGameObjects = objects => {
       this.cursors = game.input.keyboard.createCursorKeys();
     }
     this.inputQueue = [];
-    console.log(this);
+
     this.averagedPlayerController = new __WEBPACK_IMPORTED_MODULE_4__sprites_averagedPlayerController_js__["a" /* default */]({
       game: this.game,
-      x: this.playerStartX,
-      y: this.playerStartY,
-      asset: 'mushroom',
+      x: this.world.centerX,
+      y: this.world.centerY,
+      asset: 'chameleon',
       baseSpeed: this.baseSpeed
     });
+    var anim = this.averagedPlayerController.animations.add("walk");
+    this.averagedPlayerController.animations.play("walk", 5, true);
+
     this.game.world.setBounds(0, 0, 5000, 800);
     this.game.camera.follow(this.averagedPlayerController, 2);
 
@@ -11330,21 +11341,28 @@ const centerGameObjects = objects => {
     // ******************************
     //         CREATING FLIES
     // ******************************
-    this.fly = new __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__["a" /* default */]({
-      game: this.game,
-      x: 1000,
-      y: 250,
-      asset: 'fly',
-      x_mov: 50,
-      y_mov: 0
-    });
+    this.flyGroup = game.add.physicsGroup();
+    this.flyCoord = [[600, 400, 100, -100], [1000, 250, 50, 0]];
+    for (var i = 0; i < this.flyCoord.length; i++) {
+      var f = new __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__["a" /* default */]({ game: this.game,
+        x: this.flyCoord[i][0],
+        y: this.flyCoord[i][1],
+        asset: 'fly',
+        x_mov: this.flyCoord[i][2],
+        y_mov: this.flyCoord[i][3] });
+      this.flyGroup.add(f);
+    }
+    // ******************************
 
     this.game.add.existing(this.waterGroup);
-    this.game.add.existing(this.fly);
+    this.game.add.existing(this.flyGroup);
     this.game.add.existing(this.averagedPlayerController);
 
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.fly]);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup]);
     this.testWebSocket();
+
+    // Put Text
+    this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
   }
 
   update() {
@@ -11381,6 +11399,17 @@ const centerGameObjects = objects => {
     // Collision Detection
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
     game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null);
+    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
+    game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null);
+    if (flyCount < 3) {
+      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.");
+    } else if (flyCount < 6) {
+      this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.");
+    } else if (flyCount < 8) {
+      this.bmpText.setText(flyCount + " flies eaten, the night will be bearable.");
+    } else {
+      this.bmpText.setText(flyCount + " flies eaten, the dawn will come.");
+    }
   }
 
   render() {
@@ -11430,8 +11459,10 @@ const centerGameObjects = objects => {
     return gameOverTween;
   }
 
-  playerFlyCollision() {
+  playerFlyCollision(player, fly) {
     console.log('FlyCollision');
+    fly.center_x = -1000000;
+    flyCount++;
     //this.averagedPlayerController.x = 500;
     //this.averagedPlayerController.y = 500;
   }

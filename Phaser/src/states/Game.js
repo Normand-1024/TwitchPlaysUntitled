@@ -5,6 +5,9 @@ import fly from "../sprites/fly.js"
 import lang from '../lang'
 import averagedPlayerController from '../sprites/averagedPlayerController.js'
 
+// Global Variables
+var flyCount = 0
+
 export default class extends Phaser.State {
   
 
@@ -24,6 +27,7 @@ export default class extends Phaser.State {
       }
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
+        console.log("Pushing into input queue " );
         localObj.addRowOfData(obj.name, obj.direction);
         localObj.game.inputQueue.push(obj);
         localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
@@ -43,6 +47,7 @@ export default class extends Phaser.State {
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    //this.flyCount = 0;
     this.devMode = true;
     this.playerStartX = 100;
     this.playerStartY = 300;
@@ -51,15 +56,18 @@ export default class extends Phaser.State {
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
     }
-    this.inputQueue = [];
-    console.log(this);
+    this.inputQueue = []
+
     this.averagedPlayerController = new averagedPlayerController({
       game: this.game,
-      x: this.playerStartX,
-      y: this.playerStartY,
-      asset: 'mushroom',
+      x: this.world.centerX,
+      y: this.world.centerY,
+      asset: 'chameleon',
       baseSpeed: this.baseSpeed
     })
+    var anim = this.averagedPlayerController.animations.add("walk");
+    this.averagedPlayerController.animations.play("walk", 5, true);
+
     this.game.world.setBounds(0,0,5000,800)
     this.game.camera.follow(this.averagedPlayerController, 2);
 
@@ -72,21 +80,30 @@ export default class extends Phaser.State {
     // ******************************
     //         CREATING FLIES
     // ******************************
-    this.fly = new fly({
-      game: this.game,
-      x: 1000,
-      y: 250,
-      asset: 'fly',
-      x_mov: 50,
-      y_mov: 0
-    })
+    this.flyGroup = game.add.physicsGroup();
+    this.flyCoord = [[600, 400, 100, -100],
+                    [1000, 250, 50, 0]]
+    for (var i = 0; i < this.flyCoord.length; i++)
+    {
+      var f = new fly({game: this.game,
+                      x : this.flyCoord[i][0],
+                      y : this.flyCoord[i][1],
+                      asset: 'fly',
+                      x_mov: this.flyCoord[i][2],
+                      y_mov: this.flyCoord[i][3]})
+      this.flyGroup.add(f);
+    }
+    // ******************************
 
-    this.game.add.existing(this.waterGroup);
-    this.game.add.existing(this.fly);
-    this.game.add.existing(this.averagedPlayerController);
+    this.game.add.existing(this.waterGroup)
+    this.game.add.existing(this.flyGroup)
+    this.game.add.existing(this.averagedPlayerController)
 
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.fly]);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup]);
     this.testWebSocket();
+
+    // Put Text
+    this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
   }
 
   update() {
@@ -125,6 +142,20 @@ export default class extends Phaser.State {
     // Collision Detection
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
     game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
+    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
+    game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
+    if (flyCount < 3){
+      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.")
+    }
+    else if (flyCount < 6){
+      this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.")
+    }
+    else if (flyCount < 8){
+      this.bmpText.setText(flyCount + " flies eaten, the night will be bearable.")
+    }
+    else{
+      this.bmpText.setText(flyCount + " flies eaten, the dawn will come.")
+    }
   }
 
   render(){
@@ -190,8 +221,10 @@ export default class extends Phaser.State {
     return gameOverTween
   }
 
-  playerFlyCollision(){
+  playerFlyCollision(player, fly){
     console.log('FlyCollision')
+    fly.center_x = -1000000;
+    flyCount++;
     //this.averagedPlayerController.x = 500;
     //this.averagedPlayerController.y = 500;
   }
