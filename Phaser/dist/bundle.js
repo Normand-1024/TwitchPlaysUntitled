@@ -11222,7 +11222,8 @@ if ('serviceWorker' in navigator) {
     this.load.image('mushroom', 'assets/images/mushroom2.png');
     this.load.image('house', 'assets/images/House.png');
 
-    this.load.image('water', 'assets/images/Water.png');
+    this.load.spritesheet('water1', 'assets/images/WaterAnim3.png', 32, 32);
+    this.load.spritesheet('water2', 'assets/images/WaterAnim2.png', 32, 32);
     this.load.image('fly', 'assets/images/fly.png');
     this.load.spritesheet('chameleon', 'assets/images/chameleon.png', 128, 128, 2);
   }
@@ -11430,6 +11431,10 @@ console.log(__WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]);
     game.debug.text('Time until nightfall: ' + this.gameTimer.duration.toFixed(0), 32, 72);
   }
 
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
   placeMapTiles() {
     this.waterGroup = game.add.physicsGroup();
     this.dirtGroup = game.add.physicsGroup();
@@ -11438,7 +11443,14 @@ console.log(__WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]);
     for (var i = 0; i < this.mapTiles.length; i++) {
       for (var j = 0; j < this.mapTiles[i].length; j++) {
         if (this.mapTiles[i][j] == 1) {} else if (this.mapTiles[i][j] == 2) {
-          var w = this.waterGroup.create(j * 100, i * 100, 'water', 0);
+          if (this.getRandomInt(2) == 0) {
+            var w = this.waterGroup.create(j * 100, i * 100, 'water1', 0);
+          } else {
+            var w = this.waterGroup.create(j * 100, i * 100, 'water2', 0);
+          }
+          w.scale.setTo(3.13, 3.13);
+          var anim = w.animations.add("water");
+          w.animations.play("water", 5, true);
         }
       }
     }

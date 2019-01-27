@@ -177,6 +177,10 @@ export default class extends Phaser.State {
     game.debug.text('Time until nightfall: ' + this.gameTimer.duration.toFixed(0), 32, 72);
   }
 
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
   placeMapTiles(){
     this.waterGroup = game.add.physicsGroup();
     this.dirtGroup = game.add.physicsGroup();
@@ -188,8 +192,13 @@ export default class extends Phaser.State {
         if (this.mapTiles[i][j] == 1){
           
         }
-        else if (this.mapTiles[i][j] == 2){
-          var w = this.waterGroup.create(j * 100, i * 100, 'water', 0);
+        else if (this.mapTiles[i][j] == 2) {
+          if (this.getRandomInt(2) == 0) {
+            var w = this.waterGroup.create(j * 100, i * 100, 'water1', 0);
+          } else {
+            var w = this.waterGroup.create(j * 100, i * 100, 'water2', 0);
+          }
+          w.scale.setTo(3.13, 3.13);
         }
       }
     }
