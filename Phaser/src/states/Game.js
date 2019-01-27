@@ -84,7 +84,6 @@ export default class extends Phaser.State {
 
     this.game.world.setBounds(0,0,5000,800)
     this.game.camera.follow(this.averagedPlayerController, 2);
-
     this.placeMapTiles();
 
     // ******************************
@@ -135,8 +134,9 @@ export default class extends Phaser.State {
     this.testWebSocket();
 
     // Put Text
+    this.bmpTextBlack = game.add.bitmapText(12, 12, 'gem', flyCount + " / 10 Flies", 30);
+    this.bmpTextBlack.tint = '0x111111'
     this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
-
     this.setupGameTimer();
   }
 
@@ -188,17 +188,27 @@ export default class extends Phaser.State {
     game.physics.arcade.overlap(this.averagedPlayerController, this.smartflyGroup, this.playerFlyCollision, null)
     game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null)
     if (flyCount < 3){
-      this.bmpText.setText(flyCount + " flies eaten, the night deadly.")
+      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.")
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the night will be deadly.")
     }
     else if (flyCount < 6){
       this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.")
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the night will be harsh.")
     }
     else if (flyCount < 8){
       this.bmpText.setText(flyCount + " flies eaten, the night will be bearable.")
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the night will be bearable.")
     }
     else{
       this.bmpText.setText(flyCount + " flies eaten, the dawn will come.")
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the dawn will come.")
     }
+    
+    this.bmpText.x = this.game.camera.position.x + 10; //+ this.bmpText_relative_x;
+    this.bmpText.y = this.game.camera.position.y + 10; //+ this.bmpText_relative_y;
+    this.bmpTextBlack.x = this.game.camera.position.x + 12; //+ this.bmpText_relative_x;
+    this.bmpTextBlack.y = this.game.camera.position.y + 12; //+ this.bmpText_relative_y;
+
   }
 
   render(){
