@@ -11220,6 +11220,8 @@ if ('serviceWorker' in navigator) {
     // load your assets
     //
     this.load.image('mushroom', 'assets/images/mushroom2.png');
+    this.load.image('house', 'assets/images/House.png');
+
     this.load.image('water', 'assets/images/Water.png');
     this.load.image('fly', 'assets/images/fly.png');
     this.load.spritesheet('chameleon', 'assets/images/chameleon.png', 128, 128, 2);
@@ -11263,8 +11265,10 @@ const centerGameObjects = objects => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sprites_Mushroom__ = __webpack_require__(/*! ../sprites/Mushroom */ 346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__ = __webpack_require__(/*! ../sprites/fly.js */ 347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lang__ = __webpack_require__(/*! ../lang */ 348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__sprites_averagedPlayerController_js__ = __webpack_require__(/*! ../sprites/averagedPlayerController.js */ 350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__map_js__ = __webpack_require__(/*! ../map.js */ 352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sprites_averagedPlayerController_js__ = __webpack_require__(/*! ../sprites/averagedPlayerController.js */ 350);
 /* globals __DEV__ */
+
 
 
 
@@ -11273,6 +11277,7 @@ const centerGameObjects = objects => {
 
 // Global Variables
 var flyCount = 0;
+console.log(__WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.State {
 
@@ -11319,7 +11324,7 @@ var flyCount = 0;
     }
     this.inputQueue = [];
 
-    this.averagedPlayerController = new __WEBPACK_IMPORTED_MODULE_4__sprites_averagedPlayerController_js__["a" /* default */]({
+    this.averagedPlayerController = new __WEBPACK_IMPORTED_MODULE_5__sprites_averagedPlayerController_js__["a" /* default */]({
       game: this.game,
       x: this.playerStartX,
       y: this.playerStartY,
@@ -11332,17 +11337,13 @@ var flyCount = 0;
     this.game.world.setBounds(0, 0, 5000, 800);
     this.game.camera.follow(this.averagedPlayerController, 2);
 
-    // ******************************
-    //        CREATING WATER TILES
-    // EDIT this.waterCoord TO PLACE WATERS
-    // ******************************
-    this.waterGroup = game.add.physicsGroup();
-    this.placeWaterTiles();
+    this.placeMapTiles();
+
     // ******************************
     //         CREATING FLIES
     // ******************************
     this.flyGroup = game.add.physicsGroup();
-    this.flyCoord = [[600, 400, 100, -100], [1000, 250, 50, 0]];
+    this.flyCoord = __WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]['flies'];
     for (var i = 0; i < this.flyCoord.length; i++) {
       var f = new __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__["a" /* default */]({ game: this.game,
         x: this.flyCoord[i][0],
@@ -11354,11 +11355,21 @@ var flyCount = 0;
     }
     // ******************************
 
+    // ****************************** 
+    //          GO HOME
+    // ****************************** 
+
+    this.home = this.game.add.sprite(30, game.height / 2, "house");
+    this.home.scale.x = .5;
+    this.home.scale.y = .5;
+
+    this.game.add.existing(this.dirtGroup);
     this.game.add.existing(this.waterGroup);
     this.game.add.existing(this.flyGroup);
     this.game.add.existing(this.averagedPlayerController);
 
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup]);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.home]);
+    this.home.body.immovable = true;
     this.testWebSocket();
 
     // Put Text
@@ -11400,8 +11411,12 @@ var flyCount = 0;
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, this.playerCanCollide);
     game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null);
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null);
+    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
+
+    game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null);
+
     if (flyCount < 3) {
-      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.");
+      this.bmpText.setText(flyCount + " flies eaten, the night deadly.");
     } else if (flyCount < 6) {
       this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.");
     } else if (flyCount < 8) {
@@ -11415,17 +11430,17 @@ var flyCount = 0;
     game.debug.body(this.averagedPlayerController);
   }
 
-  placeWaterTiles() {
-    // ******************************
-    //        CREATING WATER TILES
-    // EDIT this.waterCoord TO PLACE WATERS
-    // ******************************
+  placeMapTiles() {
     this.waterGroup = game.add.physicsGroup();
-    this.waterCoord = [[0, 0], [100, 0], [200, 0], [300, 0], [400, 0], [500, 0], [600, 0], [700, 0], [800, 0], [900, 0], [1000, 0], [0, 700], [100, 700], [200, 700], [300, 700], [400, 700], [500, 700], [600, 700], [700, 700], [800, 700], [900, 700], [1000, 700], [0, 600], [100, 500], [100, 600], [200, 400], [200, 500], [200, 600], [300, 100], [300, 400], [300, 500], [300, 600], [400, 100], [400, 400], [400, 500], [400, 600], [500, 100], [500, 500], [500, 600], [600, 100], [600, 600], [600, 200], [700, 100], [700, 200], [700, 300], [900, 600], [1000, 200], [1000, 300], [1000, 600], [1000, 500]];
+    this.dirtGroup = game.add.physicsGroup();
+    this.mapTiles = __WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]['maptiles'];
 
-    for (var i = 0; i < this.waterCoord.length; i++) {
-      var c = this.waterGroup.create(this.waterCoord[i][0], this.waterCoord[i][1], 'water', 0);
-      c.scale.setTo(1, 1);
+    for (var i = 0; i < this.mapTiles.length; i++) {
+      for (var j = 0; j < this.mapTiles[i].length; j++) {
+        if (this.mapTiles[i][j] == 1) {} else if (this.mapTiles[i][j] == 2) {
+          var w = this.waterGroup.create(j * 100, i * 100, 'water', 0);
+        }
+      }
     }
     // ******************************
   }
@@ -11440,6 +11455,15 @@ var flyCount = 0;
     currentState.gameOver();
   }
 
+  playerHomeCollision(playerSprite, home) {
+    console.log("Water collision.");
+    playerSprite.stopAllMovement();
+    var stateManager = playerSprite.game.state;
+    var currentStateName = stateManager.current;
+    var currentState = stateManager.states[currentStateName];
+    currentState.gameWin();
+  }
+
   gameOver() {
     var centerOfScreenX = this.game.camera.position.x + this.game.camera.width / 2;
     var centerOfScreenY = this.game.camera.position.y + this.game.camera.height / 2;
@@ -11450,6 +11474,27 @@ var flyCount = 0;
     });
     this.gameOverText.anchor.set(0.5);
     var gameOverTween = game.add.tween(this.gameOverText).to({ x: centerOfScreenX, y: centerOfScreenY }, 1000, "Sine.easeInOut", false, 0, 0);
+    gameOverTween.onComplete.add(this.gameOverComplete, this);
+    gameOverTween.start();
+  }
+
+  gameWin() {
+    var text = "";
+
+    if (flyCount < 3) {
+      text = "You have let down your chameleon children,\r\n and they will hunger";
+    } else if (flyCount < 6) {
+      text = "Your family shall sustain, barely";
+    } else if (flyCount < 8) {
+      text = "Peace and prosperity shall rise tonight";
+    } else {
+      text = "Your family shall grow fat with flys\r\n joy shall overflow!";
+    }
+    var centerOfScreenX = this.game.camera.position + this.game.camera.width / 2;
+    var centerOfScreenY = this.game.camera.height / 2;
+    var gameOverText = this.add.text(400, this.game.height + 100, text);
+    gameOverText.anchor.set(0.5);
+    var gameOverTween = game.add.tween(gameOverText).to({ x: 400, y: this.game.height / 2 }, 3000, "Sine.easeInOut", false, 0, 0);
     gameOverTween.onComplete.add(this.gameOverComplete, this);
     gameOverTween.start();
   }
@@ -11661,7 +11706,6 @@ exports.default = idiom;
     this.paused = false;
     this.collideEnabled = true;
   }
-
   update() {
     if (!this.paused) {
       if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
@@ -11686,6 +11730,12 @@ exports.default = idiom;
             this.body.velocity.add(0, this.speed);
           }
         }
+      }
+      if (this.body.velocity.x > 0) {
+        this.scale.x = 1;
+      }
+      if (this.body.velocity.x < 0) {
+        this.scale.x = -1;
       }
 
       if (this.body.velocity) {
@@ -11727,6 +11777,25 @@ exports.default = idiom;
   enabledCollision() {
     this.collideEnabled = true;
   }
+});
+
+/***/ }),
+/* 351 */,
+/* 352 */
+/*!********************!*\
+  !*** ./src/map.js ***!
+  \********************/
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+let mapData;
+/* harmony default export */ __webpack_exports__["a"] = (mapData = {
+  'maptiles': [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2], [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 2, 2], [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2], [0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]],
+  'water': [[0, 600], [100, 500], [100, 600], [200, 400], [200, 500], [200, 600], [300, 100], [300, 400], [300, 500], [300, 600], [400, 100], [400, 400], [400, 500], [400, 600], [500, 100], [500, 500], [500, 600], [600, 100], [600, 600], [600, 200], [700, 100], [700, 200], [700, 300], [900, 600], [1000, 200], [1000, 300], [1000, 600], [1100, 300], [1100, 600]],
+
+  'flies': [[600, 400, 100, -100], [1000, 250, 40, 0], [1100, 250, -40, 0], [1150, 400, 0, -40]]
 });
 
 /***/ })

@@ -10,7 +10,6 @@ export default class extends Phaser.Sprite {
 		this.paused = false;
 		this.collideEnabled = true;
   }
-
   update (){
     if (!this.paused) {
       if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
@@ -37,7 +36,12 @@ export default class extends Phaser.Sprite {
           }
         }
       }
-
+       if(this.body.velocity.x >0 ){
+          this.scale.x = 1;
+       }
+       if(this.body.velocity.x < 0){
+          this.scale.x = -1;
+       }  
 
       if (this.body.velocity) {
         this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y * .95);
