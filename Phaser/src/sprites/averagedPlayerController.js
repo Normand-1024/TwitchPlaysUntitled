@@ -8,6 +8,7 @@ export default class extends Phaser.Sprite {
    	game.physics.arcade.enable(this);
 		this.shrinkCollision(80, 80);
 		this.paused = false;
+		this.collideEnabled = true;
   }
 
   update (){
@@ -70,4 +71,12 @@ export default class extends Phaser.Sprite {
   appendInputList(inputList){
   	this.inputList.push(inputList);
 	}
+
+	disableCollision(){
+    this.collideEnabled = false;
+  }
+
+  enabledCollision(){
+    this.collideEnabled = true;
+  }
 }
