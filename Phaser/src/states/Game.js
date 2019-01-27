@@ -20,18 +20,17 @@ export default class extends Phaser.State {
       console.log("connected");
     });
     var localObj = this;
-
     this.websocket.addEventListener('message', function (event) {
       console.log("event recieved");
       console.log('Message from server ' + event.data);
       var control = JSON.parse(event.data);
-
       if(!Array.isArray(control)){
          control = [control];
       }
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
         // localObj.addRowOfData(obj.name, obj.direction);
+        console.log("Pushing into input queue " );
         localObj.game.inputQueue.push(obj);
         localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
       }
@@ -54,7 +53,8 @@ export default class extends Phaser.State {
     this.devMode = false;
     this.playerStartX = 100;
     this.playerStartY = 300;
-    this.baseSpeed = 22;
+
+    this.baseSpeed = 30;
     this.game.inputQueue = [];
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
@@ -148,9 +148,13 @@ export default class extends Phaser.State {
 
     // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
-    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
+    game.physics.arcade.overlap(
+      this.averagedPlayerController,
+      this.waterGroup,
+      this.playerWaterCollision,
+      this.playerCanCollide
+    );
     game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
-    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
 
@@ -194,8 +198,9 @@ export default class extends Phaser.State {
   }
 
   playerWaterCollision(playerSprite, water){
-    // WTF, do we really have to do this?
+    console.log("Water collision.");
     playerSprite.stopAllMovement();
+    playerSprite.disableCollision();
     var stateManager = playerSprite.game.state;
     var currentStateName = stateManager.current;
     var currentState = stateManager.states[currentStateName];
@@ -204,7 +209,6 @@ export default class extends Phaser.State {
 
   playerHomeCollision(playerSprite, home){
     console.log("Water collision.");
-    // WTF, do we really have to do this?
     playerSprite.stopAllMovement();
     var stateManager = playerSprite.game.state;
     var currentStateName = stateManager.current;
@@ -214,15 +218,23 @@ export default class extends Phaser.State {
 
 
   gameOver(){
-    var centerOfScreenX = this.game.camera.position + this.game.camera.width/2;
-    var centerOfScreenY = this.game.camera.height/2;
-    var gameOverText = this.add.text(
-      centerOfScreenX, centerOfScreenY-10,
-      "Game Over!"
+    var centerOfScreenX = this.game.camera.position.x + this.game.camera.width/2;
+    var centerOfScreenY = this.game.camera.position.y + this.game.camera.height/2;
+    this.gameOverText = this.add.text(
+      centerOfScreenX, -10,
+      "Game Over!",
+      {
+        font: "Major Mono Display",
+        fontWeight: "bold",
+        fontSize: "32px"
+      }
     );
-    gameOverText.anchor.set(0.5);
-    var gameOverTween = game.add.tween(gameOverText).to( { x: centerOfScreenX, y: centerOfScreenY }, 1000, "Sine.easeInOut", false, 0, 0);
-    gameOverTween.onComplete.add(this.gameOverComplete, this)
+    this.gameOverText.anchor.set(0.5);
+    var gameOverTween = game.add.tween(
+      this.gameOverText
+    ).to(
+        { x: centerOfScreenX, y: centerOfScreenY }, 1000, "Sine.easeInOut", false, 0, 0);
+    gameOverTween.onComplete.add(this.gameOverComplete, this);
     gameOverTween.start();
   }
 
@@ -256,10 +268,7 @@ export default class extends Phaser.State {
   gameOverComplete(){
     flyCount = 0;
     this.state.start(this.state.current);
-  }
-
-  setupTweens(){
-    return gameOverTween
+    this.gameOverText.destroy()
   }
 
   playerFlyCollision(player, fly){
@@ -295,6 +304,10 @@ export default class extends Phaser.State {
     rightDiv.scrollTop = rightDiv.scrollHeight;
 
 
+  }
+
+  playerCanCollide(playerSprite){
+    return playerSprite.collideEnabled;
   }
 
 }
