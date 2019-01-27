@@ -37,6 +37,16 @@ export default class extends Phaser.State {
 
     });
 
+    this.websocket.addEventListener('close', function (event) {
+      console.log("connection closed");
+      
+    });
+
+
+    this.websocket.addEventListener('error', function (event) {
+      console.log("connection error");
+      
+    });
   }
 
   init() { }
@@ -69,7 +79,7 @@ export default class extends Phaser.State {
       baseSpeed: this.baseSpeed
     })
     var anim = this.averagedPlayerController.animations.add("walk");
-    this.averagedPlayerController.animations.play("walk", 5, true);
+    this.averagedPlayerController.animations.play("walk", 17, true);
 
     this.game.world.setBounds(0,0,5000,800)
     this.game.camera.follow(this.averagedPlayerController, 2);
