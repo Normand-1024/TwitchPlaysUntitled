@@ -1,5 +1,10 @@
 import Phaser from 'phaser'
 
+Number.prototype.clamp = function(min, max){
+  return Math.min(Math.max(this, min), max);
+};
+
+
 export default class extends Phaser.Sprite {
   constructor ({ game, x, y, asset, baseSpeed }) {
     super(game, x, y, asset);
@@ -11,6 +16,7 @@ export default class extends Phaser.Sprite {
 		this.collideEnabled = true;
     this.walkSound = game.add.audio("walk");
     this.walkSound.loop = false;
+    this.inputClamp = 100
   }
 
   create(){
@@ -21,11 +27,6 @@ export default class extends Phaser.Sprite {
       if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
         var input = this.game.inputQueue.shift();
         if (input == null) {
-          // if(this.body.velocity){
-          //   console.log("reducing velocity");
-          //   this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y*.95);
-          // }
-
         } else {
 
           this.body.velocity.add(input.right * this.speed, 0);
@@ -40,7 +41,9 @@ export default class extends Phaser.Sprite {
        }
        if(this.body.velocity.x < 0){
           this.scale.x = -1;
-       }  
+       }
+
+     this.body.velocity.set(this.body.velocity.x.clamp(-this.inputClamp, this.inputClamp), this.body.velocity.y.clamp(-this.inputClamp, this.inputClamp))
 
       if (this.body.velocity) {
         this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y * .95);

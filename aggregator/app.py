@@ -12,7 +12,7 @@ REDIS_URL = os.environ['REDIS_URL']
 REDIS_CHAN = 'chat'
 REDIS_COMMAND_CHAN = 'command'
 
-CHUNKING_DIVISOR = 1
+CHUNKING_DIVISOR = 2
 QUEUE_TIMESTEPS = .1
 
 app = Flask(__name__)

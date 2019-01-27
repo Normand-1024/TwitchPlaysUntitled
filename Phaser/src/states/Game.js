@@ -215,7 +215,6 @@ export default class extends Phaser.State {
   }
 
   render(){
-    game.debug.body(this.averagedPlayerController);
     game.debug.text('Time until nightfall: ' + this.gameTimer.duration.toFixed(0), 32, 72);
   }
 

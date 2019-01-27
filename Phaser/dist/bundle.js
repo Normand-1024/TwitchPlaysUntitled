@@ -11471,7 +11471,6 @@ var flyCount = 0;
   }
 
   render() {
-    game.debug.body(this.averagedPlayerController);
     game.debug.text('Time until nightfall: ' + this.gameTimer.duration.toFixed(0), 32, 72);
   }
 
@@ -11568,6 +11567,7 @@ var flyCount = 0;
 
   gameOverComplete() {
     flyCount = 0;
+    this.music.stop();
     this.state.start(this.state.current);
     this.gameOverText.destroy();
   }
@@ -11868,6 +11868,10 @@ let mapData;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
 
 
+Number.prototype.clamp = function (min, max) {
+  return Math.min(Math.max(this, min), max);
+};
+
 /* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Sprite {
   constructor({ game, x, y, asset, baseSpeed }) {
     super(game, x, y, asset);
@@ -11877,35 +11881,22 @@ let mapData;
     this.shrinkCollision(90, 110);
     this.paused = false;
     this.collideEnabled = true;
+    this.walkSound = game.add.audio("walk");
+    this.walkSound.loop = false;
+    this.inputClamp = 100;
   }
 
+  create() {}
   update() {
     if (!this.paused) {
       if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
         var input = this.game.inputQueue.shift();
-        if (input == null) {
-          // if(this.body.velocity){
-          //   console.log("reducing velocity");
-          //   this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y*.95);
-          // }
+        if (input == null) {} else {
 
-        } else {
           this.body.velocity.add(input.right * this.speed, 0);
           this.body.velocity.add(input.left * this.speed * -1, 0);
           this.body.velocity.add(0, input.up * this.speed * -1);
           this.body.velocity.add(0, input.down * this.speed);
-          // if (input.direction == "right") {
-          //   this.body.velocity.add(this.speed, 0);
-
-          // }
-          // if (input.direction == "left") {
-          //   this.body.velocity.add(-1 * this.speed, 0);
-          // }
-          // if (input.direction == "up") {
-          //   this.body.velocity.add(0, -1 * this.speed);
-          // }
-          // if (input.direction == "down") {
-          //   this.body.velocity.add(0, this.speed);
         }
       }
       if (this.body.velocity.x > 0) {
@@ -11915,8 +11906,21 @@ let mapData;
         this.scale.x = -1;
       }
 
+      this.body.velocity.set(this.body.velocity.x.clamp(-this.inputClamp, this.inputClamp), this.body.velocity.y.clamp(-this.inputClamp, this.inputClamp));
+
       if (this.body.velocity) {
         this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y * .95);
+      }
+      if (this.walkSound) {
+        if (this.body.velocity.x > 2 || this.body.velocity.y > 2 || this.body.velocity.x < -2 || this.body.velocity.y < -2) {
+          if (!this.walkSound.isPlaying) {
+            this.walkSound.play();
+          }
+        } else {
+          if (this.walkSound.isPlaying) {
+            this.walkSound.stop();
+          }
+        }
       }
     }
   }
