@@ -6,9 +6,11 @@ export default class extends Phaser.Sprite {
     this.anchor.setTo(0.5);
     this.speed = baseSpeed;
    	game.physics.arcade.enable(this);
-		this.shrinkCollision(80, 80);
+		this.shrinkCollision(90, 110);
 		this.paused = false;
+		this.collideEnabled = true;
   }
+
   update (){
     if (!this.paused) {
       if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
@@ -63,7 +65,7 @@ export default class extends Phaser.Sprite {
   }
 
   shrinkCollision(x, y){
-    this.body.setSize(this.body.width - x, this.body.height - y, x/2, y/2)
+    this.body.setSize(this.body.width - x, this.body.height - y, x/2, y/2 + 15)
   }
 
   stopAllMovement(){
@@ -74,4 +76,12 @@ export default class extends Phaser.Sprite {
   appendInputList(inputList){
   	this.inputList.push(inputList);
 	}
+
+	disableCollision(){
+    this.collideEnabled = false;
+  }
+
+  enabledCollision(){
+    this.collideEnabled = true;
+  }
 }

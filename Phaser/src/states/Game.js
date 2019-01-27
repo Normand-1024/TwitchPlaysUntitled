@@ -16,28 +16,38 @@ export default class extends Phaser.State {
 
   testWebSocket()
   {
-    this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
+    this.websocket = new WebSocket("ws://preston.ngrok.io/game_receive");
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
+    var localObj = this;
     this.websocket.addEventListener('message', function (event) {
       console.log("event recieved");
       console.log('Message from server ' + event.data);
       var control = JSON.parse(event.data);
-
       if(!Array.isArray(control)){
          control = [control];
       }
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
+        // localObj.addRowOfData(obj.name, obj.direction);
         console.log("Pushing into input queue " );
-        localObj.addRowOfData(obj.name, obj.direction);
         localObj.game.inputQueue.push(obj);
         localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
       }
 
     });
 
+    this.websocket.addEventListener('close', function (event) {
+      console.log("connection closed");
+      
+    });
+
+
+    this.websocket.addEventListener('error', function (event) {
+      console.log("connection error");
+      
+    });
   }
 
   init() { }
@@ -51,10 +61,11 @@ export default class extends Phaser.State {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //this.flyCount = 0;
-    this.devMode = true;
+    this.devMode = false;
     this.playerStartX = 100;
     this.playerStartY = 300;
-    this.baseSpeed = 100;
+
+    this.baseSpeed = 30;
     this.game.inputQueue = [];
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
@@ -69,7 +80,7 @@ export default class extends Phaser.State {
       baseSpeed: this.baseSpeed
     })
     var anim = this.averagedPlayerController.animations.add("walk");
-    this.averagedPlayerController.animations.play("walk", 5, true);
+    this.averagedPlayerController.animations.play("walk", 17, true);
 
     this.game.world.setBounds(0,0,5000,800)
     this.game.camera.follow(this.averagedPlayerController, 2);
@@ -105,17 +116,32 @@ export default class extends Phaser.State {
       }
     // ******************************
 
+    // ****************************** 
+    //          GO HOME
+    // ****************************** 
+    
+    this.home = this.game.add.sprite(30, game.height/2+100, "house");
+    this.home.scale.x = .5;
+    this.home.scale.y = .5;
+    
     this.game.add.existing(this.dirtGroup)
     this.game.add.existing(this.waterGroup)
     this.game.add.existing(this.flyGroup)
     this.game.add.existing(this.smartflyGroup)
     this.game.add.existing(this.averagedPlayerController)
 
+<<<<<<< HEAD
     this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.smartflyGroup]);
+=======
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.home]);
+    this.home.body.immovable = true;
+>>>>>>> e7fe7f77cbae9fbb95c647ee2a0a16ce2a473070
     this.testWebSocket();
 
     // Put Text
     this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
+
+    this.setupGameTimer();
   }
 
   update() {
@@ -155,13 +181,21 @@ export default class extends Phaser.State {
 
     // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
-    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
-    game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
-    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
+    game.physics.arcade.overlap(
+      this.averagedPlayerController,
+      this.waterGroup,
+      this.playerWaterCollision,
+      this.playerCanCollide
+    );
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
+<<<<<<< HEAD
     game.physics.arcade.overlap(this.averagedPlayerController, this.smartflyGroup, this.playerFlyCollision, null)
+=======
+    game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null);
+
+>>>>>>> e7fe7f77cbae9fbb95c647ee2a0a16ce2a473070
     if (flyCount < 3){
-      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.")
+      this.bmpText.setText(flyCount + " flies eaten, the night deadly.")
     }
     else if (flyCount < 6){
       this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.")
@@ -175,7 +209,8 @@ export default class extends Phaser.State {
   }
 
   render(){
-    game.debug.body(this.averagedPlayerController)
+    game.debug.body(this.averagedPlayerController);
+    game.debug.text('Time until nightfall: ' + this.gameTimer.duration.toFixed(0), 32, 72);
   }
 
   placeMapTiles(){
@@ -198,33 +233,77 @@ export default class extends Phaser.State {
   }
 
   playerWaterCollision(playerSprite, water){
-    // WTF, do we really have to do this?
+    console.log("Water collision.");
     playerSprite.stopAllMovement();
+    playerSprite.disableCollision();
     var stateManager = playerSprite.game.state;
     var currentStateName = stateManager.current;
     var currentState = stateManager.states[currentStateName];
     currentState.gameOver();
   }
 
+  playerHomeCollision(playerSprite, home){
+    console.log("Water collision.");
+    playerSprite.stopAllMovement();
+    var stateManager = playerSprite.game.state;
+    var currentStateName = stateManager.current;
+    var currentState = stateManager.states[currentStateName];
+    currentState.gameWin();
+  }
+
+
   gameOver(){
+    var centerOfScreenX = this.game.camera.position.x + this.game.camera.width/2;
+    var centerOfScreenY = this.game.camera.position.y + this.game.camera.height/2;
+    this.gameOverText = this.add.text(
+      centerOfScreenX, -10,
+      "Game Over!",
+      {
+        font: "Major Mono Display",
+        fontWeight: "bold",
+        fontSize: "32px"
+      }
+    );
+    this.gameOverText.anchor.set(0.5);
+    var gameOverTween = game.add.tween(
+      this.gameOverText
+    ).to(
+        { x: centerOfScreenX, y: centerOfScreenY }, 1000, "Sine.easeInOut", false, 0, 0);
+    gameOverTween.onComplete.add(this.gameOverComplete, this);
+    gameOverTween.start();
+  }
+
+   gameWin(){
+    var text = "";
+
+    if (flyCount < 3){
+      text = "You have let down your chameleon children,\r\n and they will hunger"
+    }
+    else if (flyCount < 6){
+      text = "Your family shall sustain, barely"
+    }
+    else if (flyCount < 8){
+      text = "Peace and prosperity shall rise tonight"
+    }
+    else{
+      text = "Your family shall grow fat with flys\r\n joy shall overflow!"
+    }
     var centerOfScreenX = this.game.camera.position + this.game.camera.width/2;
     var centerOfScreenY = this.game.camera.height/2;
     var gameOverText = this.add.text(
-      centerOfScreenX, centerOfScreenY-10,
-      "Game Over!"
+      400, this.game.height+100,
+      text
     );
     gameOverText.anchor.set(0.5);
-    var gameOverTween = game.add.tween(gameOverText).to( { x: centerOfScreenX, y: centerOfScreenY }, 1000, "Sine.easeInOut", false, 0, 0);
+    var gameOverTween = game.add.tween(gameOverText).to( { x:400 , y: this.game.height/2 }, 3000, "Sine.easeInOut", false, 0, 0);
     gameOverTween.onComplete.add(this.gameOverComplete, this)
     gameOverTween.start();
   }
 
   gameOverComplete(){
+    flyCount = 0;
     this.state.start(this.state.current);
-  }
-
-  setupTweens(){
-    return gameOverTween
+    this.gameOverText.destroy()
   }
 
   playerFlyCollision(player, fly){
@@ -260,6 +339,16 @@ export default class extends Phaser.State {
     rightDiv.scrollTop = rightDiv.scrollHeight;
 
 
+  }
+
+  playerCanCollide(playerSprite){
+    return playerSprite.collideEnabled;
+  }
+
+  setupGameTimer(){
+    this.gameTimer = game.time.create(false);
+    this.gameTimer.loop(20000, this.gameOver, this);
+    this.gameTimer.start();
   }
 
 }
