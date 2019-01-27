@@ -1,6 +1,7 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Mushroom from '../sprites/Mushroom'
+import fly from "../sprites/fly.js"
 import lang from '../lang'
 import averagedPlayerController from '../sprites/averagedPlayerController.js'
 
@@ -71,7 +72,18 @@ export default class extends Phaser.State {
     // EDIT this.waterCoord TO PLACE WATERS
     // ******************************
     this.waterGroup = game.add.physicsGroup();
-    this.waterCoord = [[300, 300], [50, 50], [0, 0]]
+    this.waterCoord = [[0,0],[100,0],[200,0],[300,0],[400,0],[500,0],[600,0],[700,0],[800,0],[900,0],[1000,0], 
+    [0,700],[100,700],[200,700],[300,700],[400,700],[500,700],[600,700],[700,700],[800,700],[900,700],[1000,700],
+    [0,600],
+    [100,500],[100,600],
+    [200,400],[200,500],[200,600],
+    [300,100],[300,400],[300,500],[300,600],
+    [400,100],[400,400],[400,500],[400,600],
+    [500,100],[500,500],[500,600],
+    [600,100],[600,600],[600,200],
+    [700,100],[700,200],[700,300],
+    [900,600],
+    [1000,200],[1000,300],[1000,600],[1000,500]]
 
     for (var i = 0; i < this.waterCoord.length; i++)
       {
@@ -80,10 +92,23 @@ export default class extends Phaser.State {
       }
     // ******************************
 
+    // ******************************
+    //         CREATING FLIES
+    // ******************************
+    this.fly = new fly({
+      game: this.game,
+      x: 1000,
+      y: 250,
+      asset: 'fly',
+      x_mov: 50,
+      y_mov: 0
+    })
+
     this.game.add.existing(this.waterGroup)
+    this.game.add.existing(this.fly)
     this.game.add.existing(this.averagedPlayerController)
 
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup]);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.fly]);
     this.testWebSocket();
   }
 
@@ -120,6 +145,8 @@ export default class extends Phaser.State {
 
     // Collision Detection
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
+    game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
+    
   } 
 
   restartGame(){
@@ -128,6 +155,12 @@ export default class extends Phaser.State {
 
   playerWaterCollision(){
     console.log('WaterCollision')
+    //this.averagedPlayerController.x = 500;
+    //this.averagedPlayerController.y = 500;
+  }
+
+  playerFlyCollision(){
+    console.log('FlyCollision')
     //this.averagedPlayerController.x = 500;
     //this.averagedPlayerController.y = 500;
   }
