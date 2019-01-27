@@ -10713,6 +10713,8 @@ if ('serviceWorker' in navigator) {
     let text = this.add.text(this.world.centerX, this.world.centerY, 'loading fonts', { font: '16px Arial', fill: '#dddddd', align: 'center' });
     text.anchor.setTo(0.5, 0.5);
 
+    this.load.bitmapFont('gem', 'assets/fonts/gem.png', 'assets/fonts/gem.xml');
+
     this.load.image('loaderBg', './assets/images/loader-bg.png');
     this.load.image('loaderBar', './assets/images/loader-bar.png');
   }
@@ -10810,6 +10812,9 @@ const centerGameObjects = objects => {
 
 
 
+// Global Variables
+var flyCount = 0;
+
 /* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.State {
 
   testWebSocket() {
@@ -10846,6 +10851,7 @@ const centerGameObjects = objects => {
   create() {
     this.game.physics.startSystem(__WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Physics.ARCADE);
 
+    //this.flyCount = 0;
     this.devMode = true;
     this.baseSpeed = 100;
     this.game.inputQueue = [];
@@ -10854,17 +10860,17 @@ const centerGameObjects = objects => {
     if (this.devMode) {
       this.cursors = game.input.keyboard.createCursorKeys();
     }
-    const bannerText = __WEBPACK_IMPORTED_MODULE_3__lang__["a" /* default */].text('welcome');
-    let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
-      font: '40px Bangers',
-      fill: '#77BFA3',
-      smoothed: false
-    });
+    //const bannerText = lang.text('welcome')
+    //let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
+    //  font: '40px Bangers',
+    //  fill: '#77BFA3',
+    //  smoothed: false
+    //})
 
     this.inputQueue = [];
 
-    banner.padding.set(10, 16);
-    banner.anchor.setTo(0.5);
+    //banner.padding.set(10, 16)
+    //banner.anchor.setTo(0.5)
 
     this.averagedPlayerController = new __WEBPACK_IMPORTED_MODULE_4__sprites_averagedPlayerController_js__["a" /* default */]({
       game: this.game,
@@ -10890,21 +10896,28 @@ const centerGameObjects = objects => {
     // ******************************
     //         CREATING FLIES
     // ******************************
-    this.fly = new __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__["a" /* default */]({
-      game: this.game,
-      x: 1000,
-      y: 250,
-      asset: 'fly',
-      x_mov: 50,
-      y_mov: 0
-    });
+    this.flyGroup = game.add.physicsGroup();
+    this.flyCoord = [[600, 400, 100, -100], [1000, 250, 50, 0]];
+    for (var i = 0; i < this.flyCoord.length; i++) {
+      var f = new __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__["a" /* default */]({ game: this.game,
+        x: this.flyCoord[i][0],
+        y: this.flyCoord[i][1],
+        asset: 'fly',
+        x_mov: this.flyCoord[i][2],
+        y_mov: this.flyCoord[i][3] });
+      this.flyGroup.add(f);
+    }
+    // ******************************
 
     this.game.add.existing(this.waterGroup);
-    this.game.add.existing(this.fly);
+    this.game.add.existing(this.flyGroup);
     this.game.add.existing(this.averagedPlayerController);
 
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.fly]);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup]);
     this.testWebSocket();
+
+    // Put Text
+    this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
   }
 
   update() {
@@ -10938,7 +10951,16 @@ const centerGameObjects = objects => {
     // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
-    game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null);
+    game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null);
+    if (flyCount < 3) {
+      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.");
+    } else if (flyCount < 6) {
+      this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.");
+    } else if (flyCount < 8) {
+      this.bmpText.setText(flyCount + " flies eaten, the night will be bearable.");
+    } else {
+      this.bmpText.setText(flyCount + " flies eaten, the dawn will come.");
+    }
   }
 
   restartGame() {
@@ -10951,8 +10973,10 @@ const centerGameObjects = objects => {
     //this.averagedPlayerController.y = 500;
   }
 
-  playerFlyCollision() {
+  playerFlyCollision(player, fly) {
     console.log('FlyCollision');
+    fly.center_x = -1000000;
+    flyCount++;
     //this.averagedPlayerController.x = 500;
     //this.averagedPlayerController.y = 500;
   }
@@ -11052,7 +11076,6 @@ const centerGameObjects = objects => {
   !*** ./src/lang.js ***!
   \*********************/
 /*! exports provided: default */
-/*! exports used: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11069,7 +11092,7 @@ const lang = __WEBPACK_IMPORTED_MODULE_0_idiom_js___default()({
   }
 });
 
-/* harmony default export */ __webpack_exports__["a"] = (lang(window.navigator.language));
+/* unused harmony default export */ var _unused_webpack_default_export = (lang(window.navigator.language));
 
 /***/ }),
 /* 345 */

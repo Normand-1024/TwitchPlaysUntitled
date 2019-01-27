@@ -5,6 +5,9 @@ import fly from "../sprites/fly.js"
 import lang from '../lang'
 import averagedPlayerController from '../sprites/averagedPlayerController.js'
 
+// Global Variables
+var flyCount = 0
+
 export default class extends Phaser.State {
   
 
@@ -46,6 +49,7 @@ export default class extends Phaser.State {
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    //this.flyCount = 0;
     this.devMode = true;
     this.baseSpeed = 100;
     this.game.inputQueue = [];
@@ -54,17 +58,17 @@ export default class extends Phaser.State {
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
     }
-    const bannerText = lang.text('welcome')
-    let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
-      font: '40px Bangers',
-      fill: '#77BFA3',
-      smoothed: false
-    })
+    //const bannerText = lang.text('welcome')
+    //let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
+    //  font: '40px Bangers',
+    //  fill: '#77BFA3',
+    //  smoothed: false
+    //})
 
     this.inputQueue = []
 
-    banner.padding.set(10, 16)
-    banner.anchor.setTo(0.5)
+    //banner.padding.set(10, 16)
+    //banner.anchor.setTo(0.5)
     
     this.averagedPlayerController = new averagedPlayerController({
       game: this.game,
@@ -102,21 +106,30 @@ export default class extends Phaser.State {
     // ******************************
     //         CREATING FLIES
     // ******************************
-    this.fly = new fly({
-      game: this.game,
-      x: 1000,
-      y: 250,
-      asset: 'fly',
-      x_mov: 50,
-      y_mov: 0
-    })
+    this.flyGroup = game.add.physicsGroup();
+    this.flyCoord = [[600, 400, 100, -100],
+                    [1000, 250, 50, 0]]
+    for (var i = 0; i < this.flyCoord.length; i++)
+    {
+      var f = new fly({game: this.game,
+                      x : this.flyCoord[i][0],
+                      y : this.flyCoord[i][1],
+                      asset: 'fly',
+                      x_mov: this.flyCoord[i][2],
+                      y_mov: this.flyCoord[i][3]})
+      this.flyGroup.add(f);
+    }
+    // ******************************
 
     this.game.add.existing(this.waterGroup)
-    this.game.add.existing(this.fly)
+    this.game.add.existing(this.flyGroup)
     this.game.add.existing(this.averagedPlayerController)
 
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.fly]);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup]);
     this.testWebSocket();
+
+    // Put Text
+    this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
   }
 
   update(){
@@ -151,9 +164,20 @@ export default class extends Phaser.State {
       this.game.inputQueue.push(obj);
       // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
-    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
-    game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
-    
+    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
+    game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
+    if (flyCount < 3){
+      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.")
+    }
+    else if (flyCount < 6){
+      this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.")
+    }
+    else if (flyCount < 8){
+      this.bmpText.setText(flyCount + " flies eaten, the night will be bearable.")
+    }
+    else{
+      this.bmpText.setText(flyCount + " flies eaten, the dawn will come.")
+    }
   } 
 
   restartGame(){
@@ -166,8 +190,10 @@ export default class extends Phaser.State {
     //this.averagedPlayerController.y = 500;
   }
 
-  playerFlyCollision(){
+  playerFlyCollision(player, fly){
     console.log('FlyCollision')
+    fly.center_x = -1000000;
+    flyCount++;
     //this.averagedPlayerController.x = 500;
     //this.averagedPlayerController.y = 500;
   }
