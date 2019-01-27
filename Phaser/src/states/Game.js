@@ -61,7 +61,7 @@ export default class extends Phaser.State {
 
     //this.flyCount = 0;
     this.devMode = true;
-    this.playerStartX = 100;
+    this.playerStartX = 300;
     this.playerStartY = 300;
 
     this.baseSpeed = 30;
@@ -119,7 +119,7 @@ export default class extends Phaser.State {
     //          GO HOME
     // ****************************** 
     
-    this.home = this.game.add.sprite(30, game.height/2+100, "house");
+    this.home = this.game.add.sprite(30, 300, "house");
     this.home.scale.x = .5;
     this.home.scale.y = .5;
     
@@ -226,6 +226,10 @@ export default class extends Phaser.State {
           } else {
             var w = this.waterGroup.create(j * 100, i * 100, 'water2', 0);
           }
+        } else if (this.mapTiles[i][j] == 5) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'flowers', 0);
+        } else if (this.mapTiles[i][j] == 6) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'stump', 0);
         }
         w.scale.setTo(3.13, 3.13);
       }
@@ -296,7 +300,8 @@ export default class extends Phaser.State {
       text
     );
     gameOverText.anchor.set(0.5);
-    var gameOverTween = game.add.tween(gameOverText).to( { x:400 , y: this.game.height/2 }, 3000, "Sine.easeInOut", false, 0, 0);
+    var gameOverTween = game.add.tween(gameOverText).to( { x:400 , y: this.game.height/2 }, 2000, "Sine.easeInOut", false, 0, 0);
+
     gameOverTween.onComplete.add(this.gameOverComplete, this)
     gameOverTween.start();
   }

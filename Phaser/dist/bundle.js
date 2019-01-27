@@ -11220,8 +11220,10 @@ if ('serviceWorker' in navigator) {
     // load your assets
     //
     this.load.image('mushroom', 'assets/images/mushroom2.png');
-    this.load.image('house', 'assets/images/House.png');
+    this.load.image('house', 'assets/images/bush.png');
     this.load.image('grass', 'assets/images/Grass1.png');
+    this.load.image('flowers', 'assets/images/Grass1d.png');
+    this.load.image('stump', 'assets/images/Grass1a.png');
     this.load.spritesheet('water1', 'assets/images/WaterAnim3.png', 32, 32);
     this.load.spritesheet('water2', 'assets/images/WaterAnim2.png', 32, 32);
     this.load.image('fly', 'assets/images/fly.png');
@@ -11325,7 +11327,7 @@ var flyCount = 0;
 
     //this.flyCount = 0;
     this.devMode = true;
-    this.playerStartX = 100;
+    this.playerStartX = 300;
     this.playerStartY = 300;
 
     this.baseSpeed = 30;
@@ -11381,7 +11383,7 @@ var flyCount = 0;
     //          GO HOME
     // ****************************** 
 
-    this.home = this.game.add.sprite(30, game.height / 2 + 100, "house");
+    this.home = this.game.add.sprite(30, 300, "house");
     this.home.scale.x = .5;
     this.home.scale.y = .5;
 
@@ -11475,6 +11477,10 @@ var flyCount = 0;
           } else {
             var w = this.waterGroup.create(j * 100, i * 100, 'water2', 0);
           }
+        } else if (this.mapTiles[i][j] == 5) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'flowers', 0);
+        } else if (this.mapTiles[i][j] == 6) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'stump', 0);
         }
         w.scale.setTo(3.13, 3.13);
       }
@@ -11531,7 +11537,8 @@ var flyCount = 0;
     var centerOfScreenY = this.game.camera.height / 2;
     var gameOverText = this.add.text(400, this.game.height + 100, text);
     gameOverText.anchor.set(0.5);
-    var gameOverTween = game.add.tween(gameOverText).to({ x: 400, y: this.game.height / 2 }, 3000, "Sine.easeInOut", false, 0, 0);
+    var gameOverTween = game.add.tween(gameOverText).to({ x: 400, y: this.game.height / 2 }, 2000, "Sine.easeInOut", false, 0, 0);
+
     gameOverTween.onComplete.add(this.gameOverComplete, this);
     gameOverTween.start();
   }
@@ -11738,7 +11745,7 @@ exports.default = idiom;
 "use strict";
 let mapData;
 /* harmony default export */ __webpack_exports__["a"] = (mapData = {
-                  'maptiles': [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2], [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 2, 2], [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2], [0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]],
+                  'maptiles': [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [0, 5, 0, 0, 0, 0, 2, 2, 5, 5, 2, 0, 0, 0, 5, 5, 0, 0, 0, 0, 2, 0, 5, 6, 0, 0, 0, 0, 0, 2, 2, 2, 2], [5, 5, 0, 0, 5, 0, 0, 2, 0, 0, 2, 2, 6, 0, 5, 5, 5, 0, 0, 0, 0, 5, 0, 0, 0, 2, 5, 0, 0, 2, 2, 2, 2], [0, 5, 2, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0, 5, 5, 0, 2, 2, 2, 2], [0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 5, 0, 0, 0, 0, 6, 5, 0, 5, 0, 0, 0, 0, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 5, 5, 5, 2, 2, 2, 0, 0, 0, 0, 0, 5, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]],
                   'flies': [[600, 400, 100, -100], [1000, 250, 40, 0], [1100, 250, -40, 0], [1150, 400, 0, -40]],
                   'smartflies': [[1600, 400, 50], [1680, 350, 40], [2050, 600, 60], [2400, 400, 50], [2700, 300, 50]]
 });
