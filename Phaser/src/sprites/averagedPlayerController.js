@@ -11,6 +11,7 @@ export default class extends Phaser.Sprite {
   update () {
   	if(this.game.inputQueue != null && this.game.inputQueue.length > 0){
 	  	var input = this.game.inputQueue.shift();
+      
       if (input == null){ 
         // if(this.body.velocity){
         //   console.log("reducing velocity");
@@ -34,7 +35,12 @@ export default class extends Phaser.Sprite {
       }
   	}
     
-   
+   if(this.body.velocity.x >0 ){
+      this.scale.x = 1;
+   }
+   if(this.body.velocity.x < 0){
+      this.scale.x = -1;
+   }  
     if(this.body.velocity){
       this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y*.95);
     }
