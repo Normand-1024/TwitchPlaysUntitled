@@ -41,16 +41,16 @@ export default class extends Phaser.Sprite {
 
   stopAllMovement(){
   	this.body.velocity.set(0,0);
-  	pause();
+  	this.pause();
 	}
 
 	pause(){
-    paused = true;
+    this.paused = true;
   }
 
   unpause(){
     this.setInputList([]);
-    pause = false;
+    this.pause = false;
   }
 
 	shrinkCollision(x, y){

@@ -11297,6 +11297,8 @@ const centerGameObjects = objects => {
   create() {
     this.game.physics.startSystem(__WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Physics.ARCADE);
     this.devMode = true;
+    this.playerStartX = this.world.centerX;
+    this.playerStartY = this.world.centerY;
     if (this.devMode) {
       this.cursors = game.input.keyboard.createCursorKeys();
     }
@@ -11304,8 +11306,8 @@ const centerGameObjects = objects => {
     console.log(this);
     this.averagedPlayerController = new __WEBPACK_IMPORTED_MODULE_3__sprites_averagedPlayerController_js__["a" /* default */]({
       game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
+      x: this.playerStartX,
+      y: this.playerStartY,
       asset: 'mushroom',
       baseSpeed: 10
     });
@@ -11379,18 +11381,25 @@ const centerGameObjects = objects => {
   playerWaterCollision(playerSprite, water) {
     console.log("Water collision.");
     // WTF, do we really have to do this?
-    console.log(playerSprite);
-    console.log(water);
-    playerSprite.game.averagedPlayerController.stopAllMovement();
+    playerSprite.stopAllMovement();
+    var stateManager = playerSprite.game.state;
+    var currentStateName = stateManager.current;
+    var currentState = stateManager.states[currentStateName];
+    currentState.gameOver();
   }
 
   gameOver() {
     this.gameOverTween.start();
-    reset();
   }
 
-  reset() {
-    this.inputQueue = [];
+  gameOverComplete() {
+    // this.inputQueue = [];
+    // console.log(this.averagedPlayerController);
+    // this.averagedPlayerController.x = this.playerStartX;
+    // this.averagedPlayerController.y = this.playerStartY;
+    // this.averagedPlayerController.unpause();
+    console.log(this);
+    this.state.start(this.state.current);
   }
 
   setupTweens() {
@@ -11398,7 +11407,8 @@ const centerGameObjects = objects => {
     text.anchor.set(0.5);
     var w = this.game.world.centerX;
     var h = this.game.world.centerX;
-    var gameOverTween = game.add.tween(text).to({ x: w, y: h }, 4000, "Sine.easeInOut", false, 0, 0);
+    var gameOverTween = game.add.tween(text).to({ x: w, y: h }, 1000, "Sine.easeInOut", false, 0, 0);
+    gameOverTween.onComplete.add(this.gameOverComplete, this);
     return gameOverTween;
   }
 
@@ -11571,16 +11581,16 @@ exports.default = idiom;
 
   stopAllMovement() {
     this.body.velocity.set(0, 0);
-    pause();
+    this.pause();
   }
 
   pause() {
-    paused = true;
+    this.paused = true;
   }
 
   unpause() {
     this.setInputList([]);
-    pause = false;
+    this.pause = false;
   }
 
   shrinkCollision(x, y) {

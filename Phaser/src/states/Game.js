@@ -41,6 +41,8 @@ export default class extends Phaser.State {
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.devMode = true;
+    this.playerStartX = this.world.centerX;
+    this.playerStartY = this.world.centerY
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
     }
@@ -48,8 +50,8 @@ export default class extends Phaser.State {
     console.log(this);
     this.averagedPlayerController = new averagedPlayerController({
       game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
+      x: this.playerStartX,
+      y: this.playerStartY,
       asset: 'mushroom',
       baseSpeed: 10
     });
@@ -130,18 +132,25 @@ export default class extends Phaser.State {
   playerWaterCollision(playerSprite, water){
     console.log("Water collision.");
     // WTF, do we really have to do this?
-    console.log(playerSprite);
-    console.log(water);
-    playerSprite.game.averagedPlayerController.stopAllMovement();
+    playerSprite.stopAllMovement();
+    var stateManager = playerSprite.game.state;
+    var currentStateName = stateManager.current;
+    var currentState = stateManager.states[currentStateName];
+    currentState.gameOver();
   }
 
   gameOver(){
     this.gameOverTween.start();
-    reset();
   }
 
-  reset(){
-    this.inputQueue = [];
+  gameOverComplete(){
+    // this.inputQueue = [];
+    // console.log(this.averagedPlayerController);
+    // this.averagedPlayerController.x = this.playerStartX;
+    // this.averagedPlayerController.y = this.playerStartY;
+    // this.averagedPlayerController.unpause();
+    console.log(this);
+    this.state.start(this.state.current);
   }
 
   setupTweens(){
@@ -152,7 +161,8 @@ export default class extends Phaser.State {
     text.anchor.set(0.5);
     var w = this.game.world.centerX;
     var h = this.game.world.centerX;
-    var gameOverTween = game.add.tween(text).to( { x: w, y: h }, 4000, "Sine.easeInOut", false, 0, 0);
+    var gameOverTween = game.add.tween(text).to( { x: w, y: h }, 1000, "Sine.easeInOut", false, 0, 0);
+    gameOverTween.onComplete.add(this.gameOverComplete, this)
     return gameOverTween
   }
 
