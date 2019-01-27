@@ -76,7 +76,7 @@ export default class extends Phaser.State {
     for (var i = 0; i < this.waterCoord.length; i++)
       {
         var c = this.waterGroup.create(this.waterCoord[i][0], this.waterCoord[i][1], 'water', 0)
-        c.scale.setTo(0.2, 0.2);
+        c.scale.setTo(1, 1);
       }
     // ******************************
 
