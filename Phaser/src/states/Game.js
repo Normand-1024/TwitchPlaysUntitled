@@ -26,7 +26,6 @@ export default class extends Phaser.State {
       }
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
-        console.log("Pushing into input queue " );
         localObj.addRowOfData(obj.name, obj.direction);
         localObj.game.inputQueue.push(obj);
         localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
@@ -73,6 +72,8 @@ export default class extends Phaser.State {
       asset: 'mushroom',
       baseSpeed: this.baseSpeed
     })
+    this.game.world.setBounds(0,0,5000,800)
+    this.game.camera.follow(this.averagedPlayerController, 2);
 
     // ******************************
     //        CREATING WATER TILES
@@ -146,13 +147,19 @@ export default class extends Phaser.State {
         obj = {
           "direction":"up"
         }
+
+        if(obj!=null);
+            this.game.inputQueue.push(obj);
       }
-      if(obj!=null);
-      this.game.inputQueue.push(obj);
+      
       // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
     game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
+
+     //CAMERA LOGIC
+
+
     
   } 
 
@@ -196,6 +203,8 @@ export default class extends Phaser.State {
 
     var rightDiv = document.querySelector("#RightDiv");
     rightDiv.scrollTop = rightDiv.scrollHeight;
+
+
   }
 
 }

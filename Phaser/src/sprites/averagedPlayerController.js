@@ -9,7 +9,6 @@ export default class extends Phaser.Sprite {
   }
 
   update () {
-    console.log(this.game.inputQueue);
   	if(this.game.inputQueue != null && this.game.inputQueue.length > 0){
 	  	var input = this.game.inputQueue.shift();
       if (input == null){ 
@@ -21,7 +20,7 @@ export default class extends Phaser.Sprite {
       }else{
         if(input.direction == "right"){
           this.body.velocity.add(this.speed, 0);
-          console.log("In Right");
+          
         }
         if(input.direction == "left"){
           this.body.velocity.add(-1*this.speed, 0);
@@ -37,7 +36,6 @@ export default class extends Phaser.Sprite {
     
    
     if(this.body.velocity){
-      console.log("reducing velocity");
       this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y*.95);
     }
   }
