@@ -14,10 +14,12 @@ export default class extends Phaser.State {
     // load your assets
     //
     this.load.image('mushroom', 'assets/images/mushroom2.png');
-    this.load.image('house', 'assets/images/House.png');
-    
-    this.load.spritesheet('water1', 'assets/images/WaterAnim3.png', 32,  32, 2);
-    this.load.spritesheet('water2', 'assets/images/WaterAnim2.png', 32,  32, 2);
+    this.load.image('house', 'assets/images/bush.png');
+    this.load.image('grass', 'assets/images/Grass1.png');
+    this.load.image('flowers', 'assets/images/Grass1d.png');
+    this.load.image('stump', 'assets/images/Grass1a.png');
+    this.load.spritesheet('water1', 'assets/images/WaterAnim3.png', 32,  32);
+    this.load.spritesheet('water2', 'assets/images/WaterAnim2.png', 32,  32);
     this.load.image('fly', 'assets/images/fly.png');
 
     this.load.audio("music", "assets/sound/ProfessorUmlaut.mp3");

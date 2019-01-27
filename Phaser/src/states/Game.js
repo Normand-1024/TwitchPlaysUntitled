@@ -9,7 +9,6 @@ import averagedPlayerController from '../sprites/averagedPlayerController.js'
 
 // Global Variables
 var flyCount = 0
-console.log(mapData)
 
 export default class extends Phaser.State {
   
@@ -62,7 +61,7 @@ export default class extends Phaser.State {
 
     //this.flyCount = 0;
     this.devMode = true;
-    this.playerStartX = 100;
+    this.playerStartX = 300;
     this.playerStartY = 300;
 
     this.baseSpeed = 30;
@@ -119,7 +118,7 @@ export default class extends Phaser.State {
     //          GO HOME
     // ****************************** 
     
-    this.home = this.game.add.sprite(30, game.height/2+100, "house");
+    this.home = this.game.add.sprite(30, 300, "house");
     this.home.scale.x = .5;
     this.home.scale.y = .5;
     
@@ -130,7 +129,6 @@ export default class extends Phaser.State {
     this.game.add.existing(this.averagedPlayerController)
 
     this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.smartflyGroup,this.home]);
-
     this.home.body.immovable = true;
     this.testWebSocket();
 
@@ -171,7 +169,6 @@ export default class extends Phaser.State {
         obj.up = 1;
 
       if (obj != null) {
-        console.log(obj);
         this.game.inputQueue.push(obj);
       }
 
@@ -189,7 +186,6 @@ export default class extends Phaser.State {
       this.playerCanCollide
     );
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
-
     game.physics.arcade.overlap(this.averagedPlayerController, this.smartflyGroup, this.playerFlyCollision, null)
     game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null)
 
@@ -242,17 +238,20 @@ export default class extends Phaser.State {
     for (var i = 0; i < this.mapTiles.length; i++){
       for (var j = 0; j < this.mapTiles[i].length; j++)
       {
-        if (this.mapTiles[i][j] == 1){
-          
-        }
-        else if (this.mapTiles[i][j] == 2) {
+        if (this.mapTiles[i][j] == 0) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'grass', 0);
+        } else if (this.mapTiles[i][j] == 2) {
           if (this.getRandomInt(2) == 0) {
             var w = this.waterGroup.create(j * 100, i * 100, 'water1', 0);
           } else {
             var w = this.waterGroup.create(j * 100, i * 100, 'water2', 0);
           }
-          w.scale.setTo(3.13, 3.13);
+        } else if (this.mapTiles[i][j] == 5) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'flowers', 0);
+        } else if (this.mapTiles[i][j] == 6) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'stump', 0);
         }
+        w.scale.setTo(3.13, 3.13);
       }
     }
       // ******************************
@@ -321,7 +320,8 @@ export default class extends Phaser.State {
       text
     );
     gameOverText.anchor.set(0.5);
-    var gameOverTween = game.add.tween(gameOverText).to( { x:400 , y: this.game.height/2 }, 3000, "Sine.easeInOut", false, 0, 0);
+    var gameOverTween = game.add.tween(gameOverText).to( { x:400 , y: this.game.height/2 }, 2000, "Sine.easeInOut", false, 0, 0);
+
     gameOverTween.onComplete.add(this.gameOverComplete, this)
     gameOverTween.start();
   }
