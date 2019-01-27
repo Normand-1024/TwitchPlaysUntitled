@@ -29,7 +29,6 @@ export default class extends Phaser.State {
       }
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
-        console.log("Pushing into input queue " );
         localObj.addRowOfData(obj.name, obj.direction);
         localObj.game.inputQueue.push(obj);
         localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
@@ -74,12 +73,9 @@ export default class extends Phaser.State {
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
-      asset: 'chameleon',
+      asset: 'mushroom',
       baseSpeed: this.baseSpeed
     })
-    var anim = this.averagedPlayerController.animations.add("walk");
-    this.averagedPlayerController.animations.play("walk", 5, true);
-
     this.game.world.setBounds(0,0,5000,800)
     this.game.camera.follow(this.averagedPlayerController, 2);
 
@@ -171,6 +167,7 @@ export default class extends Phaser.State {
       
       // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
+<<<<<<< HEAD
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
     if (flyCount < 3){
@@ -185,6 +182,15 @@ export default class extends Phaser.State {
     else{
       this.bmpText.setText(flyCount + " flies eaten, the dawn will come.")
     }
+=======
+    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
+    game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
+
+     //CAMERA LOGIC
+
+
+    
+>>>>>>> bee42c0720929960669bd2618734caefa2080030
   } 
 
   restartGame(){
