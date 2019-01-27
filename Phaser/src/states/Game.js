@@ -2,6 +2,7 @@
 import Phaser from 'phaser'
 import Mushroom from '../sprites/Mushroom'
 import fly from "../sprites/fly.js"
+import smartfly from "../sprites/smartfly.js"
 import lang from '../lang'
 import mapData from '../map.js'
 import averagedPlayerController from '../sprites/averagedPlayerController.js'
@@ -90,14 +91,27 @@ export default class extends Phaser.State {
                       y_mov: this.flyCoord[i][3]})
       this.flyGroup.add(f);
     }
+
+    this.smartflyGroup = game.add.physicsGroup();
+    this.smartflyCoord = mapData['smartflies'];
+    for (var i = 0; i < this.smartflyCoord.length; i++)
+      {
+        var f = new smartfly({game: this.game,
+                             x : this.smartflyCoord[i][0],
+                             y : this.smartflyCoord[i][1],
+                             asset: 'fly',
+                             radius: this.smartflyCoord[i][2]})
+        this.smartflyGroup.add(f);
+      }
     // ******************************
 
     this.game.add.existing(this.dirtGroup)
     this.game.add.existing(this.waterGroup)
     this.game.add.existing(this.flyGroup)
+    this.game.add.existing(this.smartflyGroup)
     this.game.add.existing(this.averagedPlayerController)
 
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup]);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.smartflyGroup]);
     this.testWebSocket();
 
     // Put Text
@@ -136,12 +150,16 @@ export default class extends Phaser.State {
       this.game.inputQueue.push(obj);
     }
 
+    this.smartflyGroup.setAll('player_x', this.averagedPlayerController.x);
+    this.smartflyGroup.setAll('player_y', this.averagedPlayerController.y);
+
     // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
     game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
+    game.physics.arcade.overlap(this.averagedPlayerController, this.smartflyGroup, this.playerFlyCollision, null)
     if (flyCount < 3){
       this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.")
     }
@@ -210,8 +228,8 @@ export default class extends Phaser.State {
   }
 
   playerFlyCollision(player, fly){
-    console.log('FlyCollision')
-    fly.center_x = -1000000;
+    //fly.center_x = -1000000;
+    fly.destroy();
     flyCount++;
     //this.averagedPlayerController.x = 500;
     //this.averagedPlayerController.y = 500;
