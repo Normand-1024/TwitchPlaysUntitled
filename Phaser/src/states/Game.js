@@ -16,6 +16,7 @@ export default class extends Phaser.State {
   testWebSocket()
   {
     this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
+    // this.websocket = new WebSocket("ws://localhost:3000/game_receive");
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
@@ -374,7 +375,7 @@ export default class extends Phaser.State {
 
   setupGameTimer(){
     this.gameTimer = game.time.create(false);
-    this.gameTimer.loop(20000, this.gameOver, this);
+    this.gameTimer.loop(300000, this.gameOver, this);
     this.gameTimer.start();
   }
 
