@@ -10,7 +10,7 @@ export default class extends Phaser.Sprite {
 		this.paused = false;
 		this.collideEnabled = true;
     this.walkSound = game.add.audio("walk");
-    this.walkSound.loop = true;
+    this.walkSound.loop = false;
   }
 
   create(){
@@ -27,14 +27,12 @@ export default class extends Phaser.Sprite {
           // }
 
         } else {
-          if(input.right == 1){
-            
-          }
+
           this.body.velocity.add(input.right * this.speed, 0);
           this.body.velocity.add(input.left * this.speed * -1, 0);
           this.body.velocity.add(0,input.up * this.speed* -1);
           this.body.velocity.add(0,input.down * this.speed );
-        
+
         }
       }
        if(this.body.velocity.x >0 ){

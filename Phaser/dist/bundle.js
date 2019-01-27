@@ -11063,7 +11063,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__states_Boot__ = __webpack_require__(/*! ./states/Boot */ 342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__states_Splash__ = __webpack_require__(/*! ./states/Splash */ 343);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__states_Game__ = __webpack_require__(/*! ./states/Game */ 345);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__states_Game___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__states_Game__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__config__ = __webpack_require__(/*! ./config */ 134);
 
 
@@ -11085,7 +11084,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_2_phaser___default.a.Game {
 
     this.state.add('Boot', __WEBPACK_IMPORTED_MODULE_3__states_Boot__["a" /* default */], false);
     this.state.add('Splash', __WEBPACK_IMPORTED_MODULE_4__states_Splash__["a" /* default */], false);
-    this.state.add('Game', __WEBPACK_IMPORTED_MODULE_5__states_Game__["default"], false);
+    this.state.add('Game', __WEBPACK_IMPORTED_MODULE_5__states_Game__["a" /* default */], false);
 
     // with Cordova with need to wait that the device is ready so we will call the Boot state in another file
     if (!window.cordova) {
@@ -11221,12 +11220,19 @@ if ('serviceWorker' in navigator) {
     // load your assets
     //
     this.load.image('mushroom', 'assets/images/mushroom2.png');
-    this.load.image('house', 'assets/images/House.png');
-
+    this.load.image('house', 'assets/images/bush.png');
+    this.load.image('grass', 'assets/images/Grass1.png');
+    this.load.image('flowers', 'assets/images/Grass1d.png');
+    this.load.image('stump', 'assets/images/Grass1a.png');
     this.load.spritesheet('water1', 'assets/images/WaterAnim3.png', 32, 32);
     this.load.spritesheet('water2', 'assets/images/WaterAnim2.png', 32, 32);
     this.load.image('fly', 'assets/images/fly.png');
-    this.load.spritesheet('chameleon', 'assets/images/chameleon.png', 128, 128, 2);
+
+    this.load.audio("music", "assets/sound/ProfessorUmlaut.mp3");
+    this.load.audio("slurp", "assets/sound/slurp.ogg");
+    this.load.audio("walk", "assets/sound/walk.ogg");
+
+    this.load.spritesheet('chameleon', 'assets/images/chameleon.png', 128, 128, 8);
   }
 
   create() {
@@ -11257,12 +11263,698 @@ const centerGameObjects = objects => {
 /*!****************************!*\
   !*** ./src/states/Game.js ***!
   \****************************/
-/*! dynamic exports provided */
+/*! exports provided: default */
 /*! exports used: default */
-/***/ (function(module, __webpack_exports__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: SyntaxError: Unexpected token (133:2)\n\n\u001b[0m \u001b[90m 131 | \u001b[39m    \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgame\u001b[33m.\u001b[39madd\u001b[33m.\u001b[39mexisting(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39maveragedPlayerController)\n \u001b[90m 132 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 133 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m     | \u001b[39m  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 134 | \u001b[39m    \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgame\u001b[33m.\u001b[39mphysics\u001b[33m.\u001b[39marcade\u001b[33m.\u001b[39menable([\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39maveragedPlayerController\u001b[33m,\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mwaterGroup\u001b[33m,\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mflyGroup\u001b[33m,\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msmartflyGroup])\u001b[33m;\u001b[39m\n \u001b[90m 135 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 136 | \u001b[39m    \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgame\u001b[33m.\u001b[39mphysics\u001b[33m.\u001b[39marcade\u001b[33m.\u001b[39menable([\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39maveragedPlayerController\u001b[33m,\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mwaterGroup\u001b[33m,\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mflyGroup\u001b[33m,\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mhome])\u001b[33m;\u001b[39m\u001b[0m\n");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser__ = __webpack_require__(/*! phaser */ 32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sprites_Mushroom__ = __webpack_require__(/*! ../sprites/Mushroom */ 346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__ = __webpack_require__(/*! ../sprites/fly.js */ 347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sprites_smartfly_js__ = __webpack_require__(/*! ../sprites/smartfly.js */ 353);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lang__ = __webpack_require__(/*! ../lang */ 348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__map_js__ = __webpack_require__(/*! ../map.js */ 350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__sprites_averagedPlayerController_js__ = __webpack_require__(/*! ../sprites/averagedPlayerController.js */ 351);
+/* globals __DEV__ */
+
+
+
+
+
+
+
+
+// Global Variables
+var flyCount = 0;
+
+/* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.State {
+
+  testWebSocket() {
+    this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
+    this.websocket.addEventListener('open', function (event) {
+      console.log("connected");
+    });
+    var localObj = this;
+    this.websocket.addEventListener('message', function (event) {
+      console.log("event recieved");
+      console.log('Message from server ' + event.data);
+      var control = JSON.parse(event.data);
+      if (!Array.isArray(control)) {
+        control = [control];
+      }
+      for (var i = 0; i < control.length; i++) {
+        var obj = control[i];
+        // localObj.addRowOfData(obj.name, obj.direction);
+        console.log("Pushing into input queue ");
+        localObj.game.inputQueue.push(obj);
+        localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
+      }
+    });
+
+    this.websocket.addEventListener('close', function (event) {
+      console.log("connection closed");
+    });
+
+    this.websocket.addEventListener('error', function (event) {
+      console.log("connection error");
+    });
+  }
+
+  init() {}
+
+  preload() {
+    this.output;
+  }
+
+  create() {
+    this.game.physics.startSystem(__WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Physics.ARCADE);
+
+    //this.flyCount = 0;
+    this.devMode = true;
+    this.playerStartX = 300;
+    this.playerStartY = 300;
+
+    this.baseSpeed = 30;
+    this.game.inputQueue = [];
+    if (this.devMode) {
+      this.cursors = game.input.keyboard.createCursorKeys();
+    }
+    this.inputQueue = [];
+
+    this.averagedPlayerController = new __WEBPACK_IMPORTED_MODULE_6__sprites_averagedPlayerController_js__["a" /* default */]({
+      game: this.game,
+      x: this.playerStartX,
+      y: this.playerStartY,
+      asset: 'chameleon',
+      baseSpeed: this.baseSpeed
+    });
+    var anim = this.averagedPlayerController.animations.add("walk");
+    this.averagedPlayerController.animations.play("walk", 17, true);
+
+    this.game.world.setBounds(0, 0, 5000, 800);
+    this.game.camera.follow(this.averagedPlayerController, 2);
+    this.placeMapTiles();
+
+    // ******************************
+    //         CREATING FLIES
+    // ******************************
+    this.flyGroup = game.add.physicsGroup();
+    this.flyCoord = __WEBPACK_IMPORTED_MODULE_5__map_js__["a" /* default */]['flies'];
+    for (var i = 0; i < this.flyCoord.length; i++) {
+      var f = new __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__["a" /* default */]({ game: this.game,
+        x: this.flyCoord[i][0],
+        y: this.flyCoord[i][1],
+        asset: 'fly',
+        x_mov: this.flyCoord[i][2],
+        y_mov: this.flyCoord[i][3] });
+      this.flyGroup.add(f);
+    }
+
+    this.smartflyGroup = game.add.physicsGroup();
+    this.smartflyCoord = __WEBPACK_IMPORTED_MODULE_5__map_js__["a" /* default */]['smartflies'];
+    for (var i = 0; i < this.smartflyCoord.length; i++) {
+      var f = new __WEBPACK_IMPORTED_MODULE_3__sprites_smartfly_js__["a" /* default */]({ game: this.game,
+        x: this.smartflyCoord[i][0],
+        y: this.smartflyCoord[i][1],
+        asset: 'fly',
+        radius: this.smartflyCoord[i][2] });
+      this.smartflyGroup.add(f);
+    }
+    // ******************************
+
+    // ****************************** 
+    //          GO HOME
+    // ****************************** 
+
+    this.home = this.game.add.sprite(30, 300, "house");
+    this.home.scale.x = .5;
+    this.home.scale.y = .5;
+
+    this.game.add.existing(this.dirtGroup);
+    this.game.add.existing(this.waterGroup);
+    this.game.add.existing(this.flyGroup);
+    this.game.add.existing(this.smartflyGroup);
+    this.game.add.existing(this.averagedPlayerController);
+
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.smartflyGroup, this.home]);
+    this.home.body.immovable = true;
+    this.testWebSocket();
+
+    // Put Text
+    this.bmpTextBlack = game.add.bitmapText(12, 12, 'gem', flyCount + " / 10 Flies", 30);
+    this.bmpTextBlack.tint = '0x111111';
+    this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
+    this.setupGameTimer();
+
+    this.startMusic();
+    this.attachSounds();
+  }
+
+  update() {
+    if (this.devMode) {
+      var obj = obj = {
+        "right": 0,
+        "left": 0,
+        "down": 0,
+        "up": 0
+      };
+      if (this.cursors.right.isDown) {
+
+        obj.right = 1;
+      }
+      if (this.cursors.left.isDown) {
+
+        obj.left = 1;
+      }
+
+      if (this.cursors.down.isDown) {
+
+        obj.down = 1;
+      }
+      if (this.cursors.up.isDown) obj.up = 1;
+
+      if (obj != null) {
+        this.game.inputQueue.push(obj);
+      }
+    }
+
+    this.smartflyGroup.setAll('player_x', this.averagedPlayerController.x);
+    this.smartflyGroup.setAll('player_y', this.averagedPlayerController.y);
+
+    // this.averagedPlayerController.setInputList(this.game.inputQueue);
+    // Collision Detection
+    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, this.playerCanCollide);
+    game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null);
+    game.physics.arcade.overlap(this.averagedPlayerController, this.smartflyGroup, this.playerFlyCollision, null);
+    game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null);
+
+    if (flyCount < 3) {
+      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.");
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the night will be deadly.");
+    } else if (flyCount < 6) {
+      this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.");
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the night will be harsh.");
+    } else if (flyCount < 8) {
+      this.bmpText.setText(flyCount + " flies eaten, the night will be bearable.");
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the night will be bearable.");
+    } else {
+      this.bmpText.setText(flyCount + " flies eaten, the dawn will come.");
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the dawn will come.");
+    }
+
+    this.bmpText.x = this.game.camera.position.x + 10; //+ this.bmpText_relative_x;
+    this.bmpText.y = this.game.camera.position.y + 10; //+ this.bmpText_relative_y;
+    this.bmpTextBlack.x = this.game.camera.position.x + 12; //+ this.bmpText_relative_x;
+    this.bmpTextBlack.y = this.game.camera.position.y + 12; //+ this.bmpText_relative_y;
+  }
+
+  render() {
+    game.debug.body(this.averagedPlayerController);
+    game.debug.text('Time until nightfall: ' + this.gameTimer.duration.toFixed(0), 32, 72);
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  startMusic() {
+    this.music = game.add.audio('music');
+
+    this.music.play();
+  }
+
+  placeMapTiles() {
+    this.waterGroup = game.add.physicsGroup();
+    this.dirtGroup = game.add.physicsGroup();
+    this.mapTiles = __WEBPACK_IMPORTED_MODULE_5__map_js__["a" /* default */]['maptiles'];
+
+    for (var i = 0; i < this.mapTiles.length; i++) {
+      for (var j = 0; j < this.mapTiles[i].length; j++) {
+        if (this.mapTiles[i][j] == 0) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'grass', 0);
+        } else if (this.mapTiles[i][j] == 2) {
+          if (this.getRandomInt(2) == 0) {
+            var w = this.waterGroup.create(j * 100, i * 100, 'water1', 0);
+          } else {
+            var w = this.waterGroup.create(j * 100, i * 100, 'water2', 0);
+          }
+        } else if (this.mapTiles[i][j] == 5) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'flowers', 0);
+        } else if (this.mapTiles[i][j] == 6) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'stump', 0);
+        }
+        w.scale.setTo(3.13, 3.13);
+      }
+    }
+    // ******************************
+  }
+
+  playerWaterCollision(playerSprite, water) {
+    console.log("Water collision.");
+    playerSprite.stopAllMovement();
+    playerSprite.disableCollision();
+    var stateManager = playerSprite.game.state;
+    var currentStateName = stateManager.current;
+    var currentState = stateManager.states[currentStateName];
+    currentState.gameOver();
+  }
+
+  playerHomeCollision(playerSprite, home) {
+    console.log("Water collision.");
+    playerSprite.stopAllMovement();
+    var stateManager = playerSprite.game.state;
+    var currentStateName = stateManager.current;
+    var currentState = stateManager.states[currentStateName];
+    currentState.gameWin();
+  }
+
+  gameOver() {
+    var centerOfScreenX = this.game.camera.position.x + this.game.camera.width / 2;
+    var centerOfScreenY = this.game.camera.position.y + this.game.camera.height / 2;
+    this.gameOverText = this.add.text(centerOfScreenX, -10, "Game Over!", {
+      font: "Major Mono Display",
+      fontWeight: "bold",
+      fontSize: "32px"
+    });
+    this.gameOverText.anchor.set(0.5);
+    var gameOverTween = game.add.tween(this.gameOverText).to({ x: centerOfScreenX, y: centerOfScreenY }, 1000, "Sine.easeInOut", false, 0, 0);
+    gameOverTween.onComplete.add(this.gameOverComplete, this);
+    gameOverTween.start();
+  }
+
+  gameWin() {
+    var text = "";
+
+    if (flyCount < 3) {
+      text = "You have let down your chameleon children,\r\n and they will hunger";
+    } else if (flyCount < 6) {
+      text = "Your family shall sustain, barely";
+    } else if (flyCount < 8) {
+      text = "Peace and prosperity shall rise tonight";
+    } else {
+      text = "Your family shall grow fat with flys\r\n joy shall overflow!";
+    }
+    var centerOfScreenX = this.game.camera.position + this.game.camera.width / 2;
+    var centerOfScreenY = this.game.camera.height / 2;
+    var gameOverText = this.add.text(400, this.game.height + 100, text);
+    gameOverText.anchor.set(0.5);
+    var gameOverTween = game.add.tween(gameOverText).to({ x: 400, y: this.game.height / 2 }, 2000, "Sine.easeInOut", false, 0, 0);
+
+    gameOverTween.onComplete.add(this.gameOverComplete, this);
+    gameOverTween.start();
+  }
+
+  gameOverComplete() {
+    flyCount = 0;
+    this.state.start(this.state.current);
+    this.gameOverText.destroy();
+  }
+
+  playerFlyCollision(player, fly) {
+    //fly.center_x = -1000000;
+    fly.destroy();
+    player.game.slurpSound.play();
+    flyCount++;
+    //this.averagedPlayerController.x = 500;
+    //this.averagedPlayerController.y = 500;
+  }
+
+  //   function init()
+  // {
+  //   output = document.getElementById("output");
+  //   testWebSocket();
+  // }
+  addRowOfData(name, direction) {
+    var sideTable = document.querySelector("#Inputs");
+    var row = document.createElement("tr");
+    var column1 = document.createElement("td");
+    var column2 = document.createElement("td");
+
+    row.appendChild(column1);
+    row.appendChild(column2);
+    sideTable.appendChild(row);
+
+    column1.appendChild(document.createTextNode(name));
+    column2.appendChild(document.createTextNode(direction));
+
+    var rightDiv = document.querySelector("#RightDiv");
+    rightDiv.scrollTop = rightDiv.scrollHeight;
+  }
+
+  playerCanCollide(playerSprite) {
+    return playerSprite.collideEnabled;
+  }
+
+  setupGameTimer() {
+    this.gameTimer = game.time.create(false);
+    this.gameTimer.loop(20000, this.gameOver, this);
+    this.gameTimer.start();
+  }
+
+  attachSounds() {
+    this.game.slurpSound = this.game.add.audio("slurp");
+  }
+});
+
+/***/ }),
+/* 346 */
+/*!*********************************!*\
+  !*** ./src/sprites/Mushroom.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser__ = __webpack_require__(/*! phaser */ 32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
+
+
+/* unused harmony default export */ var _unused_webpack_default_export = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Sprite {
+  constructor({ game, x, y, asset }) {
+    super(game, x, y, asset);
+    this.anchor.setTo(0.5);
+  }
+
+  update() {
+    this.angle += 1;
+  }
+
+  setInputList(inputList) {
+    this.inputList = inputList;
+  }
+});
+
+/***/ }),
+/* 347 */
+/*!****************************!*\
+  !*** ./src/sprites/fly.js ***!
+  \****************************/
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser__ = __webpack_require__(/*! phaser */ 32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Sprite {
+  constructor({ game, x, y, asset, x_mov, y_mov }) {
+    super(game, x, y, asset);
+    this.anchor.setTo(0.5);
+    this.center_x = x;
+    this.center_y = y;
+    this.x_mov = x_mov;
+    this.y_mov = y_mov;
+    var sincosdata = game.math.sinCosGenerator(200, 1, 1, 2);
+    this.sindata = sincosdata.sin;
+    this.count = 0;
+  }
+
+  update() {
+    this.count = (this.count + 1) % 200;
+    this.x = this.center_x + this.x_mov * this.sindata[this.count];
+    this.y = this.center_y + this.y_mov * this.sindata[this.count];
+  }
+});
+
+/***/ }),
+/* 348 */
+/*!*********************!*\
+  !*** ./src/lang.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_idiom_js__ = __webpack_require__(/*! idiom.js */ 349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_idiom_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_idiom_js__);
+
+
+const lang = __WEBPACK_IMPORTED_MODULE_0_idiom_js___default()({
+  'default': {
+    'welcome': 'Welcome to Phaser + ES6 + Webpack!'
+  },
+  'pt-BR': {
+    'welcome': 'Bem vindo ao Phaser + ES6 + Webpack!'
+  }
+});
+
+/* unused harmony default export */ var _unused_webpack_default_export = (lang(window.navigator.language));
+
+/***/ }),
+/* 349 */
+/*!********************************************!*\
+  !*** ./node_modules/idiom.js/lib/index.js ***!
+  \********************************************/
+/*! dynamic exports provided */
+/*! exports used: default */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends2 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var idiom = function idiom(languages) {
+    if (!languages.default) {
+        throw '[idiom.js] You need to set a default language';
+    }
+
+    return function () {
+        var currentLang = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default';
+        return {
+            get currentLanguage() {
+                return !languages[currentLang] ? 'default' : currentLang;
+            },
+            get languages() {
+                return Object.keys(languages);
+            },
+            extends: function _extends(lib) {
+                var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.currentLanguage;
+
+                if (!languages[name]) {
+                    languages[name] = _extends2({}, lib);
+                } else {
+                    languages[name] = _extends2({}, languages[name], lib);
+                }
+            },
+            text: function text(key) {
+                var lib = languages[this.currentLanguage];
+
+                if (!lib[key]) {
+                    throw '[idiom.js] Any match for key: \'' + key + '\'.';
+                }
+
+                return lib[key];
+            }
+        };
+    };
+};
+
+exports.default = idiom;
+
+/***/ }),
+/* 350 */
+/*!********************!*\
+  !*** ./src/map.js ***!
+  \********************/
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+let mapData;
+/* harmony default export */ __webpack_exports__["a"] = (mapData = {
+                  'maptiles': [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [0, 5, 0, 0, 0, 0, 2, 2, 5, 5, 2, 0, 0, 0, 5, 5, 0, 0, 0, 0, 2, 0, 5, 6, 0, 0, 0, 0, 0, 2, 2, 2, 2], [5, 5, 0, 0, 5, 0, 0, 2, 0, 0, 2, 2, 6, 0, 5, 5, 5, 0, 0, 0, 0, 5, 0, 0, 0, 2, 5, 0, 0, 2, 2, 2, 2], [0, 5, 2, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0, 5, 5, 0, 2, 2, 2, 2], [0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 5, 0, 0, 0, 0, 6, 5, 0, 5, 0, 0, 0, 0, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 5, 5, 5, 2, 2, 2, 0, 0, 0, 0, 0, 5, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]],
+                  'flies': [[600, 400, 100, -100], [1000, 250, 40, 0], [1100, 250, -40, 0], [1150, 400, 0, -40]],
+                  'smartflies': [[1600, 400, 50], [1680, 350, 40], [2050, 600, 60], [2400, 400, 50], [2700, 300, 50]]
+});
+
+/***/ }),
+/* 351 */
+/*!*************************************************!*\
+  !*** ./src/sprites/averagedPlayerController.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser__ = __webpack_require__(/*! phaser */ 32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Sprite {
+  constructor({ game, x, y, asset, baseSpeed }) {
+    super(game, x, y, asset);
+    this.anchor.setTo(0.5);
+    this.speed = baseSpeed;
+    game.physics.arcade.enable(this);
+    this.shrinkCollision(90, 110);
+    this.paused = false;
+    this.collideEnabled = true;
+  }
+
+  update() {
+    if (!this.paused) {
+      if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
+        var input = this.game.inputQueue.shift();
+        if (input == null) {
+          // if(this.body.velocity){
+          //   console.log("reducing velocity");
+          //   this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y*.95);
+          // }
+
+        } else {
+          this.body.velocity.add(input.right * this.speed, 0);
+          this.body.velocity.add(input.left * this.speed * -1, 0);
+          this.body.velocity.add(0, input.up * this.speed * -1);
+          this.body.velocity.add(0, input.down * this.speed);
+          // if (input.direction == "right") {
+          //   this.body.velocity.add(this.speed, 0);
+
+          // }
+          // if (input.direction == "left") {
+          //   this.body.velocity.add(-1 * this.speed, 0);
+          // }
+          // if (input.direction == "up") {
+          //   this.body.velocity.add(0, -1 * this.speed);
+          // }
+          // if (input.direction == "down") {
+          //   this.body.velocity.add(0, this.speed);
+        }
+      }
+      if (this.body.velocity.x > 0) {
+        this.scale.x = 1;
+      }
+      if (this.body.velocity.x < 0) {
+        this.scale.x = -1;
+      }
+
+      if (this.body.velocity) {
+        this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y * .95);
+      }
+    }
+  }
+
+  setInputList(inputList) {
+    this.inputList = inputList;
+  }
+
+  pause() {
+    this.paused = true;
+  }
+
+  unpause() {
+    this.setInputList([]);
+    this.pause = false;
+  }
+
+  shrinkCollision(x, y) {
+    this.body.setSize(this.body.width - x, this.body.height - y, x / 2, y / 2 + 15);
+  }
+
+  stopAllMovement() {
+    this.body.velocity.set(0, 0);
+    this.pause();
+  }
+
+  appendInputList(inputList) {
+    this.inputList.push(inputList);
+  }
+
+  disableCollision() {
+    this.collideEnabled = false;
+  }
+
+  enabledCollision() {
+    this.collideEnabled = true;
+  }
+});
+
+/***/ }),
+/* 352 */,
+/* 353 */
+/*!*********************************!*\
+  !*** ./src/sprites/smartfly.js ***!
+  \*********************************/
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser__ = __webpack_require__(/*! phaser */ 32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Sprite {
+  constructor({ game, x, y, asset, radius }) {
+    super(game, x, y, asset);
+    this.anchor.setTo(0.5);
+    this.center_x = x;
+    this.center_y = y;
+    this.center_x_ori = x;
+    this.center_y_ori = y;
+    this.player_x = 0;
+    this.player_y = 0;
+    var sincosdata = game.math.sinCosGenerator(150, 1, 1, 2);
+    this.sindata = sincosdata.sin;
+    this.cosdata = sincosdata.cos;
+    this.radius = radius;
+    this.count = 0;
+
+    this.alertDist = 200;
+    this.evadeSpeed = 0.01;
+    this.speed_x = 0;
+    this.speed_y = 0;
+  }
+
+  update() {
+    //console.log(this.x, this.y)
+    //var dist = game.math.distanceSq(dist_x, dist_y, this.player_x, this.player_y);
+    var dist_x = this.player_x - this.center_x;
+    var dist_y = this.player_y - this.center_y;
+
+    if (dist_x * dist_x + dist_y * dist_y < this.alertDist * this.alertDist) {
+      // Moving away from player
+      this.speed_x = -dist_x * this.evadeSpeed; //- this.speed_x + dist_x_u * this.evadeSpeed;
+      this.speed_y = -dist_y * this.evadeSpeed; //- this.speed_y + dist_y_u * this.evadeSpeed;
+
+      // Sidestepping the player
+      //this.speed_x = this.speed_x - dist_y_u * this.evadeSpeed;
+      //this.speed_y = this.speed_y + dist_x_u * this.evadeSpeed;
+    } else if (this.center_x_ori != this.center_x || this.center_x_ori != this.center_x) {
+      var diff_x = this.center_x - this.center_x_ori;
+      var diff_y = this.center_y - this.center_y_ori;
+      if (diff_x <= 5 || diff_x >= -5) {
+        this.center_x = this.center_x_ori + diff_x * 0.95;
+      } else {
+        this.center_x = this.cetner_x_ori;
+      }
+      if (diff_y <= 5 || diff_y >= -5) {
+        this.center_y = this.center_y_ori + diff_y * 0.95;
+      } else {
+        this.center_y = this.center_y_ori;
+      }
+    } else {
+      this.speed_x = 0;
+      this.speed_y = 0;
+    }
+
+    this.center_x = this.center_x + this.speed_x;
+    this.center_y = this.center_y + this.speed_y;
+
+    this.count = (this.count + 1) % 150;
+    this.x = this.center_x + this.radius * this.sindata[this.count];
+    this.y = this.center_y + this.radius * this.cosdata[this.count];
+  }
+});
 
 /***/ })
 ],[135]);

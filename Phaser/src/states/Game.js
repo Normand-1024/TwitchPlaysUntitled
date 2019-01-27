@@ -15,7 +15,7 @@ export default class extends Phaser.State {
 
   testWebSocket()
   {
-    this.websocket = new WebSocket("ws://preston.ngrok.io/game_receive");
+    this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
