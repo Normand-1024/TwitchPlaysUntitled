@@ -46,7 +46,7 @@ export default class extends Phaser.State {
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    this.devMode = true;
+    this.devMode = false;
     this.baseSpeed = 100;
     this.game.inputQueue = [];
     let websocket_url="ws://tpg45.herokuapp.com/game_receive";
@@ -61,7 +61,6 @@ export default class extends Phaser.State {
       smoothed: false
     })
 
-    this.inputQueue = []
 
     banner.padding.set(10, 16)
     banner.anchor.setTo(0.5)
@@ -79,6 +78,9 @@ export default class extends Phaser.State {
     // EDIT this.waterCoord TO PLACE WATERS
     // ******************************
     this.waterGroup = game.add.physicsGroup();
+<<<<<<< HEAD
+    this.waterCoord = [ [50, 50], [0, 0]]
+=======
     this.waterCoord = [[0,0],[100,0],[200,0],[300,0],[400,0],[500,0],[600,0],[700,0],[800,0],[900,0],[1000,0], 
     [0,700],[100,700],[200,700],[300,700],[400,700],[500,700],[600,700],[700,700],[800,700],[900,700],[1000,700],
     [0,600],
@@ -91,6 +93,7 @@ export default class extends Phaser.State {
     [700,100],[700,200],[700,300],
     [900,600],
     [1000,200],[1000,300],[1000,600],[1000,500]]
+>>>>>>> WaterBranch
 
     for (var i = 0; i < this.waterCoord.length; i++)
       {
@@ -151,9 +154,13 @@ export default class extends Phaser.State {
       this.game.inputQueue.push(obj);
       // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
+<<<<<<< HEAD
+      game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
+=======
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
     game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
     
+>>>>>>> WaterBranch
   } 
 
   restartGame(){
