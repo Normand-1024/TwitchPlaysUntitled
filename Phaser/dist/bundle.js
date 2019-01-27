@@ -11711,7 +11711,7 @@ var flyCount = 0;
     this.count = 0;
 
     this.alertDist = 200;
-    this.evadeSpeed = 0.01;
+    this.evadeSpeed = 0.005;
     this.speed_x = 0;
     this.speed_y = 0;
   }
