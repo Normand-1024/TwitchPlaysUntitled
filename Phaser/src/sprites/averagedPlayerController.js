@@ -10,41 +10,46 @@ export default class extends Phaser.Sprite {
 		this.paused = false;
   }
 
-  update () {
-  	if (!this.paused)
-    {
-      if (this.inputList != null && this.inputList.length > 0) {
-        var input = this.inputList.pop();
+  update (){
+    if (!this.paused) {
+      if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
+        var input = this.game.inputQueue.shift();
         if (input == null) {
-          return;
-        }
+          // if(this.body.velocity){
+          //   console.log("reducing velocity");
+          //   this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y*.95);
+          // }
 
-        if (input.direction == "right") {
-          this.body.velocity.add(this.speed, 0);
+        } else {
+          if (input.direction == "right") {
+            this.body.velocity.add(this.speed, 0);
+
+          }
+          if (input.direction == "left") {
+            this.body.velocity.add(-1 * this.speed, 0);
+          }
+          if (input.direction == "up") {
+            this.body.velocity.add(0, -1 * this.speed);
+          }
+          if (input.direction == "down") {
+            this.body.velocity.add(0, this.speed);
+          }
         }
-        if (input.direction == "left") {
-          this.body.velocity.add(-1 * this.speed, 0);
-        }
-        if (input.direction == "up") {
-          this.body.velocity.add(0, -1 * this.speed);
-        }
-        if (input.direction == "down") {
-          this.body.velocity.add(0, this.speed);
-        }
-      } else {
-        this.body.velocity.set(0, 0);
+      }
+
+
+      if (this.body.velocity) {
+        this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y * .95);
       }
     }
-
-
   }
 
-  stopAllMovement(){
-  	this.body.velocity.set(0,0);
-  	this.pause();
-	}
 
-	pause(){
+  setInputList(inputList) {
+    this.inputList = inputList;
+  }
+
+  pause(){
     this.paused = true;
   }
 
@@ -53,12 +58,13 @@ export default class extends Phaser.Sprite {
     this.pause = false;
   }
 
-	shrinkCollision(x, y){
-  	this.body.setSize(this.body.width - x, this.body.height - y, x/2, y/2)
-	}
+  shrinkCollision(x, y){
+    this.body.setSize(this.body.width - x, this.body.height - y, x/2, y/2)
+  }
 
-  setInputList(inputList){
-  	this.inputList = inputList;
+  stopAllMovement(){
+    this.body.velocity.set(0,0);
+    this.pause();
   }
 
   appendInputList(inputList){
