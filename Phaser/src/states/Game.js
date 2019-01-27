@@ -3,10 +3,12 @@ import Phaser from 'phaser'
 import Mushroom from '../sprites/Mushroom'
 import fly from "../sprites/fly.js"
 import lang from '../lang'
+import mapData from '../map.js'
 import averagedPlayerController from '../sprites/averagedPlayerController.js'
 
 // Global Variables
 var flyCount = 0
+console.log(mapData)
 
 export default class extends Phaser.State {
   
@@ -71,44 +73,13 @@ export default class extends Phaser.State {
     this.game.world.setBounds(0,0,5000,800)
     this.game.camera.follow(this.averagedPlayerController, 2);
 
-    // ******************************
-    //        CREATING WATER TILES
-    // EDIT this.waterCoord TO PLACE WATERS
-    // ******************************
-    this.waterGroup = game.add.physicsGroup();
-<<<<<<< HEAD
-    this.waterCoord = [[0,0],[100,0],[200,0],[300,0],[400,0],[500,0],[600,0],[700,0],[800,0],[900,0],[1000,0], [1100, 0], [1200, 0], [1300, 0], [1400, 0], [1500, 0], [1600, 0], [1700, 0], [1800, 0], [1900, 0], [2000, 0], [2100, 0], [2200, 0], [2300, 0], [2400, 0], [2500, 0], [2600, 0], [2700, 0], [2800, 0], [2900, 0], [3000, 0],
-    [0,700],[100,700],[200,700],[300,700],[400,700],[500,700],[600,700],[700,700],[800,700],[900,700],[1000,700], [1100, 700], [1200, 700], [1300, 700], [1400, 700], [1500, 700], [1600, 700], [1700, 700], [1800, 700], [1900, 700], [2000, 700], [2100, 700], [2200, 700], [2300, 700], [2400, 700], [2500, 700], [2600, 700], [2700, 700], [2800, 700], [2900, 700], [3000, 700],
-    [0,600],
-    [100,500],[100,600],
-    [200,400],[200,500],[200,600],
-    [300,100],[300,400],[300,500],[300,600],
-    [400,100],[400,400],[400,500],[400,600],
-    [500,100],[500,500],[500,600],
-    [600,100],[600,600],[600,200],
-    [700,100],[700,200],[700,300],
-    [900,600],
-    [1000,200],[1000,300],[1000,600],
-    [1100,300],[1100,600]]
+    this.placeMapTiles();
 
-    for (var i = 0; i < this.waterCoord.length; i++)
-      {
-        var c = this.waterGroup.create(this.waterCoord[i][0], this.waterCoord[i][1], 'water', 0)
-        c.scale.setTo(1, 1);
-      }
-    // ******************************
-
-=======
-    this.placeWaterTiles();
->>>>>>> 1a8824a4fe957a94df15588dd89d245e6bc1de41
     // ******************************
     //         CREATING FLIES
     // ******************************
     this.flyGroup = game.add.physicsGroup();
-    this.flyCoord = [[600, 400, 100, -100],
-                    [1000, 250, 40, 0],
-                    [1100, 250, -40, 0],
-                    [1150, 400, 0, -40]]
+    this.flyCoord = mapData['flies']
     for (var i = 0; i < this.flyCoord.length; i++)
     {
       var f = new fly({game: this.game,
@@ -121,6 +92,7 @@ export default class extends Phaser.State {
     }
     // ******************************
 
+    this.game.add.existing(this.dirtGroup)
     this.game.add.existing(this.waterGroup)
     this.game.add.existing(this.flyGroup)
     this.game.add.existing(this.averagedPlayerController)
@@ -188,36 +160,26 @@ export default class extends Phaser.State {
     game.debug.body(this.averagedPlayerController)
   }
 
-  placeWaterTiles(){
-    // ******************************
-    //        CREATING WATER TILES
-    // EDIT this.waterCoord TO PLACE WATERS
-    // ******************************
+  placeMapTiles(){
     this.waterGroup = game.add.physicsGroup();
-    this.waterCoord = [[0,0],[100,0],[200,0],[300,0],[400,0],[500,0],[600,0],[700,0],[800,0],[900,0],[1000,0],
-      [0,700],[100,700],[200,700],[300,700],[400,700],[500,700],[600,700],[700,700],[800,700],[900,700],[1000,700],
-      [0,600],
-      [100,500],[100,600],
-      [200,400],[200,500],[200,600],
-      [300,100],[300,400],[300,500],[300,600],
-      [400,100],[400,400],[400,500],[400,600],
-      [500,100],[500,500],[500,600],
-      [600,100],[600,600],[600,200],
-      [700,100],[700,200],[700,300],
-      [900,600],
-      [1000,200],[1000,300],[1000,600],[1000,500]]
+    this.dirtGroup = game.add.physicsGroup();
+    this.mapTiles = mapData['maptiles'];
 
-
-    for (var i = 0; i < this.waterCoord.length; i++)
-    {
-      var c = this.waterGroup.create(this.waterCoord[i][0], this.waterCoord[i][1], 'water', 0)
-      c.scale.setTo(1, 1);
+    for (var i = 0; i < this.mapTiles.length; i++){
+      for (var j = 0; j < this.mapTiles[i].length; j++)
+      {
+        if (this.mapTiles[i][j] == 1){
+          
+        }
+        else if (this.mapTiles[i][j] == 2){
+          var w = this.waterGroup.create(j * 100, i * 100, 'water', 0);
+        }
+      }
     }
-    // ******************************
+      // ******************************
   }
 
   playerWaterCollision(playerSprite, water){
-    console.log("Water collision.");
     // WTF, do we really have to do this?
     playerSprite.stopAllMovement();
     var stateManager = playerSprite.game.state;
