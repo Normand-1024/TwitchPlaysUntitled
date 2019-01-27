@@ -13,7 +13,7 @@ REDIS_CHAN = 'chat'
 REDIS_COMMAND_CHAN = 'command'
 
 CHUNKING_DIVISOR = 2
-QUEUE_TIMESTEPS = .5
+QUEUE_TIMESTEPS = .1
 
 app = Flask(__name__)
 app.debug = 'DEBUG' in os.environ
