@@ -329,6 +329,7 @@ export default class extends Phaser.State {
 
   gameOverComplete(){
     flyCount = 0;
+    this.music.stop();
     this.state.start(this.state.current);
     this.gameOverText.destroy()
   }
