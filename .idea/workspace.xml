@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14b10452-7ab7-43ec-ad3e-9134cee8ae11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/dist/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/src/FontLoader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/src/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aggregator/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/aggregator/app.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/aggregator/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+            <state relative-caret-position="314">
+              <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -212,12 +208,12 @@
       <updated>1548470061941</updated>
       <workItem from="1548470064234" duration="3082000" />
       <workItem from="1548549442784" duration="5756000" />
-      <workItem from="1548556383067" duration="7134000" />
+      <workItem from="1548556383067" duration="10218000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33315000" />
+    <option name="totallyTimeSpent" value="36399000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -490,8 +486,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/aggregator/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+        <state relative-caret-position="314">
+          <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
