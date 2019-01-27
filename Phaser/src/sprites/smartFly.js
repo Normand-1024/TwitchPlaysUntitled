@@ -30,7 +30,6 @@ export default class extends Phaser.Sprite {
 
     if (dist_x * dist_x + dist_y * dist_y < this.alertDist * this.alertDist){
       // Moving away from player
-      console.log('1')
       this.speed_x = - dist_x * this.evadeSpeed;//- this.speed_x + dist_x_u * this.evadeSpeed;
       this.speed_y = - dist_y * this.evadeSpeed;//- this.speed_y + dist_y_u * this.evadeSpeed;
 
