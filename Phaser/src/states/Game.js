@@ -130,12 +130,8 @@ export default class extends Phaser.State {
     this.game.add.existing(this.smartflyGroup)
     this.game.add.existing(this.averagedPlayerController)
 
-<<<<<<< HEAD
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.smartflyGroup]);
-=======
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.home]);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.smartflyGroup, this.home]);
     this.home.body.immovable = true;
->>>>>>> e7fe7f77cbae9fbb95c647ee2a0a16ce2a473070
     this.testWebSocket();
 
     // Put Text
@@ -189,12 +185,8 @@ export default class extends Phaser.State {
       this.playerCanCollide
     );
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
-<<<<<<< HEAD
     game.physics.arcade.overlap(this.averagedPlayerController, this.smartflyGroup, this.playerFlyCollision, null)
-=======
-    game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null);
-
->>>>>>> e7fe7f77cbae9fbb95c647ee2a0a16ce2a473070
+    game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null)
     if (flyCount < 3){
       this.bmpText.setText(flyCount + " flies eaten, the night deadly.")
     }

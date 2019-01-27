@@ -16,10 +16,10 @@ export default class extends Phaser.State {
     this.load.image('mushroom', 'assets/images/mushroom2.png');
     this.load.image('house', 'assets/images/House.png');
     
-    this.load.spritesheet('water1', 'assets/images/WaterAnim3.png', 32,  32);
-    this.load.spritesheet('water2', 'assets/images/WaterAnim2.png', 32,  32);
+    this.load.spritesheet('water1', 'assets/images/WaterAnim3.png', 32,  32, 2);
+    this.load.spritesheet('water2', 'assets/images/WaterAnim2.png', 32,  32, 2);
     this.load.image('fly', 'assets/images/fly.png');
-    this.load.spritesheet('chameleon', 'assets/images/chameleon.png', 128,128, 2);
+    this.load.spritesheet('chameleon', 'assets/images/chameleon.png', 128,128, 8);
   }
 
   create () {
