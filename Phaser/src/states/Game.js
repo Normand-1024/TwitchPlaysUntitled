@@ -9,7 +9,6 @@ import averagedPlayerController from '../sprites/averagedPlayerController.js'
 
 // Global Variables
 var flyCount = 0
-console.log(mapData)
 
 export default class extends Phaser.State {
   
@@ -62,7 +61,7 @@ export default class extends Phaser.State {
 
     //this.flyCount = 0;
     this.devMode = true;
-    this.playerStartX = 100;
+    this.playerStartX = 300;
     this.playerStartY = 300;
 
     this.baseSpeed = 30;
@@ -84,7 +83,6 @@ export default class extends Phaser.State {
 
     this.game.world.setBounds(0,0,5000,800)
     this.game.camera.follow(this.averagedPlayerController, 2);
-
     this.placeMapTiles();
 
     // ******************************
@@ -120,7 +118,7 @@ export default class extends Phaser.State {
     //          GO HOME
     // ****************************** 
     
-    this.home = this.game.add.sprite(30, game.height/2+100, "house");
+    this.home = this.game.add.sprite(30, 300, "house");
     this.home.scale.x = .5;
     this.home.scale.y = .5;
     
@@ -130,18 +128,18 @@ export default class extends Phaser.State {
     this.game.add.existing(this.smartflyGroup)
     this.game.add.existing(this.averagedPlayerController)
 
-<<<<<<< HEAD
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.smartflyGroup]);
-=======
-    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.home]);
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.smartflyGroup,this.home]);
     this.home.body.immovable = true;
->>>>>>> e7fe7f77cbae9fbb95c647ee2a0a16ce2a473070
     this.testWebSocket();
 
     // Put Text
+    this.bmpTextBlack = game.add.bitmapText(12, 12, 'gem', flyCount + " / 10 Flies", 30);
+    this.bmpTextBlack.tint = '0x111111'
     this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
-
     this.setupGameTimer();
+
+    this.startMusic()
+    this.attachSounds();
   }
 
   update() {
@@ -171,7 +169,6 @@ export default class extends Phaser.State {
         obj.up = 1;
 
       if (obj != null) {
-        console.log(obj);
         this.game.inputQueue.push(obj);
       }
 
@@ -189,24 +186,31 @@ export default class extends Phaser.State {
       this.playerCanCollide
     );
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
-<<<<<<< HEAD
     game.physics.arcade.overlap(this.averagedPlayerController, this.smartflyGroup, this.playerFlyCollision, null)
-=======
-    game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null);
+    game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null)
 
->>>>>>> e7fe7f77cbae9fbb95c647ee2a0a16ce2a473070
     if (flyCount < 3){
-      this.bmpText.setText(flyCount + " flies eaten, the night deadly.")
+      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.")
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the night will be deadly.")
     }
     else if (flyCount < 6){
       this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.")
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the night will be harsh.")
     }
     else if (flyCount < 8){
       this.bmpText.setText(flyCount + " flies eaten, the night will be bearable.")
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the night will be bearable.")
     }
     else{
       this.bmpText.setText(flyCount + " flies eaten, the dawn will come.")
+      this.bmpTextBlack.setText(flyCount + " flies eaten, the dawn will come.")
     }
+    
+    this.bmpText.x = this.game.camera.position.x + 10; //+ this.bmpText_relative_x;
+    this.bmpText.y = this.game.camera.position.y + 10; //+ this.bmpText_relative_y;
+    this.bmpTextBlack.x = this.game.camera.position.x + 12; //+ this.bmpText_relative_x;
+    this.bmpTextBlack.y = this.game.camera.position.y + 12; //+ this.bmpText_relative_y;
+
   }
 
   render(){
@@ -218,6 +222,14 @@ export default class extends Phaser.State {
     return Math.floor(Math.random() * Math.floor(max));
   }
 
+
+  startMusic(){
+    this.music = game.add.audio('music');
+
+    this.music.play();
+  }
+
+
   placeMapTiles(){
     this.waterGroup = game.add.physicsGroup();
     this.dirtGroup = game.add.physicsGroup();
@@ -226,17 +238,20 @@ export default class extends Phaser.State {
     for (var i = 0; i < this.mapTiles.length; i++){
       for (var j = 0; j < this.mapTiles[i].length; j++)
       {
-        if (this.mapTiles[i][j] == 1){
-          
-        }
-        else if (this.mapTiles[i][j] == 2) {
+        if (this.mapTiles[i][j] == 0) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'grass', 0);
+        } else if (this.mapTiles[i][j] == 2) {
           if (this.getRandomInt(2) == 0) {
             var w = this.waterGroup.create(j * 100, i * 100, 'water1', 0);
           } else {
             var w = this.waterGroup.create(j * 100, i * 100, 'water2', 0);
           }
-          w.scale.setTo(3.13, 3.13);
+        } else if (this.mapTiles[i][j] == 5) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'flowers', 0);
+        } else if (this.mapTiles[i][j] == 6) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'stump', 0);
         }
+        w.scale.setTo(3.13, 3.13);
       }
     }
       // ******************************
@@ -305,13 +320,15 @@ export default class extends Phaser.State {
       text
     );
     gameOverText.anchor.set(0.5);
-    var gameOverTween = game.add.tween(gameOverText).to( { x:400 , y: this.game.height/2 }, 3000, "Sine.easeInOut", false, 0, 0);
+    var gameOverTween = game.add.tween(gameOverText).to( { x:400 , y: this.game.height/2 }, 2000, "Sine.easeInOut", false, 0, 0);
+
     gameOverTween.onComplete.add(this.gameOverComplete, this)
     gameOverTween.start();
   }
 
   gameOverComplete(){
     flyCount = 0;
+    this.music.stop();
     this.state.start(this.state.current);
     this.gameOverText.destroy()
   }
@@ -319,6 +336,7 @@ export default class extends Phaser.State {
   playerFlyCollision(player, fly){
     //fly.center_x = -1000000;
     fly.destroy();
+    player.game.slurpSound.play();
     flyCount++;
     //this.averagedPlayerController.x = 500;
     //this.averagedPlayerController.y = 500;
@@ -361,4 +379,7 @@ export default class extends Phaser.State {
     this.gameTimer.start();
   }
 
+  attachSounds(){
+    this.game.slurpSound = this.game.add.audio("slurp");
+  }
 }
