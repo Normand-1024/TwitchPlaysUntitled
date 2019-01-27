@@ -14,11 +14,9 @@ export default class extends Phaser.State {
   testWebSocket()
   {
     this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
-    var webLocal = this.websocket;
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
-    var localObj = this;
     this.websocket.addEventListener('message', function (event) {
       console.log("event recieved");
       console.log('Message from server ' + event.data);
@@ -51,29 +49,19 @@ export default class extends Phaser.State {
 
     //this.flyCount = 0;
     this.devMode = true;
+    this.playerStartX = 100;
+    this.playerStartY = 300;
     this.baseSpeed = 100;
     this.game.inputQueue = [];
-    let websocket_url="ws://tpg45.herokuapp.com/game_receive";
-
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
     }
-    //const bannerText = lang.text('welcome')
-    //let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
-    //  font: '40px Bangers',
-    //  fill: '#77BFA3',
-    //  smoothed: false
-    //})
-
     this.inputQueue = []
 
-    //banner.padding.set(10, 16)
-    //banner.anchor.setTo(0.5)
-    
     this.averagedPlayerController = new averagedPlayerController({
       game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
+      x: this.playerStartX,
+      y: this.playerStartY,
       asset: 'chameleon',
       baseSpeed: this.baseSpeed
     })
@@ -88,6 +76,7 @@ export default class extends Phaser.State {
     // EDIT this.waterCoord TO PLACE WATERS
     // ******************************
     this.waterGroup = game.add.physicsGroup();
+<<<<<<< HEAD
     this.waterCoord = [[0,0],[100,0],[200,0],[300,0],[400,0],[500,0],[600,0],[700,0],[800,0],[900,0],[1000,0], [1100, 0], [1200, 0], [1300, 0], [1400, 0], [1500, 0], [1600, 0], [1700, 0], [1800, 0], [1900, 0], [2000, 0], [2100, 0], [2200, 0], [2300, 0], [2400, 0], [2500, 0], [2600, 0], [2700, 0], [2800, 0], [2900, 0], [3000, 0],
     [0,700],[100,700],[200,700],[300,700],[400,700],[500,700],[600,700],[700,700],[800,700],[900,700],[1000,700], [1100, 700], [1200, 700], [1300, 700], [1400, 700], [1500, 700], [1600, 700], [1700, 700], [1800, 700], [1900, 700], [2000, 700], [2100, 700], [2200, 700], [2300, 700], [2400, 700], [2500, 700], [2600, 700], [2700, 700], [2800, 700], [2900, 700], [3000, 700],
     [0,600],
@@ -109,6 +98,9 @@ export default class extends Phaser.State {
       }
     // ******************************
 
+=======
+    this.placeWaterTiles();
+>>>>>>> 1a8824a4fe957a94df15588dd89d245e6bc1de41
     // ******************************
     //         CREATING FLIES
     // ******************************
@@ -140,40 +132,42 @@ export default class extends Phaser.State {
     this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
   }
 
-  update(){
-    if(this.devMode){
+  update() {
+    if (this.devMode) {
       var obj;
-      if(this.cursors.right.isDown){
+      if (this.cursors.right.isDown) {
 
         obj = {
-          "direction":"right"
+          "direction": "right"
         }
       }
-       if(this.cursors.left.isDown){
+      if (this.cursors.left.isDown) {
 
         obj = {
-          "direction":"left"
+          "direction": "left"
         }
       }
-      
-      if(this.cursors.down.isDown){
+
+      if (this.cursors.down.isDown) {
 
         obj = {
-          "direction":"down"
+          "direction": "down"
         }
       }
-      if(this.cursors.up.isDown)
+      if (this.cursors.up.isDown)
 
         obj = {
-          "direction":"up"
+          "direction": "up"
         }
 
-        if(obj!=null);
-            this.game.inputQueue.push(obj);
-      }
-      
-      // this.averagedPlayerController.setInputList(this.game.inputQueue);
+      if (obj != null) ;
+      this.game.inputQueue.push(obj);
+    }
+
+    // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
+    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
+    game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
     if (flyCount < 3){
@@ -188,16 +182,69 @@ export default class extends Phaser.State {
     else{
       this.bmpText.setText(flyCount + " flies eaten, the dawn will come.")
     }
-  } 
-
-  restartGame(){
-    this.restart()
   }
 
-  playerWaterCollision(){
-    console.log('WaterCollision')
-    //this.averagedPlayerController.x = 500;
-    //this.averagedPlayerController.y = 500;
+  render(){
+    game.debug.body(this.averagedPlayerController)
+  }
+
+  placeWaterTiles(){
+    // ******************************
+    //        CREATING WATER TILES
+    // EDIT this.waterCoord TO PLACE WATERS
+    // ******************************
+    this.waterGroup = game.add.physicsGroup();
+    this.waterCoord = [[0,0],[100,0],[200,0],[300,0],[400,0],[500,0],[600,0],[700,0],[800,0],[900,0],[1000,0],
+      [0,700],[100,700],[200,700],[300,700],[400,700],[500,700],[600,700],[700,700],[800,700],[900,700],[1000,700],
+      [0,600],
+      [100,500],[100,600],
+      [200,400],[200,500],[200,600],
+      [300,100],[300,400],[300,500],[300,600],
+      [400,100],[400,400],[400,500],[400,600],
+      [500,100],[500,500],[500,600],
+      [600,100],[600,600],[600,200],
+      [700,100],[700,200],[700,300],
+      [900,600],
+      [1000,200],[1000,300],[1000,600],[1000,500]]
+
+
+    for (var i = 0; i < this.waterCoord.length; i++)
+    {
+      var c = this.waterGroup.create(this.waterCoord[i][0], this.waterCoord[i][1], 'water', 0)
+      c.scale.setTo(1, 1);
+    }
+    // ******************************
+  }
+
+  playerWaterCollision(playerSprite, water){
+    console.log("Water collision.");
+    // WTF, do we really have to do this?
+    playerSprite.stopAllMovement();
+    var stateManager = playerSprite.game.state;
+    var currentStateName = stateManager.current;
+    var currentState = stateManager.states[currentStateName];
+    currentState.gameOver();
+  }
+
+  gameOver(){
+    var centerOfScreenX = this.game.camera.position + this.game.camera.width/2;
+    var centerOfScreenY = this.game.camera.height/2;
+    var gameOverText = this.add.text(
+      centerOfScreenX, centerOfScreenY-10,
+      "Game Over!"
+    );
+    gameOverText.anchor.set(0.5);
+    var gameOverTween = game.add.tween(gameOverText).to( { x: centerOfScreenX, y: centerOfScreenY }, 1000, "Sine.easeInOut", false, 0, 0);
+    gameOverTween.onComplete.add(this.gameOverComplete, this)
+    gameOverTween.start();
+  }
+
+  gameOverComplete(){
+    this.state.start(this.state.current);
+  }
+
+  setupTweens(){
+    return gameOverTween
   }
 
   playerFlyCollision(player, fly){
