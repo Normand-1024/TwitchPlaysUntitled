@@ -50,7 +50,7 @@ export default class extends Phaser.State {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //this.flyCount = 0;
-    this.devMode = false;
+    this.devMode = true;
     this.playerStartX = 100;
     this.playerStartY = 300;
 
@@ -116,34 +116,35 @@ export default class extends Phaser.State {
 
   update() {
     if (this.devMode) {
-      var obj;
+      var obj = obj = {
+          "right" : 0,
+          "left" : 0,
+          "down" : 0,
+          "up" : 0
+        }
       if (this.cursors.right.isDown) {
 
-        obj = {
-          "direction": "right"
-        }
+        obj.right = 1;
+        
       }
       if (this.cursors.left.isDown) {
 
-        obj = {
-          "direction": "left"
-        }
+        obj.left = 1;
       }
 
       if (this.cursors.down.isDown) {
 
-        obj = {
-          "direction": "down"
-        }
+        obj.down = 1;
       }
       if (this.cursors.up.isDown)
 
-        obj = {
-          "direction": "up"
-        }
+        obj.up = 1;
 
-      if (obj != null) ;
-      this.game.inputQueue.push(obj);
+      if (obj != null) {
+        console.log(obj);
+        this.game.inputQueue.push(obj);
+      }
+
     }
 
     // this.averagedPlayerController.setInputList(this.game.inputQueue);
