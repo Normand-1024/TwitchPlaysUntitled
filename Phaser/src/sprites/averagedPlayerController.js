@@ -10,6 +10,7 @@ export default class extends Phaser.Sprite {
 		this.paused = false;
 		this.collideEnabled = true;
   }
+
   update (){
     if (!this.paused) {
       if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
