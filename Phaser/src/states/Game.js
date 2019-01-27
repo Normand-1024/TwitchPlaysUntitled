@@ -69,9 +69,12 @@ export default class extends Phaser.State {
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
-      asset: 'mushroom',
+      asset: 'chameleon',
       baseSpeed: this.baseSpeed
     })
+    var anim = this.averagedPlayerController.animations.add("walk");
+    this.averagedPlayerController.animations.play("walk", 5, true);
+
     this.game.world.setBounds(0,0,5000,800)
     this.game.camera.follow(this.averagedPlayerController, 2);
 
