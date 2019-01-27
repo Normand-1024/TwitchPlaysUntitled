@@ -209,7 +209,12 @@ export default class extends Phaser.State {
     var centerOfScreenY = this.game.camera.position.y + this.game.camera.height/2;
     this.gameOverText = this.add.text(
       centerOfScreenX, -10,
-      "Game Over!"
+      "Game Over!",
+      {
+        font: "Major Mono Display",
+        fontWeight: "bold",
+        fontSize: "32px"
+      }
     );
     this.gameOverText.anchor.set(0.5);
     var gameOverTween = game.add.tween(

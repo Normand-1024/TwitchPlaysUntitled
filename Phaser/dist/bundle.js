@@ -11443,7 +11443,11 @@ var flyCount = 0;
   gameOver() {
     var centerOfScreenX = this.game.camera.position.x + this.game.camera.width / 2;
     var centerOfScreenY = this.game.camera.position.y + this.game.camera.height / 2;
-    this.gameOverText = this.add.text(centerOfScreenX, -10, "Game Over!");
+    this.gameOverText = this.add.text(centerOfScreenX, -10, "Game Over!", {
+      font: "Major Mono Display",
+      fontWeight: "bold",
+      fontSize: "32px"
+    });
     this.gameOverText.anchor.set(0.5);
     var gameOverTween = game.add.tween(this.gameOverText).to({ x: centerOfScreenX, y: centerOfScreenY }, 1000, "Sine.easeInOut", false, 0, 0);
     gameOverTween.onComplete.add(this.gameOverComplete, this);
@@ -11653,7 +11657,7 @@ exports.default = idiom;
     this.anchor.setTo(0.5);
     this.speed = baseSpeed;
     game.physics.arcade.enable(this);
-    this.shrinkCollision(80, 80);
+    this.shrinkCollision(90, 110);
     this.paused = false;
     this.collideEnabled = true;
   }
@@ -11704,7 +11708,7 @@ exports.default = idiom;
   }
 
   shrinkCollision(x, y) {
-    this.body.setSize(this.body.width - x, this.body.height - y, x / 2, y / 2);
+    this.body.setSize(this.body.width - x, this.body.height - y, x / 2, y / 2 + 15);
   }
 
   stopAllMovement() {

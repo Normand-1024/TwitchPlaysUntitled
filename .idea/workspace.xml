@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14b10452-7ab7-43ec-ad3e-9134cee8ae11" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Phaser/src/FontLoader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/dist/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Phaser/dist/bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/bundle.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Phaser/src/states/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/states/Game.js" afterDir="false" />
     </list>
@@ -23,13 +23,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Phaser/src/states/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="447">
-              <caret line="109" selection-start-line="109" selection-end-line="109" />
+            <state relative-caret-position="115">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Phaser/src/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
+              <folding>
+                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -38,8 +50,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="75" column="27" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
+            <state relative-caret-position="663">
+              <caret line="62" column="78" selection-start-line="62" selection-start-column="78" selection-end-line="62" selection-end-column="78" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Phaser/src/FontLoader.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
         </entry>
@@ -50,8 +71,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -69,6 +90,9 @@
       <find>append</find>
       <find>appendl</find>
       <find>lcol</find>
+      <find>t</find>
+      <find>bmpText</find>
+      <find>add.text</find>
     </findStrings>
     <replaceStrings>
       <replace>col</replace>
@@ -103,8 +127,10 @@
         <option value="$PROJECT_DIR$/aggregator/static/css/application.css" />
         <option value="$PROJECT_DIR$/aggregator/templates/player_client.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Phaser/src/fontLoader.js" />
         <option value="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" />
         <option value="$PROJECT_DIR$/Phaser/src/states/Game.js" />
+        <option value="$PROJECT_DIR$/Phaser/src/index.html" />
       </list>
     </option>
   </component>
@@ -205,12 +231,12 @@
       <updated>1548470061941</updated>
       <workItem from="1548470064234" duration="3082000" />
       <workItem from="1548549442784" duration="5756000" />
-      <workItem from="1548556383067" duration="4547000" />
+      <workItem from="1548556383067" duration="5988000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30728000" />
+    <option name="totallyTimeSpent" value="32169000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -384,13 +410,6 @@
     <entry file="file://$PROJECT_DIR$/Phaser/src/config.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Phaser/src/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Phaser/dist/bundle.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="978">
@@ -458,17 +477,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="75" column="27" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
+        <state relative-caret-position="663">
+          <caret line="62" column="78" selection-start-line="62" selection-start-column="78" selection-end-line="62" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Phaser/src/FontLoader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Phaser/src/states/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
+        <state relative-caret-position="115">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Phaser/src/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
