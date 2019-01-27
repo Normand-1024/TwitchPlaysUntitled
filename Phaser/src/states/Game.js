@@ -43,7 +43,7 @@ export default class extends Phaser.State {
 
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.devMode = true;
+    this.devMode = false;
     this.baseSpeed = 1000;
     this.inputQueue = [];
     let websocket_url="ws://tpg45.herokuapp.com/game_receive";
@@ -108,6 +108,27 @@ export default class extends Phaser.State {
     }
 
     addRowOfData(name, direction){
+
+      var sideTable = document.querySelector("#Inputs");
+      if(sideTable == null) {alert("fuck you")};
+      var row = document.createElement("tr");
+      var column1 = document.createElement("td");
+      var column2 = document.createElement("td");
+
+      row.appendChild(column1);
+      row.appendChild(column2);
+      sideTable.appendChild(row);
+
+
+
+      column1.appendChild(document.createTextNode(name));
+      column2.appendChild(document.createTextNode(direction));
+
+      while (sideTable.childElementCount > 50) {
+        myNode.removeChild(myNode.firstChild);
+      }
+      var rightDiv = document.querySelector("#RightDiv");
+      rightDiv.scrollTop = rightDiv.scrollHeight;
     }
 
     //   function init()
