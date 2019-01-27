@@ -6,7 +6,7 @@ export default class extends Phaser.Sprite {
     this.anchor.setTo(0.5);
     this.speed = baseSpeed;
    	game.physics.arcade.enable(this);
-		this.shrinkCollision(40, 40);
+		this.shrinkCollision(80, 80);
 		this.paused = false;
   }
 
