@@ -74,8 +74,11 @@ class GameBackend(object):
                     queue.append(json.loads(message['data']))
                 message = self.pubsub.get_message()
             length_of_queue = len(queue)
-            num_to_process = math.ceil(length_of_queue/CHUNKING_DIVISOR)
-
+            if length_of_queue < 20:
+                num_to_process = length_of_queue
+            else:
+                num_to_process = math.ceil(length_of_queue/CHUNKING_DIVISOR)
+            
             if num_to_process != 0:
                 directions = {
                     'up': 0,
