@@ -17,18 +17,18 @@ export default class extends Phaser.State {
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
+    var localObj = this;
     this.websocket.addEventListener('message', function (event) {
       console.log("event recieved");
       console.log('Message from server ' + event.data);
       var control = JSON.parse(event.data);
-
       if(!Array.isArray(control)){
          control = [control];
       }
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
         console.log("Pushing into input queue " );
-        localObj.addRowOfData(obj.name, obj.direction);
+        //localObj.addRowOfData(obj.name, obj.direction);
         localObj.game.inputQueue.push(obj);
         localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
       }
@@ -51,7 +51,7 @@ export default class extends Phaser.State {
     this.devMode = true;
     this.playerStartX = 100;
     this.playerStartY = 300;
-    this.baseSpeed = 100;
+    this.baseSpeed = 30;
     this.game.inputQueue = [];
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
@@ -236,7 +236,6 @@ export default class extends Phaser.State {
   // }
   addRowOfData(name, direction){
     var sideTable = document.querySelector("#Inputs");
-    if(sideTable == null) {alert("fuck you")};
     var row = document.createElement("tr");
     var column1 = document.createElement("td");
     var column2 = document.createElement("td");
