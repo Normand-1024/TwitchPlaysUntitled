@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="14b10452-7ab7-43ec-ad3e-9134cee8ae11" name="Default Changelist" comment="" />
+    <list default="true" id="14b10452-7ab7-43ec-ad3e-9134cee8ae11" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Phaser/assets/images/black_square.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/dist/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/dist/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Phaser/src/states/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/Phaser/src/states/Game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aggregator/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/aggregator/app.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,11 +24,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Phaser/src/states/Game.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="201">
+              <caret line="155" column="22" selection-start-line="155" selection-start-column="22" selection-end-line="155" selection-end-column="22" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#22#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/aggregator/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="87" column="31" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="31" />
+            <state relative-caret-position="497">
+              <caret line="62" column="16" selection-start-line="62" selection-start-column="16" selection-end-line="62" selection-end-column="16" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -32,8 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/aggregator/templates/player_client.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="667">
-              <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+            <state>
+              <caret column="10" selection-start-column="10" selection-end-column="10" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -47,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/aggregator/static/js/player_client.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="230">
-              <caret line="10" column="81" lean-forward="true" selection-start-line="10" selection-start-column="81" selection-end-line="10" selection-end-column="81" />
+              <caret line="10" column="81" selection-start-line="10" selection-start-column="81" selection-end-line="10" selection-end-column="81" />
             </state>
           </provider>
         </entry>
@@ -114,11 +143,11 @@
         <option value="$PROJECT_DIR$/aggregator/templates/player_client.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Phaser/src/fontLoader.js" />
-        <option value="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" />
-        <option value="$PROJECT_DIR$/Phaser/src/states/Game.js" />
         <option value="$PROJECT_DIR$/Phaser/src/index.html" />
         <option value="$PROJECT_DIR$/Phaser/src/FontLoader.js" />
         <option value="$PROJECT_DIR$/Phaser/src/config.js" />
+        <option value="$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js" />
+        <option value="$PROJECT_DIR$/Phaser/src/states/Game.js" />
         <option value="$PROJECT_DIR$/aggregator/app.py" />
       </list>
     </option>
@@ -152,8 +181,26 @@
             <path>
               <item name="TwitchPlaysUntitled" type="b2602c69:ProjectViewProjectNode" />
               <item name="TwitchPlaysUntitled" type="462c0819:PsiDirectoryNode" />
-              <item name="aggregator" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="Phaser" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TwitchPlaysUntitled" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TwitchPlaysUntitled" type="462c0819:PsiDirectoryNode" />
+              <item name="Phaser" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TwitchPlaysUntitled" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TwitchPlaysUntitled" type="462c0819:PsiDirectoryNode" />
+              <item name="Phaser" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="sprites" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TwitchPlaysUntitled" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TwitchPlaysUntitled" type="462c0819:PsiDirectoryNode" />
+              <item name="Phaser" type="462c0819:PsiDirectoryNode" />
+              <item name="www" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -172,14 +219,15 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/aggregator/static/js" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Phaser/assets/images" />
       <recent name="$PROJECT_DIR$/aggregator/static/images" />
       <recent name="$PROJECT_DIR$/aggregator" />
       <recent name="$PROJECT_DIR$/aggregator/templates" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/aggregator/static/js" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -206,18 +254,18 @@
       <updated>1548470061941</updated>
       <workItem from="1548470064234" duration="3082000" />
       <workItem from="1548549442784" duration="5756000" />
-      <workItem from="1548556383067" duration="10442000" />
+      <workItem from="1548556383067" duration="12471000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36623000" />
+    <option name="totallyTimeSpent" value="38652000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28397712" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28397712" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -395,13 +443,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="62" column="78" selection-start-line="62" selection-start-column="78" selection-end-line="62" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Phaser/config.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -409,17 +450,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Phaser/src/states/Game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="212" column="6" selection-start-line="212" selection-start-column="6" selection-end-line="212" selection-end-column="6" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#22#49#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -442,8 +472,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/aggregator/templates/player_client.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+        <state>
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -455,14 +485,32 @@
     <entry file="file://$PROJECT_DIR$/aggregator/static/js/player_client.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
-          <caret line="10" column="81" lean-forward="true" selection-start-line="10" selection-start-column="81" selection-end-line="10" selection-end-column="81" />
+          <caret line="10" column="81" selection-start-line="10" selection-start-column="81" selection-end-line="10" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Phaser/src/states/Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="155" column="22" selection-start-line="155" selection-start-column="22" selection-end-line="155" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#22#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Phaser/src/sprites/averagedPlayerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/aggregator/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="87" column="31" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="31" />
+        <state relative-caret-position="497">
+          <caret line="62" column="16" selection-start-line="62" selection-start-column="16" selection-end-line="62" selection-end-column="16" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

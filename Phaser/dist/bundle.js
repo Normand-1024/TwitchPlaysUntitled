@@ -11265,8 +11265,8 @@ const centerGameObjects = objects => {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sprites_Mushroom__ = __webpack_require__(/*! ../sprites/Mushroom */ 346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sprites_fly_js__ = __webpack_require__(/*! ../sprites/fly.js */ 347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lang__ = __webpack_require__(/*! ../lang */ 348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__map_js__ = __webpack_require__(/*! ../map.js */ 352);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sprites_averagedPlayerController_js__ = __webpack_require__(/*! ../sprites/averagedPlayerController.js */ 350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__map_js__ = __webpack_require__(/*! ../map.js */ 350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sprites_averagedPlayerController_js__ = __webpack_require__(/*! ../sprites/averagedPlayerController.js */ 351);
 /* globals __DEV__ */
 
 
@@ -11282,7 +11282,7 @@ console.log(__WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]);
 /* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.State {
 
   testWebSocket() {
-    this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
+    this.websocket = new WebSocket("ws://preston.ngrok.io/game_receive");
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
@@ -11374,6 +11374,8 @@ console.log(__WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]);
 
     // Put Text
     this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
+
+    this.setupGameTimer();
   }
 
   update() {
@@ -11409,10 +11411,7 @@ console.log(__WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]);
     // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, this.playerCanCollide);
-    game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null);
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null);
-    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
-
     game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null);
 
     if (flyCount < 3) {
@@ -11428,6 +11427,7 @@ console.log(__WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]);
 
   render() {
     game.debug.body(this.averagedPlayerController);
+    game.debug.text('Time until nightfall: ' + this.gameTimer.duration.toFixed(0), 32, 72);
   }
 
   placeMapTiles() {
@@ -11536,6 +11536,12 @@ console.log(__WEBPACK_IMPORTED_MODULE_4__map_js__["a" /* default */]);
 
   playerCanCollide(playerSprite) {
     return playerSprite.collideEnabled;
+  }
+
+  setupGameTimer() {
+    this.gameTimer = game.time.create(false);
+    this.gameTimer.loop(20000, this.gameOver, this);
+    this.gameTimer.start();
   }
 
 });
@@ -11684,6 +11690,24 @@ exports.default = idiom;
 
 /***/ }),
 /* 350 */
+/*!********************!*\
+  !*** ./src/map.js ***!
+  \********************/
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+let mapData;
+/* harmony default export */ __webpack_exports__["a"] = (mapData = {
+  'maptiles': [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2], [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 2, 2], [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2], [0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]],
+  'water': [[0, 600], [100, 500], [100, 600], [200, 400], [200, 500], [200, 600], [300, 100], [300, 400], [300, 500], [300, 600], [400, 100], [400, 400], [400, 500], [400, 600], [500, 100], [500, 500], [500, 600], [600, 100], [600, 600], [600, 200], [700, 100], [700, 200], [700, 300], [900, 600], [1000, 200], [1000, 300], [1000, 600], [1100, 300], [1100, 600]],
+
+  'flies': [[600, 400, 100, -100], [1000, 250, 40, 0], [1100, 250, -40, 0], [1150, 400, 0, -40]]
+});
+
+/***/ }),
+/* 351 */
 /*!*************************************************!*\
   !*** ./src/sprites/averagedPlayerController.js ***!
   \*************************************************/
@@ -11706,6 +11730,7 @@ exports.default = idiom;
     this.paused = false;
     this.collideEnabled = true;
   }
+
   update() {
     if (!this.paused) {
       if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
@@ -11777,25 +11802,6 @@ exports.default = idiom;
   enabledCollision() {
     this.collideEnabled = true;
   }
-});
-
-/***/ }),
-/* 351 */,
-/* 352 */
-/*!********************!*\
-  !*** ./src/map.js ***!
-  \********************/
-/*! exports provided: default */
-/*! exports used: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-let mapData;
-/* harmony default export */ __webpack_exports__["a"] = (mapData = {
-  'maptiles': [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2], [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 2, 2], [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2], [0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2], [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]],
-  'water': [[0, 600], [100, 500], [100, 600], [200, 400], [200, 500], [200, 600], [300, 100], [300, 400], [300, 500], [300, 600], [400, 100], [400, 400], [400, 500], [400, 600], [500, 100], [500, 500], [500, 600], [600, 100], [600, 600], [600, 200], [700, 100], [700, 200], [700, 300], [900, 600], [1000, 200], [1000, 300], [1000, 600], [1100, 300], [1100, 600]],
-
-  'flies': [[600, 400, 100, -100], [1000, 250, 40, 0], [1100, 250, -40, 0], [1150, 400, 0, -40]]
 });
 
 /***/ })

@@ -15,7 +15,7 @@ export default class extends Phaser.State {
 
   testWebSocket()
   {
-    this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
+    this.websocket = new WebSocket("ws://preston.ngrok.io/game_receive");
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
@@ -112,6 +112,8 @@ export default class extends Phaser.State {
 
     // Put Text
     this.bmpText = game.add.bitmapText(10, 10, 'gem', flyCount + " / 10 Flies", 30);
+
+    this.setupGameTimer();
   }
 
   update() {
@@ -154,10 +156,7 @@ export default class extends Phaser.State {
       this.playerWaterCollision,
       this.playerCanCollide
     );
-    game.physics.arcade.overlap(this.averagedPlayerController, this.fly, this.playerFlyCollision, null)
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
-    game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
-
     game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null);
 
     if (flyCount < 3){
@@ -175,7 +174,8 @@ export default class extends Phaser.State {
   }
 
   render(){
-    game.debug.body(this.averagedPlayerController)
+    game.debug.body(this.averagedPlayerController);
+    game.debug.text('Time until nightfall: ' + this.gameTimer.duration.toFixed(0), 32, 72);
   }
 
   placeMapTiles(){
@@ -308,6 +308,12 @@ export default class extends Phaser.State {
 
   playerCanCollide(playerSprite){
     return playerSprite.collideEnabled;
+  }
+
+  setupGameTimer(){
+    this.gameTimer = game.time.create(false);
+    this.gameTimer.loop(20000, this.gameOver, this);
+    this.gameTimer.start();
   }
 
 }
