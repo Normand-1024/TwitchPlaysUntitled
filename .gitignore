@@ -1,9 +1,0 @@
-venv
-*.js.map
-*.pyc
-node_modules/*
-*.log
-idea/workspace.xml
-Phaser/node_modules/*
-Phaser/build/*
-Phaser/dist/*
