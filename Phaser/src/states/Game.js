@@ -7,9 +7,10 @@ import averagedPlayerController from '../sprites/averagedPlayerController.js'
 export default class extends Phaser.State {
   
 
-  testWebSocket(websocket_url)
+  testWebSocket()
   {
-    this.websocket = new WebSocket(websocket_url);
+    this.websocket = new WebSocket("ws://tpg45.herokuapp.com/game_receive");
+    var webLocal = this.websocket;
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
@@ -22,12 +23,10 @@ export default class extends Phaser.State {
       if(!Array.isArray(control)){
          control = [control];
       }
-
       for(var i = 0; i < control.length; i++){
-        var obj = control[i];
-        localObj.addRowOfData("fakeName", obj.direction);
-        localObj.inputQueue.push(obj);
-        localObj.averagedPlayerController.setInputList(localObj.inputQueue);
+        obj = control[i];
+        this.inputQueue.push(obj);
+        this.averagedPlayerController.setInputList(this.inputQueue);
       }
 
     });
@@ -37,27 +36,31 @@ export default class extends Phaser.State {
   init() { }
   
 
-  preload() {   
+  preload() { 
        this.output;
     }
 
   create() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
+<<<<<<< HEAD
     this.devMode = false;
     this.baseSpeed = 1000;
     this.inputQueue = [];
     let websocket_url="ws://tpg45.herokuapp.com/game_receive";
+=======
+    this.devMode = true;
+>>>>>>> master
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
-      websocket_url="ws://0.0.0.0:5000/game_receive";
     }
-    const bannerText = lang.text('welcome');
+    const bannerText = lang.text('welcome')
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
       font: '40px Bangers',
       fill: '#77BFA3',
       smoothed: false
-    });
+    })
 
+    this.inputQueue = []
 
     banner.padding.set(10, 16)
     banner.anchor.setTo(0.5)
@@ -67,74 +70,100 @@ export default class extends Phaser.State {
       x: this.world.centerX,
       y: this.world.centerY,
       asset: 'mushroom',
-      baseSpeed: this.baseSpeed,
-    });
+      baseSpeed: 10
+    })
 
+    // ******************************
+    //        CREATING WATER TILES
+    // EDIT this.waterCoord TO PLACE WATERS
+    // ******************************
+    this.waterGroup = game.add.physicsGroup();
+    this.waterCoord = [[300, 300], [50, 50], [0, 0]]
 
-    this.game.add.existing(this.averagedPlayerController);
+    for (var i = 0; i < this.waterCoord.length; i++)
+      {
+        var c = this.waterGroup.create(this.waterCoord[i][0], this.waterCoord[i][1], 'water', 0)
+        c.scale.setTo(1, 1);
+      }
+    // ******************************
 
-    this.game.physics.arcade.enable([this.averagedPlayerController]);
-    this.testWebSocket(websocket_url);
+    this.game.add.existing(this.waterGroup)
+    this.game.add.existing(this.averagedPlayerController)
+
+    this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup]);
+    this.testWebSocket();
   }
 
-  update() {
-    if (this.devMode) {
+  update(){
+    if(this.devMode){
       var obj;
-      if (this.cursors.right.isDown) {
+      if(this.cursors.right.isDown){
+
         obj = {
-          "direction": "right"
+          "direction":"right"
         }
       }
-      if (this.cursors.left.isDown) {
+       if(this.cursors.left.isDown){
+
         obj = {
-          "direction": "left"
+          "direction":"left"
         }
       }
-      if (this.cursors.down.isDown) {
+      
+      if(this.cursors.down.isDown){
+
         obj = {
-          "direction": "down"
+          "direction":"down"
         }
       }
-      if (this.cursors.up.isDown) {
+      if(this.cursors.up.isDown)
+
         obj = {
-          "direction": "up"
+          "direction":"up"
         }
       }
-      if (obj) {
-        this.inputQueue.push(obj);
-        this.averagedPlayerController.setInputList(this.inputQueue);
-        }
-      }
+      this.inputQueue.push(obj);
+      this.averagedPlayerController.setInputList(this.inputQueue);
+    // Collision Detection
+      game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null)
+  } 
+
+  restartGame(){
+    this.restart()
+  }
+
+  playerWaterCollision(){
+    console.log('WaterCollision')
+    //this.averagedPlayerController.x = 500;
+    //this.averagedPlayerController.y = 500;
+  }
+
+  //   function init()
+  // {
+  //   output = document.getElementById("output");
+  //   testWebSocket();
+  // }
+  addRowOfData(name, direction){
+    var sideTable = document.querySelector("#Inputs");
+    if(sideTable == null) {alert("fuck you")};
+    var row = document.createElement("tr");
+    var column1 = document.createElement("td");
+    var column2 = document.createElement("td");
+
+    row.appendChild(column1);
+    row.appendChild(column2);
+    sideTable.appendChild(row);
+
+
+
+    column1.appendChild(document.createTextNode(name));
+    column2.appendChild(document.createTextNode(direction));
+
+    while (sideTable.childElementCount > 50) {
+      myNode.removeChild(myNode.firstChild);
     }
+    var rightDiv = document.querySelector("#RightDiv");
+    rightDiv.scrollTop = rightDiv.scrollHeight;
+  }
 
-    addRowOfData(name, direction){
-
-      var sideTable = document.querySelector("#Inputs");
-      if(sideTable == null) {alert("fuck you")};
-      var row = document.createElement("tr");
-      var column1 = document.createElement("td");
-      var column2 = document.createElement("td");
-
-      row.appendChild(column1);
-      row.appendChild(column2);
-      sideTable.appendChild(row);
-
-
-
-      column1.appendChild(document.createTextNode(name));
-      column2.appendChild(document.createTextNode(direction));
-
-      while (sideTable.childElementCount > 50) {
-        myNode.removeChild(myNode.firstChild);
-      }
-      var rightDiv = document.querySelector("#RightDiv");
-      rightDiv.scrollTop = rightDiv.scrollHeight;
-    }
-
-    //   function init()
-    // {
-    //   output = document.getElementById("output");
-    //   testWebSocket();
-    // }
-//
 }
