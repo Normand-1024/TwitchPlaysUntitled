@@ -11321,8 +11321,8 @@ var flyCount = 0;
 
     this.averagedPlayerController = new __WEBPACK_IMPORTED_MODULE_4__sprites_averagedPlayerController_js__["a" /* default */]({
       game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
+      x: this.playerStartX,
+      y: this.playerStartY,
       asset: 'chameleon',
       baseSpeed: this.baseSpeed
     });
@@ -11656,7 +11656,7 @@ exports.default = idiom;
     this.anchor.setTo(0.5);
     this.speed = baseSpeed;
     game.physics.arcade.enable(this);
-    this.shrinkCollision(40, 40);
+    this.shrinkCollision(80, 80);
     this.paused = false;
   }
 

@@ -60,8 +60,8 @@ export default class extends Phaser.State {
 
     this.averagedPlayerController = new averagedPlayerController({
       game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
+      x: this.playerStartX,
+      y: this.playerStartY,
       asset: 'chameleon',
       baseSpeed: this.baseSpeed
     })
