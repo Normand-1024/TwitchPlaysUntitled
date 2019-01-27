@@ -10879,6 +10879,8 @@ var flyCount = 0;
       asset: 'mushroom',
       baseSpeed: this.baseSpeed
     });
+    this.game.world.setBounds(0, 0, 5000, 800);
+    this.game.camera.follow(this.averagedPlayerController, 2);
 
     // ******************************
     //        CREATING WATER TILES
@@ -10945,9 +10947,11 @@ var flyCount = 0;
       if (this.cursors.up.isDown) obj = {
         "direction": "up"
       };
+
+      if (obj != null) ;
+      this.game.inputQueue.push(obj);
     }
-    if (obj != null) ;
-    this.game.inputQueue.push(obj);
+
     // this.averagedPlayerController.setInputList(this.game.inputQueue);
     // Collision Detection
     game.physics.arcade.overlap(this.averagedPlayerController, this.waterGroup, this.playerWaterCollision, null);
@@ -11173,7 +11177,6 @@ exports.default = idiom;
   }
 
   update() {
-    console.log(this.game.inputQueue);
     if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
       var input = this.game.inputQueue.shift();
       if (input == null) {
@@ -11185,7 +11188,6 @@ exports.default = idiom;
       } else {
         if (input.direction == "right") {
           this.body.velocity.add(this.speed, 0);
-          console.log("In Right");
         }
         if (input.direction == "left") {
           this.body.velocity.add(-1 * this.speed, 0);
@@ -11200,7 +11202,6 @@ exports.default = idiom;
     }
 
     if (this.body.velocity) {
-      console.log("reducing velocity");
       this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y * .95);
     }
   }
