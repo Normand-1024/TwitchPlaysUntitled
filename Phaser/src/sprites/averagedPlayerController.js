@@ -22,10 +22,6 @@ export default class extends Phaser.Sprite {
           // }
 
         } else {
-          console.log("adding input");
-          if(input.right == 1){
-            console.log("yo");
-          }
           this.body.velocity.add(input.right * this.speed, 0);
           this.body.velocity.add(input.left * this.speed * -1, 0);
           this.body.velocity.add(0,input.up * this.speed* -1);
@@ -42,7 +38,6 @@ export default class extends Phaser.Sprite {
           // }
           // if (input.direction == "down") {
           //   this.body.velocity.add(0, this.speed);
-          console.log(this.body.velocity);
         }
       }
        if(this.body.velocity.x >0 ){

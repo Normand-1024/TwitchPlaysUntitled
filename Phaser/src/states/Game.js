@@ -9,7 +9,6 @@ import averagedPlayerController from '../sprites/averagedPlayerController.js'
 
 // Global Variables
 var flyCount = 0
-console.log(mapData)
 
 export default class extends Phaser.State {
   
@@ -130,12 +129,9 @@ export default class extends Phaser.State {
     this.game.add.existing(this.smartflyGroup)
     this.game.add.existing(this.averagedPlayerController)
 
-<<<<<<< HEAD
     this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.smartflyGroup]);
-=======
     this.game.physics.arcade.enable([this.averagedPlayerController, this.waterGroup, this.flyGroup, this.home]);
     this.home.body.immovable = true;
->>>>>>> e7fe7f77cbae9fbb95c647ee2a0a16ce2a473070
     this.testWebSocket();
 
     // Put Text
@@ -171,7 +167,6 @@ export default class extends Phaser.State {
         obj.up = 1;
 
       if (obj != null) {
-        console.log(obj);
         this.game.inputQueue.push(obj);
       }
 
@@ -189,14 +184,11 @@ export default class extends Phaser.State {
       this.playerCanCollide
     );
     game.physics.arcade.overlap(this.averagedPlayerController, this.flyGroup, this.playerFlyCollision, null)
-<<<<<<< HEAD
     game.physics.arcade.overlap(this.averagedPlayerController, this.smartflyGroup, this.playerFlyCollision, null)
-=======
     game.physics.arcade.collide(this.averagedPlayerController, this.home, this.playerHomeCollision, null);
 
->>>>>>> e7fe7f77cbae9fbb95c647ee2a0a16ce2a473070
     if (flyCount < 3){
-      this.bmpText.setText(flyCount + " flies eaten, the night deadly.")
+      this.bmpText.setText(flyCount + " flies eaten, the night will be deadly.")
     }
     else if (flyCount < 6){
       this.bmpText.setText(flyCount + " flies eaten, the night will be harsh.")
@@ -226,17 +218,16 @@ export default class extends Phaser.State {
     for (var i = 0; i < this.mapTiles.length; i++){
       for (var j = 0; j < this.mapTiles[i].length; j++)
       {
-        if (this.mapTiles[i][j] == 1){
-          
-        }
-        else if (this.mapTiles[i][j] == 2) {
+        if (this.mapTiles[i][j] == 0) {
+          var w = this.game.add.sprite(j * 100, i * 100, 'grass', 0);
+        } else if (this.mapTiles[i][j] == 2) {
           if (this.getRandomInt(2) == 0) {
             var w = this.waterGroup.create(j * 100, i * 100, 'water1', 0);
           } else {
             var w = this.waterGroup.create(j * 100, i * 100, 'water2', 0);
           }
-          w.scale.setTo(3.13, 3.13);
         }
+        w.scale.setTo(3.13, 3.13);
       }
     }
       // ******************************
