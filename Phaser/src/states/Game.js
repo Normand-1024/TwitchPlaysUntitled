@@ -19,6 +19,8 @@ export default class extends Phaser.State {
     this.websocket.addEventListener('open', function (event) {
       console.log("connected");
     });
+    var localObj = this;
+
     this.websocket.addEventListener('message', function (event) {
       console.log("event recieved");
       console.log('Message from server ' + event.data);
@@ -29,8 +31,7 @@ export default class extends Phaser.State {
       }
       for(var i = 0; i < control.length; i++){
         var obj = control[i];
-        console.log("Pushing into input queue " );
-        localObj.addRowOfData(obj.name, obj.direction);
+        // localObj.addRowOfData(obj.name, obj.direction);
         localObj.game.inputQueue.push(obj);
         localObj.averagedPlayerController.setInputList(localObj.game.inputQueue);
       }
@@ -50,10 +51,10 @@ export default class extends Phaser.State {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //this.flyCount = 0;
-    this.devMode = true;
+    this.devMode = false;
     this.playerStartX = 100;
     this.playerStartY = 300;
-    this.baseSpeed = 100;
+    this.baseSpeed = 22;
     this.game.inputQueue = [];
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();
@@ -96,7 +97,7 @@ export default class extends Phaser.State {
     //          GO HOME
     // ****************************** 
     
-    this.home = this.game.add.sprite(30, game.height/2, "house");
+    this.home = this.game.add.sprite(30, game.height/2+100, "house");
     this.home.scale.x = .5;
     this.home.scale.y = .5;
     
@@ -253,6 +254,7 @@ export default class extends Phaser.State {
   }
 
   gameOverComplete(){
+    flyCount = 0;
     this.state.start(this.state.current);
   }
 
