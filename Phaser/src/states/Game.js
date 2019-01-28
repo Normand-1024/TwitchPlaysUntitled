@@ -24,6 +24,7 @@ export default class extends Phaser.State {
     this.websocket.addEventListener('message', function (event) {
       console.log("event recieved");
       console.log('Message from server ' + event.data);
+      localObj.game.inputQueue = [];
       var control = JSON.parse(event.data);
       if(!Array.isArray(control)){
          control = [control];
@@ -65,7 +66,7 @@ export default class extends Phaser.State {
     this.playerStartX = 300;
     this.playerStartY = 300;
 
-    this.baseSpeed = 30;
+    this.baseSpeed = 60;
     this.game.inputQueue = [];
     if(this.devMode){
       this.cursors = game.input.keyboard.createCursorKeys();

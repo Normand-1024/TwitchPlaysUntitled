@@ -16,7 +16,7 @@ export default class extends Phaser.Sprite {
 		this.collideEnabled = true;
     this.walkSound = game.add.audio("walk");
     this.walkSound.loop = false;
-    this.inputClamp = 100
+    this.inputClamp = 140
   }
 
   create(){
@@ -26,6 +26,7 @@ export default class extends Phaser.Sprite {
     if (!this.paused) {
       if (this.game.inputQueue != null && this.game.inputQueue.length > 0) {
         var input = this.game.inputQueue.shift();
+        console.log("Input " + this.game.inputQueue);
         if (input == null) {
         } else {
 
@@ -46,7 +47,7 @@ export default class extends Phaser.Sprite {
      this.body.velocity.set(this.body.velocity.x.clamp(-this.inputClamp, this.inputClamp), this.body.velocity.y.clamp(-this.inputClamp, this.inputClamp))
 
       if (this.body.velocity) {
-        this.body.velocity.set(this.body.velocity.x * .95, this.body.velocity.y * .95);
+        this.body.velocity.set(this.body.velocity.x * .92, this.body.velocity.y * .92);
       }
       if (this.walkSound){
         if(this.body.velocity.x > 2 || this.body.velocity.y > 2 || this.body.velocity.x < -2 || this.body.velocity.y < -2){
