@@ -66,27 +66,32 @@ class GameBackend(object):
 
     def run_average(self):
         """Listens for new messages in Redis, and sends them to clients."""
-        queue = []
         while True:
+            queue = []
             message = self.pubsub.get_message()
             while message:
                 if message['type'] == 'message':
                     queue.append(json.loads(message['data']))
                 message = self.pubsub.get_message()
-            length_of_queue = len(queue)
-            if length_of_queue < 20:
-                num_to_process = length_of_queue
-            else:
-                num_to_process = math.ceil(length_of_queue/CHUNKING_DIVISOR)
-            
-            if num_to_process != 0:
-                directions = {
-                    'up': 0,
-                    'down': 0,
-                    'left': 0,
-                    'right': 0
-                }
-                for message in queue[0:num_to_process]:
+            # length_of_queue = len(queue)
+            # if length_of_queue < 20:
+            #     num_to_process = length_of_queue
+            # else:
+            #     num_to_process = math.ceil(length_of_queue/CHUNKING_DIVISOR)
+
+            # if num_to_process != 0:
+            try:
+                inputs_to_process = queue[-20:]
+            except AttributeError:
+                inputs_to_process = queue
+            directions = {
+                'up': 0,
+                'down': 0,
+                'left': 0,
+                'right': 0
+            }
+            if len(inputs_to_process) > 0:
+                for message in inputs_to_process:
                     if not message.get('direction'):
                         continue
                     if message['direction'] == 'up':
@@ -98,8 +103,8 @@ class GameBackend(object):
                     elif message['direction'] == 'right':
                         directions['right'] += 1
 
+                print(directions)
                 gevent.spawn(self.send_average, directions)
-                queue = queue[num_to_process+1:]
             gevent.sleep(QUEUE_TIMESTEPS)
 
     def start(self):
